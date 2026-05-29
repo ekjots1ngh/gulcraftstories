@@ -106,7 +106,7 @@ export default async function ProductPage({
             <div>
               <dt className="eyebrow text-marigold">From the edit</dt>
               <dd className="mt-1">
-                <Link href={`/shop?edit=${product.edit}`} className="underline hover:text-marigold">
+                <Link href={`/edit/${product.edit}`} className="underline hover:text-marigold">
                   {editName(product.edit)}
                 </Link>
               </dd>

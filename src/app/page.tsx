@@ -2,12 +2,13 @@ import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
 import { SectionHeading } from "@/components/SectionHeading";
-import { MotifDivider } from "@/components/MotifDivider";
+import { MotifDivider, MotifMark } from "@/components/MotifDivider";
 import { ProductCard } from "@/components/ProductCard";
 import { PieceImage } from "@/components/PieceImage";
 import { JournalCard } from "@/components/JournalCard";
 import { Newsletter } from "@/components/Newsletter";
-import { products, TYPES } from "@/lib/products";
+import { products, TYPES, EDITS } from "@/lib/products";
+import { editContent } from "@/lib/edits";
 import { getAllPosts } from "@/lib/journal";
 
 /**
@@ -109,6 +110,37 @@ export default function Home() {
             <Button href="/shop" variant="outline">
               View all pieces
             </Button>
+          </div>
+        </Container>
+      </section>
+
+      {/* ───────── THE EDITS ───────── */}
+      <section className="bg-cream-deep/40 py-16 sm:py-24">
+        <Container>
+          <SectionHeading
+            eyebrow="Curated, evolving"
+            title="The Edits"
+            intro="Small, living curations — each with its own story, each changing as one-of-a-kind pieces find their homes. Not collections that restock; gardens that bloom and thin."
+            eyebrowColor="text-rani"
+          />
+          <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-5">
+            {EDITS.map((e) => (
+              <Link
+                key={e.slug}
+                href={`/edit/${e.slug}`}
+                className="group relative flex aspect-[3/4] flex-col justify-end overflow-hidden rounded-lg p-5 text-cream"
+                style={{
+                  backgroundImage: `radial-gradient(130% 130% at 70% 10%, ${editContent[e.slug].heroSwatch[0]} 0%, ${editContent[e.slug].heroSwatch[1]} 100%)`,
+                }}
+              >
+                <div className="absolute right-3 top-3 opacity-30 transition-transform duration-500 group-hover:rotate-45">
+                  <MotifMark size={30} color="var(--color-cream)" />
+                </div>
+                <h3 className="font-display text-2xl">{e.name}</h3>
+                <p className="mt-1 text-xs text-cream/85">{e.blurb}</p>
+                <span className="eyebrow mt-3 text-cream/90">Enter →</span>
+              </Link>
+            ))}
           </div>
         </Container>
       </section>

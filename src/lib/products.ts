@@ -17,7 +17,7 @@ export type Status = "available" | "sold";
 /* ---------- Browse taxonomies (the three ways to shop) ---------- */
 
 export type TypeSlug = "necklaces" | "earrings" | "bracelets" | "anklets";
-export type EditSlug = "everyday" | "monsoon" | "festival" | "earth";
+export type EditSlug = "gulzar" | "mitti" | "dhaaga" | "roshni" | "saanjh";
 export type MaterialSlug =
   | "semi-precious-stones"
   | "beads"
@@ -36,10 +36,11 @@ export const TYPES: Taxon<TypeSlug>[] = [
 ];
 
 export const EDITS: Taxon<EditSlug>[] = [
-  { slug: "everyday", name: "The Everyday Edit", blurb: "Light pieces for any day.", accent: "#C9A24B" },
-  { slug: "monsoon", name: "The Monsoon Edit", blurb: "Teal, green-gold, rain-quiet.", accent: "#0E5A5B" },
-  { slug: "festival", name: "The Festival Edit", blurb: "Marigold and rani warmth.", accent: "#E08A1E" },
-  { slug: "earth", name: "Earth & Clay", blurb: "Hand-sculpted, hand-painted.", accent: "#9A5B33" },
+  { slug: "gulzar", name: "Gulzar", blurb: "A garden, in bloom.", accent: "#E08A1E" },
+  { slug: "mitti", name: "Mitti", blurb: "Earth, and what it holds.", accent: "#9A5B33" },
+  { slug: "dhaaga", name: "Dhaaga", blurb: "A single thread.", accent: "#B5267A" },
+  { slug: "roshni", name: "Roshni", blurb: "Light, and how it catches.", accent: "#C9A24B" },
+  { slug: "saanjh", name: "Saanjh", blurb: "The hour of dusk.", accent: "#0E5A5B" },
 ];
 
 export const MATERIALS: Taxon<MaterialSlug>[] = [
@@ -88,7 +89,7 @@ export const products: Product[] = [
     slug: "clay-bloom-pendant",
     name: "Clay Bloom Pendant",
     type: "necklaces",
-    edit: "earth",
+    edit: "gulzar",
     materials: ["air-dry-clay", "brass", "beads"],
     price: 42,
     currency: "GBP",
@@ -112,7 +113,7 @@ export const products: Product[] = [
     slug: "marigold-jhumka",
     name: "Marigold Jhumka",
     type: "earrings",
-    edit: "festival",
+    edit: "gulzar",
     materials: ["brass", "beads"],
     price: 68,
     currency: "GBP",
@@ -136,7 +137,7 @@ export const products: Product[] = [
     slug: "peacock-haar",
     name: "Peacock Haar",
     type: "necklaces",
-    edit: "monsoon",
+    edit: "saanjh",
     materials: ["ceramics", "beads", "brass"],
     price: 142,
     currency: "GBP",
@@ -160,7 +161,7 @@ export const products: Product[] = [
     slug: "crochet-hoop-earrings",
     name: "Crochet Hoop Earrings",
     type: "earrings",
-    edit: "everyday",
+    edit: "dhaaga",
     materials: ["crochet", "brass"],
     price: 32,
     currency: "GBP",
@@ -182,7 +183,7 @@ export const products: Product[] = [
     slug: "river-stone-bracelet",
     name: "River Stone Bracelet",
     type: "bracelets",
-    edit: "everyday",
+    edit: "roshni",
     materials: ["semi-precious-stones", "beads"],
     price: 38,
     currency: "GBP",
@@ -204,7 +205,7 @@ export const products: Product[] = [
     slug: "amethyst-thread-necklace",
     name: "Amethyst Thread Necklace",
     type: "necklaces",
-    edit: "monsoon",
+    edit: "dhaaga",
     materials: ["semi-precious-stones", "crochet"],
     price: 56,
     currency: "GBP",
@@ -226,7 +227,7 @@ export const products: Product[] = [
     slug: "ceramic-cluster-studs",
     name: "Ceramic Cluster Studs",
     type: "earrings",
-    edit: "everyday",
+    edit: "mitti",
     materials: ["ceramics", "brass"],
     price: 28,
     currency: "GBP",
@@ -248,7 +249,7 @@ export const products: Product[] = [
     slug: "terracotta-charm-anklet",
     name: "Terracotta Charm Anklet",
     type: "anklets",
-    edit: "earth",
+    edit: "mitti",
     materials: ["air-dry-clay", "brass", "beads"],
     price: 34,
     currency: "GBP",

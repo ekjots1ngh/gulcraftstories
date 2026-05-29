@@ -125,7 +125,18 @@ are replaceable; product data lives in this file (a CMS can return this shape la
 Exported from `products.ts`: `TYPES`, `EDITS`, and `MATERIALS`. **Materials use
 her real palette:** semi-precious stones, beads, ceramics, air-dry clay, brass
 charms/beads, crochet. `/shop` filters on any combination via `?type=`, `?edit=`,
-`?material=` (AND); the header mega-menu links into each axis.
+`?material=` (AND); the header mega-menu links into each axis (type/material →
+shop filters, edit → the immersive edit page).
+
+### Edits (curated, evolving — not restocked lines)
+Five named edits: **Gulzar** (garden/bloom), **Mitti** (earth/clay), **Dhaaga**
+(thread/crochet), **Roshni** (light), **Saanjh** (dusk). Each has an immersive
+page at `/edit/[slug]` (full-bleed hero, written story, pull quote, an
+"evolving, not restocked" note, then its current pieces, then the other edits).
+Editorial copy lives in **`src/lib/edits.ts`** (`editContent` keyed by `EditSlug`)
+— swap the `tagline`/`story`/`pullQuote` there to update copy in one place. Edits
+are linked from the homepage ("The Edits" section) and the mega-menu. A piece's
+`edit` field assigns it; as one-of-a-kind pieces sell, an edit's contents change.
 
 ### Journal / "Stories"
 Editorial long-form lives in **markdown files** under `content/journal/*.md`.
@@ -201,13 +212,14 @@ src/
     layout.tsx    global shell — fonts + CartProvider + Header + Footer
     page.tsx      homepage (Direction A "Atelier")
     globals.css   design tokens
-    shop/         /shop grid (+ ?c= filter) and /shop/[slug] detail
+    shop/         /shop grid (browse by type/edit/material) + /shop/[slug] detail
+    edit/         /edit/[slug] immersive curated-edit pages (Gulzar … Saanjh)
     cart/         /cart page
     journal/      /journal index and /journal/[slug] post (markdown)
     checkout/     /checkout/success confirmation page
     api/          /api/checkout (Stripe session) + /api/stripe/webhook
   components/      reusable UI primitives + sections
-  lib/            products, cart, journal, stripe (server client)
+  lib/            products, cart, journal, edits (edit story copy), stripe
 content/journal/  *.md story posts (frontmatter + body) — add files to publish
 .env.example      env var template (copy to .env.local — never commit real keys)
 design/previews/  screenshots (homepage, shop, product, cart, journal, directions)
@@ -226,6 +238,8 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
       featured pieces, behind-the-craft teaser, footer w/ Instagram + contact)
 - [x] Shop: grid + browse three ways (Type / Edit / Material) via mega-menu
 - [x] One-of-a-kind model: stock 1, permanent "Sold", "One of one" everywhere
+- [x] Five immersive edit pages (Gulzar · Mitti · Dhaaga · Roshni · Saanjh),
+      linked from homepage + mega-menu; copy in src/lib/edits.ts
 - [x] Product detail page (`/shop/[slug]`) with the story given real space
 - [x] Client-side cart (`/cart`): add/remove, quantity, running total, localStorage
 - [x] Journal / Stories: markdown-driven (`/journal` + `/journal/[slug]`),

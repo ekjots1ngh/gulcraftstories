@@ -19,6 +19,10 @@ const BROWSE = [
   { heading: "By material", facet: "material", options: MATERIALS },
 ] as const;
 
+/** Edits get their own immersive pages; type/material are shop filters. */
+const facetHref = (facet: string, slug: string) =>
+  facet === "edit" ? `/edit/${slug}` : `/shop?${facet}=${slug}`;
+
 function CartIcon({ count = 0 }: { count?: number }) {
   return (
     <span className="relative inline-flex">
@@ -154,7 +158,7 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
                     {group.options.map((o) => (
                       <li key={o.slug}>
                         <Link
-                          href={`/shop?${group.facet}=${o.slug}`}
+                          href={facetHref(group.facet, o.slug)}
                           onClick={() => setShopOpen(false)}
                           className="group flex items-baseline justify-between gap-3"
                         >
@@ -193,7 +197,7 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
                   {group.options.map((o) => (
                     <Link
                       key={o.slug}
-                      href={`/shop?${group.facet}=${o.slug}`}
+                      href={facetHref(group.facet, o.slug)}
                       onClick={() => setMobileOpen(false)}
                       className="rounded-full border border-ink/20 px-3 py-1 text-sm text-ink/80"
                     >
