@@ -1,0 +1,130 @@
+"use client";
+
+import Link from "next/link";
+import { Container } from "@/components/Container";
+import { Button } from "@/components/Button";
+import { PieceImage } from "@/components/PieceImage";
+import { QuantityStepper } from "@/components/QuantityStepper";
+import { useCart, formatMoney } from "@/lib/cart";
+
+export default function CartPage() {
+  const { items, subtotal, count, setQuantity, remove, clear } = useCart();
+
+  return (
+    <main className="flex-1">
+      <Container className="py-12 sm:py-16">
+        <h1 className="text-3xl sm:text-4xl">Your cart</h1>
+
+        {items.length === 0 ? (
+          <div className="mt-10 flex flex-col items-start gap-5">
+            <p className="text-ink-soft">Your cart is empty — nothing chosen yet.</p>
+            <Button href="/shop" variant="primary">
+              Explore the pieces
+            </Button>
+          </div>
+        ) : (
+          <div className="mt-10 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
+            {/* line items */}
+            <div className="flex flex-col">
+              <ul className="flex flex-col divide-y divide-gold/40 border-y border-gold/40">
+                {items.map(({ product, quantity, lineTotal }) => (
+                  <li key={product.slug} className="flex gap-4 py-5">
+                    <Link
+                      href={`/shop/${product.slug}`}
+                      className="w-20 shrink-0 sm:w-24"
+                    >
+                      <PieceImage
+                        swatch={product.images[0].swatch}
+                        label={product.name}
+                        ratio="square"
+                      />
+                    </Link>
+
+                    <div className="flex flex-1 flex-col gap-2">
+                      <div className="flex justify-between gap-3">
+                        <div>
+                          <Link
+                            href={`/shop/${product.slug}`}
+                            className="font-display text-lg leading-snug hover:text-peacock"
+                          >
+                            {product.name}
+                          </Link>
+                          <p className="text-xs text-ink-soft">{product.category}</p>
+                        </div>
+                        <span className="shrink-0 font-semibold">
+                          {formatMoney(lineTotal, product.currency)}
+                        </span>
+                      </div>
+
+                      <div className="mt-auto flex items-center justify-between gap-3">
+                        <QuantityStepper
+                          value={quantity}
+                          onChange={(q) => setQuantity(product.slug, q)}
+                          size="sm"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => remove(product.slug)}
+                          className="text-xs text-ink-soft underline transition-colors hover:text-rani"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-5 flex justify-between">
+                <Link href="/shop" className="text-sm underline hover:text-marigold">
+                  ← Continue shopping
+                </Link>
+                <button
+                  type="button"
+                  onClick={clear}
+                  className="text-sm text-ink-soft underline hover:text-rani"
+                >
+                  Clear cart
+                </button>
+              </div>
+            </div>
+
+            {/* summary */}
+            <aside className="h-fit rounded-lg bg-cream-deep/50 p-6">
+              <h2 className="font-display text-xl">Summary</h2>
+              <dl className="mt-5 flex flex-col gap-3 text-sm">
+                <div className="flex justify-between">
+                  <dt className="text-ink-soft">Items</dt>
+                  <dd>{count}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-ink-soft">Subtotal</dt>
+                  <dd className="font-semibold">{formatMoney(subtotal)}</dd>
+                </div>
+                <div className="flex justify-between border-t border-gold/40 pt-3">
+                  <dt className="text-ink-soft">Shipping</dt>
+                  <dd className="text-ink-soft">Calculated at checkout</dd>
+                </div>
+              </dl>
+
+              <div className="mt-6 flex items-baseline justify-between">
+                <span className="text-sm text-ink-soft">Total</span>
+                <span className="font-display text-2xl">{formatMoney(subtotal)}</span>
+              </div>
+
+              <button
+                type="button"
+                className="mt-6 w-full rounded-sm bg-peacock px-6 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-peacock-deep"
+              >
+                Checkout
+              </button>
+              <p className="mt-3 text-center text-xs text-ink-soft">
+                Secure checkout via Shopify — connected during integration.
+              </p>
+            </aside>
+          </div>
+        )}
+      </Container>
+    </main>
+  );
+}

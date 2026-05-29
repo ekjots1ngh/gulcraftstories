@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { cn } from "@/lib/cn";
+import { useCart } from "@/lib/cart";
 
 const NAV = [
   { label: "Shop", href: "/shop" },
@@ -34,7 +35,7 @@ function CartIcon({ count = 0 }: { count?: number }) {
  */
 export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
   const [open, setOpen] = useState(false);
-  const cartCount = 0;
+  const { count: cartCount } = useCart();
   const onDark = tone === "dark";
 
   return (

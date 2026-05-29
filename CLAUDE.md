@@ -102,9 +102,20 @@ Footer: About · Shipping & Returns · Care · Contact · Instagram · Newslette
 ```
 
 ### Per-piece story content model
-Each product carries: **the making story**, **materials**, **hours to make**,
-and an **artisan/maker note** — alongside standard price/variants/images. In the
-chosen backend these live in Shopify metafields (see §4).
+Implemented in `src/lib/products.ts` as the `Product` type. Each piece carries:
+`name`, `price` + `currency`, `description`, `materials[]`, `dimensions`,
+`makingStory` (the long how-it's-made), `makersNote`, `hoursToMake`, `images[]`
+(multiple; `swatch` placeholders now, `src` later), and `stock` status
+(`in_stock` | `made_to_order` | `sold_out`). Three replaceable **seed pieces**
+are provided. When Shopify is wired in, the fetch layer should return this shape
+(story fields ← metafields).
+
+### Cart
+Client-side cart in `src/lib/cart.tsx` (`CartProvider` + `useCart`), persisted to
+`localStorage`. Stores only `{slug, quantity}` so it survives data edits; line
+items + totals are derived from current product data. Wraps the app in
+`layout.tsx`; the header badge reads `count`. The cart's Checkout button is a
+placeholder until the Shopify hosted checkout is connected.
 
 ---
 
@@ -138,12 +149,14 @@ every route inherits the sticky header (announcement bar, nav, cart) and footer.
 ```
 src/
   app/            routes (App Router)
-    layout.tsx    global shell — fonts + Header + Footer
+    layout.tsx    global shell — fonts + CartProvider + Header + Footer
     page.tsx      homepage (Direction A "Atelier")
     globals.css   design tokens
+    shop/         /shop grid (+ ?c= filter) and /shop/[slug] detail
+    cart/         /cart page
   components/      reusable UI primitives + sections
-  lib/            placeholder product / story / journal data
-design/previews/  screenshots (homepage + the two original directions)
+  lib/            products (model + seeds), cart (context), journal data
+design/previews/  screenshots (homepage, shop, product, cart, original directions)
 ```
 
 ---
@@ -157,7 +170,10 @@ design/previews/  screenshots (homepage + the two original directions)
 - [x] Direction chosen (A "Atelier", warmed with B's jewel tones)
 - [x] Global layout + full homepage built (sticky header/nav/cart, hero,
       featured pieces, behind-the-craft teaser, footer w/ Instagram + contact)
-- [ ] Full page build-out (Shop, Product w/ story, Our Story, Journal, Bespoke)
+- [x] Shop: collection/grid page (`/shop` + `?c=` filter)
+- [x] Product detail page (`/shop/[slug]`) with the story given real space
+- [x] Client-side cart (`/cart`): add/remove, quantity, running total, localStorage
+- [ ] Remaining pages (Our Story, Journal, Bespoke)
 - [ ] Shopify Storefront API wiring (needs store + Storefront API token)
 - [ ] Polish: a11y, SEO, motion, responsive QA
 
