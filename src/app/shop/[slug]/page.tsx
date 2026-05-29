@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
-import { MotifDivider } from "@/components/MotifDivider";
+import { MotifDivider, MotifMark } from "@/components/MotifDivider";
 import { Gallery } from "@/components/Gallery";
 import { AddToCart } from "@/components/AddToCart";
 import { ProductCard } from "@/components/ProductCard";
@@ -15,9 +15,10 @@ import {
   getProduct,
   getRelated,
   formatMoney,
-  stockLabel,
-  categorySlug,
-  type StockStatus,
+  typeName,
+  editName,
+  materialName,
+  ONE_OF_ONE,
 } from "@/lib/products";
 
 export function generateStaticParams() {
@@ -49,7 +50,7 @@ export default async function ProductPage({
 
   const related = getRelated(product.slug);
   const stories = getPostsForProduct(product.slug);
-  const inStock = product.stock !== "sold_out";
+  const sold = product.status === "sold";
 
   return (
     <main className="flex-1">
@@ -58,8 +59,8 @@ export default async function ProductPage({
         <nav className="flex flex-wrap items-center gap-2 text-xs text-ink-soft">
           <Link href="/shop" className="hover:text-marigold">Shop</Link>
           <span aria-hidden>/</span>
-          <Link href={`/shop?c=${categorySlug(product.category)}`} className="hover:text-marigold">
-            {product.category}
+          <Link href={`/shop?type=${product.type}`} className="hover:text-marigold">
+            {typeName(product.type)}
           </Link>
           <span aria-hidden>/</span>
           <span className="text-ink">{product.name}</span>
@@ -72,14 +73,24 @@ export default async function ProductPage({
 
         <div className="flex flex-col gap-5 md:pt-2">
           <div className="flex flex-col gap-2">
-            <span className="eyebrow text-peacock">{product.category}</span>
+            <span className="eyebrow text-peacock">
+              <Link href={`/shop?type=${product.type}`} className="hover:text-marigold">
+                {typeName(product.type)}
+              </Link>
+            </span>
             <h1 className="text-3xl leading-tight sm:text-4xl">{product.name}</h1>
             <div className="mt-1 flex items-center gap-3">
-              <span className="text-2xl font-semibold">
+              <span className={`text-2xl font-semibold ${sold ? "text-ink-soft line-through" : ""}`}>
                 {formatMoney(product.price, product.currency)}
               </span>
-              <StockBadge stock={product.stock} />
+              <StatusBadge sold={sold} />
             </div>
+          </div>
+
+          {/* one-of-one promise — the brand rule, made visible */}
+          <div className="flex items-center gap-3 rounded-md border border-gold/50 bg-cream-deep/40 px-4 py-3">
+            <MotifMark size={22} color="var(--color-gold)" />
+            <p className="text-sm font-medium text-ink">{ONE_OF_ONE}</p>
           </div>
 
           <p className="text-base leading-relaxed text-ink-soft">
@@ -93,19 +104,16 @@ export default async function ProductPage({
               <dd className="mt-1">{product.hoursToMake} hours by hand</dd>
             </div>
             <div>
-              <dt className="eyebrow text-marigold">Dimensions</dt>
-              <dd className="mt-1">{product.dimensions}</dd>
+              <dt className="eyebrow text-marigold">From the edit</dt>
+              <dd className="mt-1">
+                <Link href={`/shop?edit=${product.edit}`} className="underline hover:text-marigold">
+                  {editName(product.edit)}
+                </Link>
+              </dd>
             </div>
           </dl>
 
           <AddToCart product={product} />
-
-          {inStock && product.stock === "made_to_order" && (
-            <p className="text-sm text-ink-soft">
-              Made to order — please allow 2–3 weeks, as each piece is made by
-              hand once you order.
-            </p>
-          )}
 
           <ul className="mt-1 flex flex-col gap-1.5 text-xs text-ink-soft">
             <li>· Free UK shipping over £75 · worldwide delivery</li>
@@ -148,8 +156,8 @@ export default async function ProductPage({
         <Container className="mt-12">
           <div className="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-gold/40 bg-gold/40 text-center sm:grid-cols-3">
             <Stat value={`${product.hoursToMake} hrs`} label="On the bench, by hand" />
-            <Stat value={`${product.materials.length}`} label="Carefully chosen materials" />
-            <Stat value="1 of 1" label="Made in small batches" />
+            <Stat value={`${product.materials.length}`} label="Real materials, named" />
+            <Stat value="1 of 1" label="One of a kind, never remade" />
           </div>
         </Container>
 
@@ -157,14 +165,20 @@ export default async function ProductPage({
         <Container size="narrow" className="mt-14 grid gap-10 sm:grid-cols-2">
           <div>
             <h3 className="font-display text-xl">Materials</h3>
-            <ul className="mt-4 flex flex-col gap-2">
+            <ul className="mt-4 flex flex-wrap gap-2">
               {product.materials.map((m) => (
-                <li key={m} className="flex items-start gap-3 text-ink-soft">
-                  <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-marigold" />
-                  <span>{m}</span>
+                <li key={m}>
+                  <Link
+                    href={`/shop?material=${m}`}
+                    className="inline-flex items-center gap-2 rounded-full border border-gold/50 px-3 py-1.5 text-sm text-ink transition-colors hover:border-ink"
+                  >
+                    <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-marigold" />
+                    {materialName(m)}
+                  </Link>
                 </li>
               ))}
             </ul>
+            <p className="mt-4 text-sm leading-relaxed text-ink-soft">{product.materialNote}</p>
             <h3 className="mt-8 font-display text-xl">Dimensions</h3>
             <p className="mt-3 text-ink-soft">{product.dimensions}</p>
           </div>
@@ -222,16 +236,14 @@ export default async function ProductPage({
   );
 }
 
-function StockBadge({ stock }: { stock: StockStatus }) {
-  const styles =
-    stock === "in_stock"
-      ? "bg-peacock/10 text-peacock"
-      : stock === "made_to_order"
-        ? "bg-marigold/15 text-marigold"
-        : "bg-ink/10 text-ink-soft";
+function StatusBadge({ sold }: { sold: boolean }) {
   return (
-    <span className={`rounded-full px-3 py-1 text-xs font-semibold ${styles}`}>
-      {stockLabel(stock)}
+    <span
+      className={`rounded-full px-3 py-1 text-xs font-semibold ${
+        sold ? "bg-ink/10 text-ink-soft" : "bg-peacock/10 text-peacock"
+      }`}
+    >
+      {sold ? "Sold" : "Available · 1 of 1"}
     </span>
   );
 }

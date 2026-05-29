@@ -4,35 +4,47 @@ import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/lib/cart";
 import type { Product } from "@/lib/products";
-import { QuantityStepper } from "./QuantityStepper";
 
-/** Quantity selector + add-to-cart for the product detail page. */
+/**
+ * Add-to-cart for a one-of-a-kind piece: there is only ever one, so there is no
+ * quantity selector. Sold pieces are permanently unavailable — never remade.
+ */
 export function AddToCart({ product }: { product: Product }) {
-  const { add } = useCart();
-  const [qty, setQty] = useState(1);
+  const { add, items } = useCart();
   const [added, setAdded] = useState(false);
-  const soldOut = product.stock === "sold_out";
+  const inCart = items.some((i) => i.product.slug === product.slug);
 
-  function handleAdd() {
-    add(product.slug, qty);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2500);
-  }
-
-  if (soldOut) {
+  if (product.status === "sold") {
     return (
       <div className="flex flex-col gap-2">
         <button
           disabled
           className="w-full cursor-not-allowed rounded-sm bg-ink/15 px-6 py-3.5 text-sm font-semibold text-ink/50"
         >
-          Sold out
+          Sold
         </button>
         <p className="text-xs text-ink-soft">
-          This one has found its home.{" "}
-          <Link href="/bespoke" className="underline hover:text-marigold">
-            Ask about a bespoke version →
+          This one has found its home. Every piece is one of a kind and never
+          remade —{" "}
+          <Link href="/shop" className="underline hover:text-marigold">
+            see what&apos;s still here →
           </Link>
+        </p>
+      </div>
+    );
+  }
+
+  if (inCart) {
+    return (
+      <div className="flex flex-col gap-2">
+        <Link
+          href="/cart"
+          className="w-full rounded-sm border border-peacock px-6 py-3.5 text-center text-sm font-semibold text-peacock transition-colors hover:bg-peacock hover:text-cream"
+        >
+          In your cart — view cart →
+        </Link>
+        <p className="text-xs text-ink-soft">
+          Only one exists, and it&apos;s being held for you here.
         </p>
       </div>
     );
@@ -40,21 +52,18 @@ export function AddToCart({ product }: { product: Product }) {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex items-center gap-3">
-        <QuantityStepper value={qty} onChange={setQty} />
-        <button
-          type="button"
-          onClick={handleAdd}
-          className="flex-1 rounded-sm bg-peacock px-6 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-peacock-deep"
-        >
-          Add to cart
-        </button>
-      </div>
-      <p
-        aria-live="polite"
-        className={`text-sm transition-opacity ${added ? "opacity-100" : "opacity-0"}`}
+      <button
+        type="button"
+        onClick={() => {
+          add(product.slug);
+          setAdded(true);
+        }}
+        className="w-full rounded-sm bg-peacock px-6 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-peacock-deep"
       >
-        <span className="text-peacock">Added to your cart.</span>{" "}
+        Add to cart
+      </button>
+      <p aria-live="polite" className={`text-sm transition-opacity ${added ? "opacity-100" : "opacity-0"}`}>
+        <span className="text-peacock">Added.</span>{" "}
         <Link href="/cart" className="font-semibold underline hover:text-marigold">
           View cart →
         </Link>

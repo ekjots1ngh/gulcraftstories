@@ -7,7 +7,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { PieceImage } from "@/components/PieceImage";
 import { JournalCard } from "@/components/JournalCard";
 import { Newsletter } from "@/components/Newsletter";
-import { products, collections } from "@/lib/products";
+import { products, TYPES } from "@/lib/products";
 import { getAllPosts } from "@/lib/journal";
 
 /**
@@ -65,28 +65,28 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ───────── COLLECTIONS STRIP ───────── */}
+      {/* ───────── BROWSE BY TYPE STRIP ───────── */}
       <section className="border-y border-gold/40 bg-cream-deep/40 py-10">
         <Container>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-            {collections.map((c) => (
+            {TYPES.map((t) => (
               <Link
-                key={c.slug}
-                href={`/shop?c=${c.slug}`}
+                key={t.slug}
+                href={`/shop?type=${t.slug}`}
                 className="group flex items-center justify-between rounded-md border border-ink/10 bg-cream px-4 py-3 transition-colors hover:border-ink/30"
               >
-                <span
-                  className="font-display text-lg"
-                  style={{ color: c.accent }}
-                >
-                  {c.name}
+                <span className="font-display text-lg" style={{ color: t.accent }}>
+                  {t.name}
                 </span>
-                <span className="text-ink-soft transition-transform group-hover:translate-x-1">
-                  →
-                </span>
+                <span className="text-ink-soft transition-transform group-hover:translate-x-1">→</span>
               </Link>
             ))}
           </div>
+          <p className="mt-4 text-center text-sm text-ink-soft">
+            Or browse by{" "}
+            <Link href="/shop" className="underline hover:text-marigold">edit and material</Link>.
+            Every piece is one of one.
+          </p>
         </Container>
       </section>
 

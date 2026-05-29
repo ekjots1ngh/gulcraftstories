@@ -4,7 +4,7 @@ date: "2026-04-28"
 kind: "Inspiration"
 excerpt: "Piercing a ring one tiny window at a time — and what the carved screens of old havelis taught me about negative space."
 cover: ["#3B2A4A", "#C9A24B"]
-products: ["jaali-band-ring"]
+products: ["crochet-hoop-earrings"]
 ---
 
 If you have ever stood inside an old haveli in the late afternoon, you will have seen it: light arriving not as a glare but as a scatter of soft shapes across the floor, broken gently by a carved stone screen. That screen is a *jaali*.

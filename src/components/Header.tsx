@@ -1,17 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { cn } from "@/lib/cn";
 import { useCart } from "@/lib/cart";
+import { TYPES, EDITS, MATERIALS } from "@/lib/products";
 
-const NAV = [
-  { label: "Shop", href: "/shop" },
+const LINKS = [
   { label: "Our Story", href: "/our-story" },
   { label: "The Craft", href: "/journal" },
   { label: "Bespoke", href: "/bespoke" },
 ];
+
+const BROWSE = [
+  { heading: "By type", facet: "type", options: TYPES },
+  { heading: "By edit", facet: "edit", options: EDITS },
+  { heading: "By material", facet: "material", options: MATERIALS },
+] as const;
 
 function CartIcon({ count = 0 }: { count?: number }) {
   return (
@@ -29,27 +35,40 @@ function CartIcon({ count = 0 }: { count?: number }) {
   );
 }
 
-/**
- * Global sticky header. `tone="dark"` is available for dark heroes; the live
- * site uses the default "light" (cream) tone.
- */
 export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
-  const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [shopOpen, setShopOpen] = useState(false); // desktop mega-menu
   const { count: cartCount } = useCart();
   const onDark = tone === "dark";
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Close the mega-menu on Escape.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setShopOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const openShop = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setShopOpen(true);
+  };
+  const scheduleClose = () => {
+    closeTimer.current = setTimeout(() => setShopOpen(false), 120);
+  };
 
   return (
     <div className="sticky top-0 z-50">
       {/* announcement bar */}
       <div className="bg-peacock-deep text-center text-cream">
         <p className="px-4 py-1.5 text-[0.7rem] tracking-wide">
-          Handmade to order · Free UK shipping over £75 · Worldwide delivery
+          One of one · handmade to order · worldwide delivery
         </p>
       </div>
 
       <header
         className={cn(
-          "w-full border-b backdrop-blur-md",
+          "relative w-full border-b backdrop-blur-md",
           onDark ? "border-cream/15 bg-peacock-deep/85" : "border-ink/10 bg-cream/85",
         )}
       >
@@ -61,7 +80,24 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
 
           {/* desktop nav */}
           <nav className="hidden items-center gap-8 md:flex">
-            {NAV.map((item) => (
+            <div onMouseEnter={openShop} onMouseLeave={scheduleClose} className="flex">
+              <button
+                type="button"
+                aria-haspopup="true"
+                aria-expanded={shopOpen}
+                onClick={() => setShopOpen((v) => !v)}
+                className={cn(
+                  "flex items-center gap-1 text-sm font-medium transition-colors",
+                  onDark ? "text-cream/85 hover:text-gold-soft" : "text-ink/80 hover:text-marigold",
+                )}
+              >
+                Shop
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" className={cn("transition-transform", shopOpen && "rotate-180")} aria-hidden>
+                  <path d="M3 4.5 6 7.5 9 4.5" />
+                </svg>
+              </button>
+            </div>
+            {LINKS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -87,42 +123,96 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
               <CartIcon count={cartCount} />
             </Link>
 
-            {/* mobile toggle */}
             <button
               type="button"
-              onClick={() => setOpen((v) => !v)}
-              aria-expanded={open}
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-expanded={mobileOpen}
               aria-label="Toggle menu"
-              className={cn(
-                "flex h-10 w-10 items-center justify-center md:hidden",
-                onDark ? "text-cream" : "text-ink",
-              )}
+              className={cn("flex h-10 w-10 items-center justify-center md:hidden", onDark ? "text-cream" : "text-ink")}
             >
               <div className="space-y-1.5">
-                <span className={cn("block h-px w-6 bg-current transition-transform", open && "translate-y-[7px] rotate-45")} />
-                <span className={cn("block h-px w-6 bg-current transition-opacity", open && "opacity-0")} />
-                <span className={cn("block h-px w-6 bg-current transition-transform", open && "-translate-y-[7px] -rotate-45")} />
+                <span className={cn("block h-px w-6 bg-current transition-transform", mobileOpen && "translate-y-[7px] rotate-45")} />
+                <span className={cn("block h-px w-6 bg-current transition-opacity", mobileOpen && "opacity-0")} />
+                <span className={cn("block h-px w-6 bg-current transition-transform", mobileOpen && "-translate-y-[7px] -rotate-45")} />
               </div>
             </button>
           </div>
         </div>
 
-        {/* mobile drawer */}
-        {open && (
-          <nav className="border-t border-ink/10 bg-cream px-5 py-4 md:hidden">
-            <ul className="flex flex-col">
-              {NAV.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className="block border-b border-ink/5 py-3 font-display text-xl text-ink"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
+        {/* desktop MEGA-MENU */}
+        {shopOpen && (
+          <div
+            onMouseEnter={openShop}
+            onMouseLeave={scheduleClose}
+            className="absolute inset-x-0 top-full hidden border-b border-ink/10 bg-cream shadow-[var(--shadow-soft)] md:block"
+          >
+            <div className="mx-auto grid w-full max-w-6xl grid-cols-3 gap-8 px-8 py-9">
+              {BROWSE.map((group) => (
+                <div key={group.facet}>
+                  <h3 className="eyebrow text-peacock">{group.heading}</h3>
+                  <ul className="mt-4 flex flex-col gap-2.5">
+                    {group.options.map((o) => (
+                      <li key={o.slug}>
+                        <Link
+                          href={`/shop?${group.facet}=${o.slug}`}
+                          onClick={() => setShopOpen(false)}
+                          className="group flex items-baseline justify-between gap-3"
+                        >
+                          <span className="font-display text-lg text-ink transition-colors group-hover:text-marigold">
+                            {o.name}
+                          </span>
+                          <span className="text-xs text-ink-soft">{o.blurb}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
-            </ul>
+            </div>
+            <div className="border-t border-gold/40">
+              <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-8 py-4">
+                <span className="text-sm text-ink-soft">Every piece is one of one — when it&apos;s gone, it&apos;s gone.</span>
+                <Link href="/shop" onClick={() => setShopOpen(false)} className="text-sm font-semibold text-peacock underline hover:text-marigold">
+                  View everything →
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* mobile drawer */}
+        {mobileOpen && (
+          <nav className="max-h-[80vh] overflow-y-auto border-t border-ink/10 bg-cream px-5 py-4 md:hidden">
+            <Link href="/shop" onClick={() => setMobileOpen(false)} className="block border-b border-ink/5 py-3 font-display text-xl text-ink">
+              Shop all
+            </Link>
+            {BROWSE.map((group) => (
+              <div key={group.facet} className="border-b border-ink/5 py-3">
+                <h3 className="eyebrow text-peacock">{group.heading}</h3>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {group.options.map((o) => (
+                    <Link
+                      key={o.slug}
+                      href={`/shop?${group.facet}=${o.slug}`}
+                      onClick={() => setMobileOpen(false)}
+                      className="rounded-full border border-ink/20 px-3 py-1 text-sm text-ink/80"
+                    >
+                      {o.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+            {LINKS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className="block border-b border-ink/5 py-3 font-display text-xl text-ink"
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
         )}
       </header>

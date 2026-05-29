@@ -5,12 +5,12 @@ import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
 import { PieceImage } from "@/components/PieceImage";
-import { QuantityStepper } from "@/components/QuantityStepper";
 import { CheckoutButton } from "@/components/CheckoutButton";
 import { useCart, formatMoney } from "@/lib/cart";
+import { typeName } from "@/lib/products";
 
 export default function CartPage() {
-  const { items, subtotal, count, setQuantity, remove, clear } = useCart();
+  const { items, subtotal, count, remove, clear } = useCart();
   const [cancelled, setCancelled] = useState(false);
 
   // Stripe sends the customer back here with ?checkout=cancelled if they abandon.
@@ -42,7 +42,7 @@ export default function CartPage() {
             {/* line items */}
             <div className="flex flex-col">
               <ul className="flex flex-col divide-y divide-gold/40 border-y border-gold/40">
-                {items.map(({ product, quantity, lineTotal }) => (
+                {items.map(({ product, lineTotal }) => (
                   <li key={product.slug} className="flex gap-4 py-5">
                     <Link
                       href={`/shop/${product.slug}`}
@@ -64,7 +64,7 @@ export default function CartPage() {
                           >
                             {product.name}
                           </Link>
-                          <p className="text-xs text-ink-soft">{product.category}</p>
+                          <p className="text-xs text-ink-soft">{typeName(product.type)}</p>
                         </div>
                         <span className="shrink-0 font-semibold">
                           {formatMoney(lineTotal, product.currency)}
@@ -72,11 +72,7 @@ export default function CartPage() {
                       </div>
 
                       <div className="mt-auto flex items-center justify-between gap-3">
-                        <QuantityStepper
-                          value={quantity}
-                          onChange={(q) => setQuantity(product.slug, q)}
-                          size="sm"
-                        />
+                        <span className="eyebrow text-marigold">One of one</span>
                         <button
                           type="button"
                           onClick={() => remove(product.slug)}

@@ -33,17 +33,16 @@ export async function POST(req: NextRequest) {
   }
 
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+  const seen = new Set<string>();
   for (const raw of items) {
     const slug = String((raw as { slug?: unknown })?.slug ?? "");
-    const quantity = Math.max(
-      1,
-      Math.min(99, Math.floor(Number((raw as { quantity?: unknown })?.quantity) || 0)),
-    );
     const product = products.find((p) => p.slug === slug);
-    if (!product || product.stock === "sold_out") continue; // skip unknown / unavailable
+    // Skip unknown, sold, or duplicate slugs — every piece is one of a kind.
+    if (!product || product.status === "sold" || seen.has(slug)) continue;
+    seen.add(slug);
 
     line_items.push({
-      quantity,
+      quantity: 1, // one of one
       price_data: {
         currency: product.currency.toLowerCase(),
         unit_amount: Math.round(product.price * 100), // GBP → pence

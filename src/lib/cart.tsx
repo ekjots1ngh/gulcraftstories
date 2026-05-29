@@ -55,27 +55,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [stored, hydrated]);
 
-  const add = useCallback((slug: string, quantity = 1) => {
-    setStored((prev) => {
-      const existing = prev.find((i) => i.slug === slug);
-      if (existing) {
-        return prev.map((i) =>
-          i.slug === slug ? { ...i, quantity: i.quantity + quantity } : i,
-        );
-      }
-      return [...prev, { slug, quantity }];
-    });
+  // Every piece is one of a kind, so a slug can only ever be in the cart once.
+  const add = useCallback((slug: string, _quantity = 1) => {
+    void _quantity;
+    setStored((prev) =>
+      prev.some((i) => i.slug === slug) ? prev : [...prev, { slug, quantity: 1 }],
+    );
   }, []);
 
   const remove = useCallback((slug: string) => {
     setStored((prev) => prev.filter((i) => i.slug !== slug));
   }, []);
 
+  // Quantity is fixed at 1 for one-of-a-kind pieces; 0 removes.
   const setQuantity = useCallback((slug: string, quantity: number) => {
     setStored((prev) =>
-      quantity <= 0
-        ? prev.filter((i) => i.slug !== slug)
-        : prev.map((i) => (i.slug === slug ? { ...i, quantity } : i)),
+      quantity <= 0 ? prev.filter((i) => i.slug !== slug) : prev,
     );
   }, []);
 

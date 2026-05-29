@@ -8,8 +8,8 @@ const COLUMNS = [
     title: "Shop",
     links: [
       { label: "All pieces", href: "/shop" },
-      { label: "Earrings", href: "/shop?c=earrings" },
-      { label: "Necklaces", href: "/shop?c=necklaces" },
+      { label: "Earrings", href: "/shop?type=earrings" },
+      { label: "Necklaces", href: "/shop?type=necklaces" },
       { label: "Bespoke", href: "/bespoke" },
     ],
   },

@@ -96,19 +96,36 @@ lifting; UI stays quiet. (Mockups use placeholders until real photos arrive.)
 ## 3. Sitemap
 
 ```
-Home · Shop (All / Collections / Product) · Our Story · The Craft / Journal
-· Bespoke / Enquiries · Cart → Stripe hosted checkout
+Home · Shop (browse by Type / Edit / Material → Product) · Our Story
+· The Craft / Journal · Bespoke / Enquiries · Cart → Stripe hosted checkout
+Header: mega-menu (By type · By edit · By material) + Our Story · The Craft · Bespoke · Cart
 Footer: About · Shipping & Returns · Care · Contact · Instagram · Newsletter
 ```
 
-### Per-piece story content model
-Implemented in `src/lib/products.ts` as the `Product` type. Each piece carries:
-`name`, `price` + `currency`, `description`, `materials[]`, `dimensions`,
-`makingStory` (the long how-it's-made), `makersNote`, `hoursToMake`, `images[]`
-(multiple; `swatch` placeholders now, `src` later), and `stock` status
-(`in_stock` | `made_to_order` | `sold_out`). Three replaceable **seed pieces**
-are provided. Product data currently lives in this file (local seed data); if a
-CMS/Shopify catalogue is added later, the fetch layer should return this shape.
+### One-of-a-kind rule (brand-critical)
+**Every piece is one of one. She never restocks or remakes.** In the model this
+means stock is always 1 and `status` is either `available` or **`sold`** —
+`sold` is permanent. There is NO "restocking" / "made to order" / "back soon"
+state, and never any quantity > 1 (the cart caps each piece at 1; checkout
+de-dupes). The promise **"One of one — when it's gone, it's gone"** (exported as
+`ONE_OF_ONE`) is surfaced on product cards, the product page, the shop header,
+and the mega-menu. Sold pieces are shown (not hidden), with the price struck and
+a "found its home / never remade" note.
+
+### Per-piece content model
+Implemented in `src/lib/products.ts` as the `Product` type: `name`, `type`
+(necklaces/earrings/bracelets/anklets), `edit` (collection), `materials[]`
+(from the real-materials taxonomy), `price` + `currency`, `description`,
+`materialNote` (specific tactile detail), `dimensions`, `makingStory`,
+`makersNote`, `hoursToMake`, `images[]` (multiple; `swatch` placeholders now,
+`src` later), and `status` (`available` | `sold`). Seed pieces are provided and
+are replaceable; product data lives in this file (a CMS can return this shape later).
+
+### Three ways to browse (taxonomies)
+Exported from `products.ts`: `TYPES`, `EDITS`, and `MATERIALS`. **Materials use
+her real palette:** semi-precious stones, beads, ceramics, air-dry clay, brass
+charms/beads, crochet. `/shop` filters on any combination via `?type=`, `?edit=`,
+`?material=` (AND); the header mega-menu links into each axis.
 
 ### Journal / "Stories"
 Editorial long-form lives in **markdown files** under `content/journal/*.md`.
@@ -207,7 +224,8 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
 - [x] Direction chosen (A "Atelier", warmed with B's jewel tones)
 - [x] Global layout + full homepage built (sticky header/nav/cart, hero,
       featured pieces, behind-the-craft teaser, footer w/ Instagram + contact)
-- [x] Shop: collection/grid page (`/shop` + `?c=` filter)
+- [x] Shop: grid + browse three ways (Type / Edit / Material) via mega-menu
+- [x] One-of-a-kind model: stock 1, permanent "Sold", "One of one" everywhere
 - [x] Product detail page (`/shop/[slug]`) with the story given real space
 - [x] Client-side cart (`/cart`): add/remove, quantity, running total, localStorage
 - [x] Journal / Stories: markdown-driven (`/journal` + `/journal/[slug]`),
