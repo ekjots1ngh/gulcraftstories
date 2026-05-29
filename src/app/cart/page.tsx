@@ -1,19 +1,34 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
 import { PieceImage } from "@/components/PieceImage";
 import { QuantityStepper } from "@/components/QuantityStepper";
+import { CheckoutButton } from "@/components/CheckoutButton";
 import { useCart, formatMoney } from "@/lib/cart";
 
 export default function CartPage() {
   const { items, subtotal, count, setQuantity, remove, clear } = useCart();
+  const [cancelled, setCancelled] = useState(false);
+
+  // Stripe sends the customer back here with ?checkout=cancelled if they abandon.
+  useEffect(() => {
+    setCancelled(new URLSearchParams(window.location.search).get("checkout") === "cancelled");
+  }, []);
 
   return (
     <main className="flex-1">
       <Container className="py-12 sm:py-16">
         <h1 className="text-3xl sm:text-4xl">Your cart</h1>
+
+        {cancelled && (
+          <p className="mt-5 rounded-md border border-marigold/40 bg-marigold/10 px-4 py-3 text-sm text-ink">
+            Your checkout was cancelled — nothing was charged. Your cart is just
+            as you left it whenever you&apos;re ready.
+          </p>
+        )}
 
         {items.length === 0 ? (
           <div className="mt-10 flex flex-col items-start gap-5">
@@ -107,20 +122,12 @@ export default function CartPage() {
                 </div>
               </dl>
 
-              <div className="mt-6 flex items-baseline justify-between">
+              <div className="mb-6 mt-6 flex items-baseline justify-between">
                 <span className="text-sm text-ink-soft">Total</span>
                 <span className="font-display text-2xl">{formatMoney(subtotal)}</span>
               </div>
 
-              <button
-                type="button"
-                className="mt-6 w-full rounded-sm bg-peacock px-6 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-peacock-deep"
-              >
-                Checkout
-              </button>
-              <p className="mt-3 text-center text-xs text-ink-soft">
-                Secure checkout via Shopify — connected during integration.
-              </p>
+              <CheckoutButton />
             </aside>
           </div>
         )}

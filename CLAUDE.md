@@ -97,7 +97,7 @@ lifting; UI stays quiet. (Mockups use placeholders until real photos arrive.)
 
 ```
 Home · Shop (All / Collections / Product) · Our Story · The Craft / Journal
-· Bespoke / Enquiries · Cart → Shopify hosted checkout
+· Bespoke / Enquiries · Cart → Stripe hosted checkout
 Footer: About · Shipping & Returns · Care · Contact · Instagram · Newsletter
 ```
 
@@ -107,8 +107,8 @@ Implemented in `src/lib/products.ts` as the `Product` type. Each piece carries:
 `makingStory` (the long how-it's-made), `makersNote`, `hoursToMake`, `images[]`
 (multiple; `swatch` placeholders now, `src` later), and `stock` status
 (`in_stock` | `made_to_order` | `sold_out`). Three replaceable **seed pieces**
-are provided. When Shopify is wired in, the fetch layer should return this shape
-(story fields ← metafields).
+are provided. Product data currently lives in this file (local seed data); if a
+CMS/Shopify catalogue is added later, the fetch layer should return this shape.
 
 ### Journal / "Stories"
 Editorial long-form lives in **markdown files** under `content/journal/*.md`.
@@ -123,8 +123,31 @@ product page shows "The story behind this piece" via the `products` frontmatter.
 Client-side cart in `src/lib/cart.tsx` (`CartProvider` + `useCart`), persisted to
 `localStorage`. Stores only `{slug, quantity}` so it survives data edits; line
 items + totals are derived from current product data. Wraps the app in
-`layout.tsx`; the header badge reads `count`. The cart's Checkout button is a
-placeholder until the Shopify hosted checkout is connected.
+`layout.tsx`; the header badge reads `count`.
+
+### Checkout — Stripe hosted Checkout (GBP)
+We use **Stripe Checkout (hosted)** — customers pay on Stripe's page, so we
+never see or store card data. (Stripe over Razorpay because the market is
+UK/international in GBP.)
+
+- `src/lib/stripe.ts` — lazy server-only client; returns `null` if
+  `STRIPE_SECRET_KEY` is unset (endpoints then respond "not connected yet"
+  instead of crashing). **Keys are read from env vars only — never hard-coded.**
+- `POST /api/checkout` — builds line items **server-side from our own product
+  data** (client sends only slug + quantity, so prices can't be tampered with),
+  creates a Checkout Session, returns its URL. Collects shipping/billing address
+  + phone; GBP.
+- `src/components/CheckoutButton.tsx` — posts the cart, redirects to Stripe.
+- `/checkout/success?session_id=…` — verifies the session server-side and shows
+  a confirmation (paid / pending / error / not-configured states); clears the
+  cart on success. Cancelled checkouts return to `/cart?checkout=cancelled`
+  (cart shows a "nothing was charged" notice).
+- `POST /api/stripe/webhook` — OPTIONAL scaffold for order fulfilment; verifies
+  the Stripe signature with `STRIPE_WEBHOOK_SECRET`.
+
+**Env vars** (see `.env.example`; copy to `.env.local`, never commit real keys):
+`STRIPE_SECRET_KEY` (required), `STRIPE_WEBHOOK_SECRET` (optional, webhook only),
+`NEXT_PUBLIC_SITE_URL` (optional, for custom-domain absolute URLs).
 
 ---
 
@@ -134,8 +157,8 @@ placeholder until the Shopify hosted checkout is connected.
 |---|---|
 | Framework | Next.js (App Router, TypeScript) — currently v16 |
 | Styling | Tailwind CSS v4 (CSS-based `@theme` tokens) |
-| Commerce + checkout | **Shopify headless (Storefront API) → Shopify hosted checkout** — managed payments, GBP/VAT, intl shipping. No payment backend built here. |
-| Story content | Shopify metafields (Sanity hybrid is a documented future upgrade) |
+| Checkout / payments | **Stripe Checkout (hosted)** — managed payments in GBP, intl shipping; we never handle card data. (See Checkout section above.) |
+| Catalogue / content | Products: local seed data in `src/lib/products.ts`. Stories: markdown in `content/journal/`. A CMS/Shopify catalogue can be layered in later without changing the UI. |
 | Animation | Framer Motion (subtle), added when needed |
 | Hosting | Vercel |
 
@@ -144,7 +167,7 @@ Conventions:
 - Use design tokens, never raw hex, in components.
 - Reusable primitives live in `src/components/`. Placeholder data in `src/lib/`.
 - Keep components server-first; add `"use client"` only when interactivity needs it.
-- No secrets in the repo. Shopify Storefront token comes from env vars at integration time.
+- No secrets in the repo. Stripe keys come from env vars (`.env.local`); only `.env.example` is committed.
 
 ### Chosen direction
 **Direction A — "Atelier"** (calm, editorial, story-first) is the chosen base,
@@ -164,9 +187,12 @@ src/
     shop/         /shop grid (+ ?c= filter) and /shop/[slug] detail
     cart/         /cart page
     journal/      /journal index and /journal/[slug] post (markdown)
+    checkout/     /checkout/success confirmation page
+    api/          /api/checkout (Stripe session) + /api/stripe/webhook
   components/      reusable UI primitives + sections
-  lib/            products (model + seeds), cart (context), journal (markdown loader)
+  lib/            products, cart, journal, stripe (server client)
 content/journal/  *.md story posts (frontmatter + body) — add files to publish
+.env.example      env var template (copy to .env.local — never commit real keys)
 design/previews/  screenshots (homepage, shop, product, cart, journal, directions)
 ```
 
@@ -186,8 +212,9 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
 - [x] Client-side cart (`/cart`): add/remove, quantity, running total, localStorage
 - [x] Journal / Stories: markdown-driven (`/journal` + `/journal/[slug]`),
       calm reading experience, linked both ways with product pages
+- [x] Checkout: Stripe hosted Checkout + success/cancel flow + confirmation page
+      + webhook scaffold (needs real keys in env to go live)
 - [ ] Remaining pages (Our Story, Bespoke)
-- [ ] Shopify Storefront API wiring (needs store + Storefront API token)
 - [ ] Polish: a11y, SEO, motion, responsive QA
 
 > Development branch: `claude/funny-wozniak-M7VpJ`.
