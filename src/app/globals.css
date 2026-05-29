@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Gul Craft Stories — Design Tokens
+   Edit palette/type here only. Components consume tokens.
+   ============================================================ */
+
+@theme {
+  /* --- Brand colours --- */
+  --color-marigold: #e08a1e; /* primary warm accent */
+  --color-marigold-soft: #f3b85f;
+  --color-rani: #b5267a; /* vibrant secondary, sparingly */
+  --color-rani-soft: #d96aa8;
+  --color-peacock: #0e5a5b; /* deep jewel anchor */
+  --color-peacock-deep: #0a4344;
+  --color-aubergine: #3b2a4a; /* regal dark */
+  --color-gold: #c9a24b; /* hairline accent only */
+  --color-gold-soft: #e3cf93;
+  --color-cream: #faf4e8; /* primary background */
+  --color-cream-deep: #f1e7d3;
+  --color-ink: #241f1c; /* body text */
+  --color-ink-soft: #5a514b;
+
+  /* --- Typography --- */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+
+  /* --- Radius --- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+
+  /* --- Shadows (soft, warm) --- */
+  --shadow-soft: 0 12px 40px -16px rgba(36, 31, 28, 0.25);
+  --shadow-card: 0 8px 28px -18px rgba(36, 31, 28, 0.45);
+}
+
+/* --- Base --- */
+:root {
+  --background: var(--color-cream);
+  --foreground: var(--color-ink);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "kern", "liga";
+  text-rendering: optimizeLegibility;
+}
+
+/* Display headings default to the serif */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+
+/* Selection in jewel tone */
+::selection {
+  background: var(--color-marigold-soft);
+  color: var(--color-ink);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   Reusable token-driven utilities
+   ============================================================ */
+
+/* Letter-spaced micro label used across the site */
+.eyebrow {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* Very subtle jaali (lattice) texture for story backgrounds only.
+   Original geometric pattern — not lifted from any source. */
+.jaali-bg {
+  background-image:
+    linear-gradient(45deg, rgba(201, 162, 75, 0.06) 25%, transparent 25%, transparent 75%, rgba(201, 162, 75, 0.06) 75%),
+    linear-gradient(45deg, rgba(201, 162, 75, 0.06) 25%, transparent 25%, transparent 75%, rgba(201, 162, 75, 0.06) 75%);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
+}
