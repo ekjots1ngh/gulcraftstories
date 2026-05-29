@@ -44,6 +44,25 @@ export function Footer() {
               Handmade Indian jewellery, with the story of every piece told as
               carefully as it was made.
             </p>
+            <div className="flex flex-col gap-1 text-sm">
+              <a
+                href="https://instagram.com/gulcraftstories"
+                className="inline-flex items-center gap-2 text-cream/85 transition-colors hover:text-gold-soft"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+                @gulcraftstories
+              </a>
+              <a
+                href="mailto:hello@gulcraftstories.com"
+                className="text-cream/85 transition-colors hover:text-gold-soft"
+              >
+                hello@gulcraftstories.com
+              </a>
+            </div>
           </div>
 
           {COLUMNS.map((col) => (

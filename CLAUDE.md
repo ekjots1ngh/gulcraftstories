@@ -126,15 +126,24 @@ Conventions:
 - Keep components server-first; add `"use client"` only when interactivity needs it.
 - No secrets in the repo. Shopify Storefront token comes from env vars at integration time.
 
+### Chosen direction
+**Direction A — "Atelier"** (calm, editorial, story-first) is the chosen base,
+warmed with Direction B's jewel-tone accents so it stays vibrantly Indian. The
+two original mockups live in git history and as images in `design/previews/`.
+
+Global shell: `Header` + `Footer` are rendered once in `src/app/layout.tsx`, so
+every route inherits the sticky header (announcement bar, nav, cart) and footer.
+
 ### Project structure
 ```
 src/
   app/            routes (App Router)
-    page.tsx      homepage-direction chooser (temporary, during design phase)
-    direction-a/  Homepage Direction A — "Atelier" mockup
-    direction-b/  Homepage Direction B — "Marigold" mockup
+    layout.tsx    global shell — fonts + Header + Footer
+    page.tsx      homepage (Direction A "Atelier")
+    globals.css   design tokens
   components/      reusable UI primitives + sections
-  lib/            placeholder product/story data
+  lib/            placeholder product / story / journal data
+design/previews/  screenshots (homepage + the two original directions)
 ```
 
 ---
@@ -145,7 +154,9 @@ src/
 - [x] Project scaffolded (Next.js + TS + Tailwind v4)
 - [x] Design system: tokens, typography, spacing, reusable components
 - [x] Two homepage design directions as static mockups (mobile-first)
-- [ ] Founder picks a direction
+- [x] Direction chosen (A "Atelier", warmed with B's jewel tones)
+- [x] Global layout + full homepage built (sticky header/nav/cart, hero,
+      featured pieces, behind-the-craft teaser, footer w/ Instagram + contact)
 - [ ] Full page build-out (Shop, Product w/ story, Our Story, Journal, Bespoke)
 - [ ] Shopify Storefront API wiring (needs store + Storefront API token)
 - [ ] Polish: a11y, SEO, motion, responsive QA
