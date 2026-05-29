@@ -8,13 +8,14 @@ import { PieceImage } from "@/components/PieceImage";
 import { JournalCard } from "@/components/JournalCard";
 import { Newsletter } from "@/components/Newsletter";
 import { products, collections } from "@/lib/products";
-import { journal } from "@/lib/journal";
+import { getAllPosts } from "@/lib/journal";
 
 /**
  * Homepage — built on Direction A ("Atelier"): calm, editorial, story-first,
  * warmed with the brand's jewel tones. Global header/footer live in layout.tsx.
  */
 export default function Home() {
+  const posts = getAllPosts().slice(0, 3);
   return (
     <main className="flex-1">
       {/* ───────── HERO ───────── */}
@@ -149,8 +150,8 @@ export default function Home() {
             </Button>
           </div>
           <div className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {journal.map((entry) => (
-              <JournalCard key={entry.slug} entry={entry} />
+            {posts.map((post) => (
+              <JournalCard key={post.slug} post={post} />
             ))}
           </div>
         </Container>

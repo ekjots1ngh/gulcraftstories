@@ -110,6 +110,15 @@ Implemented in `src/lib/products.ts` as the `Product` type. Each piece carries:
 are provided. When Shopify is wired in, the fetch layer should return this shape
 (story fields ← metafields).
 
+### Journal / "Stories"
+Editorial long-form lives in **markdown files** under `content/journal/*.md`.
+Adding a post = drop in a new `.md` with frontmatter (`title`, `date`, `kind`,
+`excerpt`, `cover` swatch, `products` = related product slugs). Read time is
+computed automatically. Parsed by `src/lib/journal.ts` (gray-matter + marked)
+at build time; rendered through the calm `.story-prose` styles in `globals.css`.
+Stories and products link both ways: a post lists "Shop the piece(s)", and a
+product page shows "The story behind this piece" via the `products` frontmatter.
+
 ### Cart
 Client-side cart in `src/lib/cart.tsx` (`CartProvider` + `useCart`), persisted to
 `localStorage`. Stores only `{slug, quantity}` so it survives data edits; line
@@ -154,9 +163,11 @@ src/
     globals.css   design tokens
     shop/         /shop grid (+ ?c= filter) and /shop/[slug] detail
     cart/         /cart page
+    journal/      /journal index and /journal/[slug] post (markdown)
   components/      reusable UI primitives + sections
-  lib/            products (model + seeds), cart (context), journal data
-design/previews/  screenshots (homepage, shop, product, cart, original directions)
+  lib/            products (model + seeds), cart (context), journal (markdown loader)
+content/journal/  *.md story posts (frontmatter + body) — add files to publish
+design/previews/  screenshots (homepage, shop, product, cart, journal, directions)
 ```
 
 ---
@@ -173,7 +184,9 @@ design/previews/  screenshots (homepage, shop, product, cart, original direction
 - [x] Shop: collection/grid page (`/shop` + `?c=` filter)
 - [x] Product detail page (`/shop/[slug]`) with the story given real space
 - [x] Client-side cart (`/cart`): add/remove, quantity, running total, localStorage
-- [ ] Remaining pages (Our Story, Journal, Bespoke)
+- [x] Journal / Stories: markdown-driven (`/journal` + `/journal/[slug]`),
+      calm reading experience, linked both ways with product pages
+- [ ] Remaining pages (Our Story, Bespoke)
 - [ ] Shopify Storefront API wiring (needs store + Storefront API token)
 - [ ] Polish: a11y, SEO, motion, responsive QA
 

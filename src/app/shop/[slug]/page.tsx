@@ -7,7 +7,9 @@ import { MotifDivider } from "@/components/MotifDivider";
 import { Gallery } from "@/components/Gallery";
 import { AddToCart } from "@/components/AddToCart";
 import { ProductCard } from "@/components/ProductCard";
+import { JournalCard } from "@/components/JournalCard";
 import { PieceImage } from "@/components/PieceImage";
+import { getPostsForProduct } from "@/lib/journal";
 import {
   products,
   getProduct,
@@ -46,6 +48,7 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const related = getRelated(product.slug);
+  const stories = getPostsForProduct(product.slug);
   const inStock = product.stock !== "sold_out";
 
   return (
@@ -174,6 +177,28 @@ export default async function ProductPage({
           </figure>
         </Container>
       </section>
+
+      {/* ───────── RELATED STORIES (links pieces ↔ journal) ───────── */}
+      {stories.length > 0 && (
+        <section className="py-16 sm:py-20">
+          <Container>
+            <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+              <div className="flex flex-col gap-2">
+                <span className="eyebrow text-rani">Read more</span>
+                <h2 className="text-2xl sm:text-3xl">The story behind this piece</h2>
+              </div>
+              <Button href="/journal" variant="ghost" className="shrink-0">
+                All stories →
+              </Button>
+            </div>
+            <div className="mt-10 grid gap-x-7 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {stories.map((post) => (
+                <JournalCard key={post.slug} post={post} />
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* ───────── RELATED ───────── */}
       {related.length > 0 && (

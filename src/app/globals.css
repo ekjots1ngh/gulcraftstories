@@ -88,6 +88,100 @@ h1, h2, h3, h4 {
   font-weight: 600;
 }
 
+/* ------------------------------------------------------------
+   Story prose — a calm, bespoke reading experience for the
+   journal. Generous measure, quiet rhythm, jewel-tone accents.
+   ------------------------------------------------------------ */
+.story-prose {
+  color: var(--color-ink);
+  font-size: 1.125rem;
+  line-height: 1.85;
+}
+.story-prose > * + * {
+  margin-top: 1.4em;
+}
+.story-prose p {
+  max-width: 38rem;
+}
+.story-prose h2 {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  line-height: 1.25;
+  margin-top: 2.4em;
+  color: var(--color-ink);
+}
+.story-prose h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin-top: 2em;
+}
+.story-prose a {
+  color: var(--color-peacock);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-gold);
+}
+.story-prose a:hover {
+  color: var(--color-marigold);
+}
+.story-prose strong {
+  font-weight: 600;
+  color: var(--color-aubergine);
+}
+.story-prose em {
+  font-style: italic;
+}
+.story-prose ul,
+.story-prose ol {
+  max-width: 38rem;
+  padding-left: 1.2em;
+}
+.story-prose li {
+  margin-top: 0.5em;
+}
+.story-prose ul li {
+  list-style: none;
+  position: relative;
+  padding-left: 1.1em;
+}
+.story-prose ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.78em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 9999px;
+  background: var(--color-marigold);
+}
+.story-prose ol {
+  list-style: decimal;
+}
+.story-prose blockquote {
+  max-width: 40rem;
+  margin-block: 2em;
+  padding: 0.2em 0 0.2em 1.4rem;
+  border-left: 2px solid var(--color-gold);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--color-peacock);
+}
+.story-prose blockquote p {
+  max-width: none;
+}
+.story-prose img {
+  border-radius: var(--radius-md);
+  margin-block: 2em;
+}
+.story-prose hr {
+  border: 0;
+  height: 1px;
+  background: color-mix(in srgb, var(--color-gold) 50%, transparent);
+  margin-block: 2.5em;
+}
+
 /* Very subtle jaali (lattice) texture for story backgrounds only.
    Original geometric pattern — not lifted from any source. */
 .jaali-bg {
