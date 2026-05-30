@@ -218,6 +218,22 @@ Checkout. `POST /api/gift-card` validates the amount server-side against
 issued at fulfilment (webhook) and emailed. Same graceful "not configured" path
 as the main checkout when keys are unset.
 
+### Support pages (DRAFTS — review before publishing)
+`/shipping`, `/returns`, `/international`, `/faq`, `/contact` are **drafts**: each
+shows a `DraftBanner`, is set `robots: { index: false }`, and uses `ReviewNote`
+callouts to flag decisions (✎) and legally-sensitive points (⚠). Key flags:
+- **Returns/exchange** is the sensitive one. "One of a kind" is a brand promise,
+  **not** a legal basis to refuse returns: ready-made online sales keep the UK
+  14-day cooling-off right (Consumer Contracts Regs 2013); genuinely
+  bespoke/personalised pieces can be exempted; pierced earrings have a hygiene
+  exemption; the Consumer Rights Act 2015 faulty-goods rights can't be waived.
+  Draft reflects this — **must be checked against current law before publishing.**
+- **International** flags customs/duties/VAT (DDU vs DDP) and keeping the shipped-
+  country list in sync with `/api/checkout`.
+- **Contact** has placeholder phone/address (founder to fill in) and a form that
+  is **not wired** to any backend yet.
+None of this is legal advice; flagged for the founder to adapt + verify.
+
 ### Conversion & trust features
 - **Floating WhatsApp button** (`WhatsAppButton`, in `layout.tsx`) — number from
   `NEXT_PUBLIC_WHATSAPP_NUMBER` (placeholder fallback), via `whatsappLink()`.
@@ -277,6 +293,7 @@ src/
     cart/         /cart page
     journal/      /journal index and /journal/[slug] post (markdown)
     checkout/     /checkout/success confirmation page
+    shipping/ returns/ international/ faq/ contact/   support pages (DRAFTS)
     api/          /api/checkout · /api/gift-card (Stripe) · /api/stripe/webhook
   components/      reusable UI primitives + sections
   lib/            products, cart, wishlist, journal, edits, stripe, site (config)
@@ -306,6 +323,8 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
 - [x] Conversion/trust: floating WhatsApp button, testimonials, footer
       newsletter, gift vouchers, wishlist, size guide, per-material care page,
       payment + secure-checkout trust signals near cart and in footer
+- [x] Support pages drafted (shipping, returns, international, FAQ, contact) —
+      marked as drafts, noindex, with decision/legal flags; need founder review
 - [x] Product detail page (`/shop/[slug]`) with the story given real space
 - [x] Client-side cart (`/cart`): add/remove, quantity, running total, localStorage
 - [x] Journal / Stories: markdown-driven (`/journal` + `/journal/[slug]`),

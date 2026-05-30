@@ -29,10 +29,12 @@ const COLUMNS = [
   {
     title: "Help",
     links: [
+      { label: "FAQ", href: "/faq" },
+      { label: "Shipping & delivery", href: "/shipping" },
+      { label: "Returns & exchanges", href: "/returns" },
+      { label: "International orders", href: "/international" },
       { label: "Size guide", href: "/size-guide" },
       { label: "Jewellery care", href: "/care" },
-      { label: "Shipping & returns", href: "/shipping" },
-      { label: "Instagram", href: SITE.instagram },
     ],
   },
 ];
