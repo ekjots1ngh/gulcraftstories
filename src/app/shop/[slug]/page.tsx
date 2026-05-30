@@ -9,7 +9,7 @@ import { AddToCart } from "@/components/AddToCart";
 import { ProductCard } from "@/components/ProductCard";
 import { JournalCard } from "@/components/JournalCard";
 import { PieceImage } from "@/components/PieceImage";
-import { getPostsForProduct } from "@/lib/journal";
+import { getPostsForProduct, getFeaturedPost } from "@/lib/journal";
 import {
   products,
   getProduct,
@@ -50,6 +50,7 @@ export default async function ProductPage({
 
   const related = getRelated(product.slug);
   const stories = getPostsForProduct(product.slug);
+  const oneOfAKind = getFeaturedPost();
   const sold = product.status === "sold";
 
   return (
@@ -88,9 +89,19 @@ export default async function ProductPage({
           </div>
 
           {/* one-of-one promise — the brand rule, made visible */}
-          <div className="flex items-center gap-3 rounded-md border border-gold/50 bg-cream-deep/40 px-4 py-3">
+          <div className="flex items-start gap-3 rounded-md border border-gold/50 bg-cream-deep/40 px-4 py-3">
             <MotifMark size={22} color="var(--color-gold)" />
-            <p className="text-sm font-medium text-ink">{ONE_OF_ONE}</p>
+            <div className="flex flex-col gap-0.5">
+              <p className="text-sm font-medium text-ink">{ONE_OF_ONE}</p>
+              {oneOfAKind && (
+                <Link
+                  href={`/journal/${oneOfAKind.slug}`}
+                  className="text-xs font-semibold text-peacock underline underline-offset-2 hover:text-marigold"
+                >
+                  Read: {oneOfAKind.title} →
+                </Link>
+              )}
+            </div>
           </div>
 
           <p className="text-base leading-relaxed text-ink-soft">

@@ -9,14 +9,17 @@ import { JournalCard } from "@/components/JournalCard";
 import { Newsletter } from "@/components/Newsletter";
 import { products, TYPES, EDITS } from "@/lib/products";
 import { editContent } from "@/lib/edits";
-import { getAllPosts } from "@/lib/journal";
+import { getAllPosts, getFeaturedPost } from "@/lib/journal";
 
 /**
  * Homepage — built on Direction A ("Atelier"): calm, editorial, story-first,
  * warmed with the brand's jewel tones. Global header/footer live in layout.tsx.
  */
 export default function Home() {
-  const posts = getAllPosts().slice(0, 3);
+  const featuredStory = getFeaturedPost();
+  const posts = getAllPosts()
+    .filter((p) => p.slug !== featuredStory?.slug)
+    .slice(0, 3);
   return (
     <main className="flex-1">
       {/* ───────── HERO ───────── */}
@@ -165,6 +168,27 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+      {/* ───────── FEATURED STORY: ONE OF A KIND ───────── */}
+      {featuredStory && (
+        <section className="bg-peacock py-16 text-cream sm:py-20">
+          <Container className="grid items-center gap-10 md:grid-cols-2 md:gap-14">
+            <div className="order-2 overflow-hidden rounded-md md:order-1">
+              <PieceImage swatch={featuredStory.cover} label={featuredStory.title} ratio="landscape" />
+            </div>
+            <div className="order-1 flex flex-col items-start gap-4 md:order-2">
+              <span className="eyebrow text-gold-soft">The promise · read this first</span>
+              <h2 className="text-3xl leading-tight text-cream sm:text-4xl">
+                {featuredStory.title}
+              </h2>
+              <p className="max-w-md leading-relaxed text-cream/85">{featuredStory.excerpt}</p>
+              <Button href={`/journal/${featuredStory.slug}`} variant="onDark">
+                Read the story · {featuredStory.readTime}
+              </Button>
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* ───────── BEHIND-THE-CRAFT STORIES TEASER ───────── */}
       <section className="py-16 sm:py-24">

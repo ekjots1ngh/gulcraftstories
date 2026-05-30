@@ -160,14 +160,25 @@ Editorial copy lives in **`src/lib/edits.ts`** (`editContent` keyed by `EditSlug
 are linked from the homepage ("The Edits" section) and the mega-menu. A piece's
 `edit` field assigns it; as one-of-a-kind pieces sell, an edit's contents change.
 
-### Journal / "Stories"
+### Journal / "Stories" (the craft journal)
 Editorial long-form lives in **markdown files** under `content/journal/*.md`.
-Adding a post = drop in a new `.md` with frontmatter (`title`, `date`, `kind`,
-`excerpt`, `cover` swatch, `products` = related product slugs). Read time is
-computed automatically. Parsed by `src/lib/journal.ts` (gray-matter + marked)
-at build time; rendered through the calm `.story-prose` styles in `globals.css`.
-Stories and products link both ways: a post lists "Shop the piece(s)", and a
-product page shows "The story behind this piece" via the `products` frontmatter.
+Adding a post = drop in a new `.md` with frontmatter: `title`, `date`, `kind`,
+`excerpt`, `cover` swatch, `products` (related product slugs), `edits` (related
+edit slugs), `featured` (pin as headline), `status` (`upcoming` stubs a not-yet-
+written post — listed as "coming soon", no page). Read time is computed
+automatically. Parsed by `src/lib/journal.ts` (gray-matter + marked) at build
+time; rendered through the calm `.story-prose` styles in `globals.css`.
+
+Published posts: **Why It's Called Gul**, **One of a Kind** (the featured
+headline), **The Hours Inside One Piece**. Four upcoming stubs are listed as
+"coming soon".
+
+Cross-linking is frontmatter-driven, both ways: a product page shows "The story
+behind this piece" (`getPostsForProduct`) and an edit page shows "Stories from
+this edit" (`getPostsForEdit`); posts link back to pieces/edits in their body.
+**One of a Kind** is surfaced prominently: a feature band on the homepage and a
+"Read: One of a Kind →" link on every product page beside the one-of-one note
+(via `getFeaturedPost`).
 
 ### Cart
 Client-side cart in `src/lib/cart.tsx` (`CartProvider` + `useCart`), persisted to

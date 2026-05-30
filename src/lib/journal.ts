@@ -5,11 +5,14 @@
  *
  *   ---
  *   title: "..."
- *   date: "2026-05-12"        # ISO date, used for ordering
- *   kind: "Making of"          # small label (Making of / Inspiration / ...)
- *   excerpt: "..."             # one-line teaser
+ *   date: "2026-05-12"          # ISO date, used for ordering
+ *   kind: "The craft"           # small label
+ *   excerpt: "..."              # one-line teaser
  *   cover: ["#E08A1E", "#B5267A"]   # two-stop placeholder swatch (until photos)
  *   products: ["marigold-jhumka"]   # related product slugs (optional)
+ *   edits: ["gulzar"]               # related edit slugs (optional)
+ *   featured: true                  # pin as the headline story (optional)
+ *   status: "upcoming"              # stub a not-yet-written post (optional)
  *   ---
  *
  * Read time is computed automatically from the body — no need to set it.
@@ -23,6 +26,8 @@ import { marked } from "marked";
 
 const JOURNAL_DIR = path.join(process.cwd(), "content", "journal");
 
+export type PostStatus = "published" | "upcoming";
+
 export type PostMeta = {
   slug: string;
   title: string;
@@ -33,6 +38,10 @@ export type PostMeta = {
   cover: [string, string];
   /** Related product slugs. */
   products: string[];
+  /** Related edit (collection) slugs. */
+  edits: string[];
+  featured: boolean;
+  status: PostStatus;
   readTime: string;
 };
 
@@ -57,6 +66,9 @@ function parseFile(fileName: string): { meta: PostMeta; body: string } {
       excerpt: String(data.excerpt ?? ""),
       cover: (Array.isArray(data.cover) ? data.cover : ["#0E5A5B", "#C9A24B"]) as [string, string],
       products: Array.isArray(data.products) ? data.products.map(String) : [],
+      edits: Array.isArray(data.edits) ? data.edits.map(String) : [],
+      featured: Boolean(data.featured),
+      status: data.status === "upcoming" ? "upcoming" : "published",
       readTime: readingTime(content),
     },
   };
@@ -67,22 +79,44 @@ function fileNames(): string[] {
   return fs.readdirSync(JOURNAL_DIR).filter((f) => f.endsWith(".md"));
 }
 
-/** All posts, newest first. */
+const allMeta = (): PostMeta[] => fileNames().map((f) => parseFile(f).meta);
+
+const byNewest = (a: PostMeta, b: PostMeta) => (a.date < b.date ? 1 : -1);
+
+/** Published posts, newest first. */
 export function getAllPosts(): PostMeta[] {
-  return fileNames()
-    .map((f) => parseFile(f).meta)
-    .sort((a, b) => (a.date < b.date ? 1 : -1));
+  return allMeta()
+    .filter((p) => p.status === "published")
+    .sort(byNewest);
 }
 
-/** A single post with rendered HTML, or null if not found. */
+/** Stubbed, not-yet-written posts (shown as "coming soon"; no page). */
+export function getUpcomingPosts(): PostMeta[] {
+  return allMeta()
+    .filter((p) => p.status === "upcoming")
+    .sort(byNewest);
+}
+
+/** The pinned headline story ("One of a Kind"), if any. */
+export function getFeaturedPost(): PostMeta | null {
+  return getAllPosts().find((p) => p.featured) ?? null;
+}
+
+/** A single published post with rendered HTML, or null if missing/upcoming. */
 export function getPost(slug: string): Post | null {
   const file = `${slug}.md`;
   if (!fs.existsSync(path.join(JOURNAL_DIR, file))) return null;
   const { meta, body } = parseFile(file);
+  if (meta.status !== "published") return null;
   return { ...meta, html: marked.parse(body) as string };
 }
 
-/** Posts that reference a given product slug (for "stories behind this piece"). */
+/** Published posts referencing a given product slug. */
 export function getPostsForProduct(productSlug: string): PostMeta[] {
   return getAllPosts().filter((p) => p.products.includes(productSlug));
+}
+
+/** Published posts referencing a given edit (collection) slug. */
+export function getPostsForEdit(editSlug: string): PostMeta[] {
+  return getAllPosts().filter((p) => p.edits.includes(editSlug));
 }

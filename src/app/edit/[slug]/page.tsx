@@ -6,8 +6,10 @@ import { Button } from "@/components/Button";
 import { MotifDivider, MotifMark } from "@/components/MotifDivider";
 import { ProductBrowser } from "@/components/ProductBrowser";
 import { PieceImage } from "@/components/PieceImage";
+import { JournalCard } from "@/components/JournalCard";
 import { EDITS, getProducts, ONE_OF_ONE } from "@/lib/products";
 import { editContent } from "@/lib/edits";
+import { getPostsForEdit } from "@/lib/journal";
 
 export function generateStaticParams() {
   return EDITS.map((e) => ({ slug: e.slug }));
@@ -36,6 +38,7 @@ export default async function EditPage({
 
   const content = editContent[edit.slug];
   const pieces = getProducts({ edit: edit.slug });
+  const stories = getPostsForEdit(edit.slug);
   const available = pieces.filter((p) => p.status === "available");
   const others = EDITS.filter((e) => e.slug !== edit.slug);
 
@@ -139,6 +142,23 @@ export default async function EditPage({
           </div>
         </Container>
       </section>
+
+      {/* ───────── STORIES FROM THIS EDIT ───────── */}
+      {stories.length > 0 && (
+        <section className="border-t border-gold/40 py-14 sm:py-20">
+          <Container>
+            <div className="flex flex-col items-center gap-2 text-center">
+              <span className="eyebrow text-rani">Read more</span>
+              <h2 className="text-2xl sm:text-3xl">Stories from this edit</h2>
+            </div>
+            <div className="mt-10 grid gap-x-7 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {stories.map((post) => (
+                <JournalCard key={post.slug} post={post} />
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* ───────── OTHER EDITS ───────── */}
       <section className="bg-cream-deep/40 py-14 sm:py-20">
