@@ -6,7 +6,7 @@ import { DraftBanner } from "@/components/DraftBanner";
 import { ReviewNote } from "@/components/ReviewNote";
 
 export const metadata: Metadata = {
-  title: "Shipping & Delivery (draft) · Gul Craft Stories",
+  title: "Shipping & Delivery (draft)",
   robots: { index: false },
 };
 

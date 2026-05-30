@@ -7,7 +7,8 @@
 
 @theme {
   /* --- Brand colours --- */
-  --color-marigold: #e08a1e; /* primary warm accent */
+  --color-marigold: #e08a1e; /* primary warm accent (fills, large/decorative) */
+  --color-marigold-ink: #985311; /* accessible deep amber for SMALL text on cream (WCAG AA) */
   --color-marigold-soft: #f3b85f;
   --color-rani: #b5267a; /* vibrant secondary, sparingly */
   --color-rani-soft: #d96aa8;
@@ -78,6 +79,25 @@ h1, h2, h3, h4 {
 /* ============================================================
    Reusable token-driven utilities
    ============================================================ */
+
+/* Skip-to-content link — visible only when focused (keyboard users) */
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  background: var(--color-peacock);
+  color: var(--color-cream);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: transform 0.15s ease;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
 
 /* Letter-spaced micro label used across the site */
 .eyebrow {

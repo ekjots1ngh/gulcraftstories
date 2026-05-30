@@ -33,9 +33,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const product = getProduct(slug);
-  if (!product) return { title: "Not found · Gul Craft Stories" };
+  if (!product) return { title: "Not found" };
   return {
-    title: `${product.name} · Gul Craft Stories`,
+    title: `${product.name}`,
     description: product.description,
   };
 }
@@ -59,9 +59,9 @@ export default async function ProductPage({
       {/* breadcrumb */}
       <Container className="pt-6">
         <nav className="flex flex-wrap items-center gap-2 text-xs text-ink-soft">
-          <Link href="/shop" className="hover:text-marigold">Shop</Link>
+          <Link href="/shop" className="hover:text-marigold-ink">Shop</Link>
           <span aria-hidden>/</span>
-          <Link href={`/shop?type=${product.type}`} className="hover:text-marigold">
+          <Link href={`/shop?type=${product.type}`} className="hover:text-marigold-ink">
             {typeName(product.type)}
           </Link>
           <span aria-hidden>/</span>
@@ -76,7 +76,7 @@ export default async function ProductPage({
         <div className="flex flex-col gap-5 md:pt-2">
           <div className="flex flex-col gap-2">
             <span className="eyebrow text-peacock">
-              <Link href={`/shop?type=${product.type}`} className="hover:text-marigold">
+              <Link href={`/shop?type=${product.type}`} className="hover:text-marigold-ink">
                 {typeName(product.type)}
               </Link>
             </span>
@@ -97,7 +97,7 @@ export default async function ProductPage({
               {oneOfAKind && (
                 <Link
                   href={`/journal/${oneOfAKind.slug}`}
-                  className="text-xs font-semibold text-peacock underline underline-offset-2 hover:text-marigold"
+                  className="text-xs font-semibold text-peacock underline underline-offset-2 hover:text-marigold-ink"
                 >
                   Read: {oneOfAKind.title} →
                 </Link>
@@ -112,13 +112,13 @@ export default async function ProductPage({
           {/* at-a-glance facts */}
           <dl className="grid grid-cols-2 gap-3 border-y border-gold/40 py-4 text-sm">
             <div>
-              <dt className="eyebrow text-marigold">Time to make</dt>
+              <dt className="eyebrow text-marigold-ink">Time to make</dt>
               <dd className="mt-1">{product.hoursToMake} hours by hand</dd>
             </div>
             <div>
-              <dt className="eyebrow text-marigold">From the edit</dt>
+              <dt className="eyebrow text-marigold-ink">From the edit</dt>
               <dd className="mt-1">
-                <Link href={`/edit/${product.edit}`} className="underline hover:text-marigold">
+                <Link href={`/edit/${product.edit}`} className="underline hover:text-marigold-ink">
                   {editName(product.edit)}
                 </Link>
               </dd>
@@ -133,9 +133,9 @@ export default async function ProductPage({
           </div>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-soft">
-            <Link href="/size-guide" className="underline hover:text-marigold">Size guide</Link>
-            <Link href="/care" className="underline hover:text-marigold">Care</Link>
-            <Link href="/gift-cards" className="underline hover:text-marigold">Gift vouchers</Link>
+            <Link href="/size-guide" className="underline hover:text-marigold-ink">Size guide</Link>
+            <Link href="/care" className="underline hover:text-marigold-ink">Care</Link>
+            <Link href="/gift-cards" className="underline hover:text-marigold-ink">Gift vouchers</Link>
           </div>
 
           <ul className="mt-1 flex flex-col gap-1.5 text-xs text-ink-soft">

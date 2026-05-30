@@ -4,7 +4,7 @@ import { Container } from "@/components/Container";
 import { MotifDivider } from "@/components/MotifDivider";
 
 export const metadata: Metadata = {
-  title: "Size Guide · Gul Craft Stories",
+  title: "Size Guide",
   description:
     "How to find your fit for necklaces, bracelets, anklets and rings — and how to measure at home.",
 };

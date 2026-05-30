@@ -4,7 +4,7 @@ import { MotifDivider, MotifMark } from "@/components/MotifDivider";
 import { GiftCardBuy } from "@/components/GiftCardBuy";
 
 export const metadata: Metadata = {
-  title: "Gift Vouchers · Gul Craft Stories",
+  title: "Gift Vouchers",
   description:
     "Give the gift of a handmade, one-of-a-kind piece — a digital voucher, emailed after purchase, to spend on whatever speaks to them.",
 };

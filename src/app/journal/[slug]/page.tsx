@@ -20,7 +20,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post) return { title: "Story not found · Gul Craft Stories" };
+  if (!post) return { title: "Story not found" };
   return { title: `${post.title} · Stories`, description: post.excerpt };
 }
 
@@ -50,7 +50,7 @@ export default async function PostPage({
       <article>
         {/* header */}
         <Container size="narrow" className="pt-8 sm:pt-12">
-          <Link href="/journal" className="text-sm text-ink-soft underline hover:text-marigold">
+          <Link href="/journal" className="text-sm text-ink-soft underline hover:text-marigold-ink">
             ← All stories
           </Link>
           <div className="mt-6 flex items-center gap-3 text-ink-soft">

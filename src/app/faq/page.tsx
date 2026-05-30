@@ -6,7 +6,7 @@ import { DraftBanner } from "@/components/DraftBanner";
 import { ReviewNote } from "@/components/ReviewNote";
 
 export const metadata: Metadata = {
-  title: "FAQ (draft) · Gul Craft Stories",
+  title: "FAQ (draft)",
   robots: { index: false },
 };
 
@@ -17,7 +17,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
       <>
         Yes. Each piece is made once and never restocked or remade. When it&apos;s
         gone, it&apos;s gone — sold pieces live on in{" "}
-        <Link href="/archive" className="underline hover:text-marigold">the archive</Link>.
+        <Link href="/archive" className="underline hover:text-marigold-ink">the archive</Link>.
       </>
     ),
   },
@@ -27,7 +27,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
       <>
         Anywhere from a few hours to twenty-plus, depending on the piece — each
         product page lists its exact hours. More in{" "}
-        <Link href="/journal/the-hours-inside-one-piece" className="underline hover:text-marigold">
+        <Link href="/journal/the-hours-inside-one-piece" className="underline hover:text-marigold-ink">
           The Hours Inside One Piece
         </Link>.
       </>
@@ -42,7 +42,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     a: (
       <>
         See the{" "}
-        <Link href="/size-guide" className="underline hover:text-marigold">size guide</Link>{" "}
+        <Link href="/size-guide" className="underline hover:text-marigold-ink">size guide</Link>{" "}
         for necklace lengths and how to measure for bracelets, anklets and rings.
       </>
     ),
@@ -52,7 +52,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     a: (
       <>
         Each material has its own needs — the{" "}
-        <Link href="/care" className="underline hover:text-marigold">care guide</Link>{" "}
+        <Link href="/care" className="underline hover:text-marigold-ink">care guide</Link>{" "}
         covers clay, brass, crochet and stones.
       </>
     ),
@@ -62,7 +62,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     a: (
       <>
         In most cases, yes — see{" "}
-        <Link href="/returns" className="underline hover:text-marigold">returns &amp; exchanges</Link>.
+        <Link href="/returns" className="underline hover:text-marigold-ink">returns &amp; exchanges</Link>.
         Because pieces are unique, we usually refund eligible returns rather than
         swap like-for-like.
       </>
@@ -73,7 +73,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     a: (
       <>
         Yes, worldwide from the UK — see{" "}
-        <Link href="/international" className="underline hover:text-marigold">international orders</Link>{" "}
+        <Link href="/international" className="underline hover:text-marigold-ink">international orders</Link>{" "}
         for delivery and customs information.
       </>
     ),
@@ -83,7 +83,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     a: (
       <>
         A small number each season — tell us what you have in mind via{" "}
-        <Link href="/bespoke" className="underline hover:text-marigold">bespoke enquiries</Link>.
+        <Link href="/bespoke" className="underline hover:text-marigold-ink">bespoke enquiries</Link>.
       </>
     ),
   },
@@ -92,7 +92,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     a: (
       <>
         Yes —{" "}
-        <Link href="/gift-cards" className="underline hover:text-marigold">digital gift vouchers</Link>{" "}
+        <Link href="/gift-cards" className="underline hover:text-marigold-ink">digital gift vouchers</Link>{" "}
         let someone choose their own piece.
       </>
     ),

@@ -5,7 +5,7 @@ import { ProductBrowser } from "@/components/ProductBrowser";
 import { products, TYPES, EDITS, MATERIALS, ONE_OF_ONE } from "@/lib/products";
 
 export const metadata: Metadata = {
-  title: "Shop · Gul Craft Stories",
+  title: "Shop",
   description:
     "One-of-a-kind handmade jewellery. Filter by availability, price, material and collection, and sort to taste. Every piece is one of one.",
 };

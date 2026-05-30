@@ -277,6 +277,23 @@ two original mockups live in git history and as images in `design/previews/`.
 Global shell: `Header` + `Footer` are rendered once in `src/app/layout.tsx`, so
 every route inherits the sticky header (announcement bar, nav, cart) and footer.
 
+### Accessibility & SEO conventions
+- **Contrast:** use `text-marigold-ink` (deep amber, WCAG-AA on cream) for small
+  text; reserve `marigold` for fills and large/decorative use, `gold` for
+  dividers/icons only. Other accents (peacock, rani, ink) already pass on cream.
+- **A11y:** a "Skip to content" link (`.skip-link`) targets `#main-content` in
+  the layout; form fields carry labels/`aria-label`; the quick-view dialog moves
+  focus and closes on Escape; decorative motifs are `aria-hidden`; `PieceImage`
+  exposes `role="img"` + alt.
+- **SEO:** root `metadata` sets a title template (`%s · Gul Craft Stories`),
+  description, keywords, Open Graph + Twitter (`summary_large_image`). The social
+  card and favicon are **generated** by `src/app/opengraph-image.tsx` /
+  `twitter-image.tsx` / `icon.tsx` (next/og) from the brand motif — no static
+  assets. Draft pages set `robots: { index: false }`.
+- **Images:** placeholders are CSS gradients (`PieceImage`) — no network images
+  yet. When real photos arrive, swap to `next/image` (responsive `sizes`,
+  lazy by default). Fonts use `next/font` (self-hosted, `display: swap`).
+
 ### Project structure
 ```
 src/
@@ -325,6 +342,11 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
       payment + secure-checkout trust signals near cart and in footer
 - [x] Support pages drafted (shipping, returns, international, FAQ, contact) —
       marked as drafts, noindex, with decision/legal flags; need founder review
+- [x] Our Story + Bespoke pages built (bio/enquiry form are flagged placeholders)
+- [x] Polish + self-review: responsive (mobile/tablet/desktop), a11y (skip link,
+      labels, AA contrast via `marigold-ink`, focus styles, alt text), SEO
+      (title template, OG + Twitter cards via generated images, generated
+      favicon), zero console errors across all pages
 - [x] Product detail page (`/shop/[slug]`) with the story given real space
 - [x] Client-side cart (`/cart`): add/remove, quantity, running total, localStorage
 - [x] Journal / Stories: markdown-driven (`/journal` + `/journal/[slug]`),

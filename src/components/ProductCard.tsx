@@ -84,7 +84,7 @@ export function ProductCard({
             </span>
           </div>
           <p className="line-clamp-2 text-sm leading-relaxed text-ink-soft">{product.description}</p>
-          <span className="eyebrow mt-1 inline-flex items-center gap-1.5 text-marigold">
+          <span className="eyebrow mt-1 inline-flex items-center gap-1.5 text-marigold-ink">
             <span aria-hidden className="inline-block h-1 w-1 rounded-full bg-gold" />
             {sold ? "One of one — now sold" : ONE_OF_ONE}
           </span>

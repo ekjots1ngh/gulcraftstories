@@ -26,7 +26,7 @@ export function AddToCart({ product }: { product: Product }) {
         <p className="text-xs text-ink-soft">
           This one has found its home. Every piece is one of a kind and never
           remade —{" "}
-          <Link href="/shop" className="underline hover:text-marigold">
+          <Link href="/shop" className="underline hover:text-marigold-ink">
             see what&apos;s still here →
           </Link>
         </p>
@@ -64,7 +64,7 @@ export function AddToCart({ product }: { product: Product }) {
       </button>
       <p aria-live="polite" className={`text-sm transition-opacity ${added ? "opacity-100" : "opacity-0"}`}>
         <span className="text-peacock">Added.</span>{" "}
-        <Link href="/cart" className="font-semibold underline hover:text-marigold">
+        <Link href="/cart" className="font-semibold underline hover:text-marigold-ink">
           View cart →
         </Link>
       </p>

@@ -61,7 +61,7 @@ export default function Home() {
               className="shadow-[var(--shadow-soft)]"
             />
             <div className="absolute -bottom-5 -left-3 max-w-[14rem] rounded-md bg-cream p-4 shadow-[var(--shadow-card)] sm:-left-6">
-              <span className="eyebrow text-marigold">This week</span>
+              <span className="eyebrow text-marigold-ink">This week</span>
               <p className="mt-1 font-display text-lg leading-snug">Peacock Haar</p>
               <p className="text-xs text-ink-soft">21 hours on the bench</p>
             </div>
@@ -88,7 +88,7 @@ export default function Home() {
           </div>
           <p className="mt-4 text-center text-sm text-ink-soft">
             Or browse by{" "}
-            <Link href="/shop" className="underline hover:text-marigold">edit and material</Link>.
+            <Link href="/shop" className="underline hover:text-marigold-ink">edit and material</Link>.
             Every piece is one of one.
           </p>
         </Container>
@@ -224,7 +224,7 @@ export default function Home() {
             “I make the things I grew up surrounded by — and I want you to know
             the hands and the hours that went into them.”
           </p>
-          <p className="mt-6 eyebrow text-marigold">— The maker, Gul Craft Stories</p>
+          <p className="mt-6 eyebrow text-marigold-ink">— The maker, Gul Craft Stories</p>
         </Container>
       </section>
     </main>

@@ -6,7 +6,7 @@ export function SectionHeading({
   intro,
   align = "center",
   className,
-  eyebrowColor = "text-marigold",
+  eyebrowColor = "text-marigold-ink",
 }: {
   eyebrow?: string;
   title: string;

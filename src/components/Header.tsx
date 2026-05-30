@@ -95,7 +95,7 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
                 onClick={() => setShopOpen((v) => !v)}
                 className={cn(
                   "flex items-center gap-1 text-sm font-medium transition-colors",
-                  onDark ? "text-cream/85 hover:text-gold-soft" : "text-ink/80 hover:text-marigold",
+                  onDark ? "text-cream/85 hover:text-gold-soft" : "text-ink/80 hover:text-marigold-ink",
                 )}
               >
                 Shop
@@ -110,7 +110,7 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
                 href={item.href}
                 className={cn(
                   "text-sm font-medium transition-colors",
-                  onDark ? "text-cream/85 hover:text-gold-soft" : "text-ink/80 hover:text-marigold",
+                  onDark ? "text-cream/85 hover:text-gold-soft" : "text-ink/80 hover:text-marigold-ink",
                 )}
               >
                 {item.label}
@@ -182,7 +182,7 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
                           onClick={() => setShopOpen(false)}
                           className="group flex items-baseline justify-between gap-3"
                         >
-                          <span className="font-display text-lg text-ink transition-colors group-hover:text-marigold">
+                          <span className="font-display text-lg text-ink transition-colors group-hover:text-marigold-ink">
                             {o.name}
                           </span>
                           <span className="text-xs text-ink-soft">{o.blurb}</span>
@@ -196,7 +196,7 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
             <div className="border-t border-gold/40">
               <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-8 py-4">
                 <span className="text-sm text-ink-soft">Every piece is one of one — when it&apos;s gone, it&apos;s gone.</span>
-                <Link href="/shop" onClick={() => setShopOpen(false)} className="text-sm font-semibold text-peacock underline hover:text-marigold">
+                <Link href="/shop" onClick={() => setShopOpen(false)} className="text-sm font-semibold text-peacock underline hover:text-marigold-ink">
                   View everything →
                 </Link>
               </div>

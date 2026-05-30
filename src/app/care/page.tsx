@@ -4,7 +4,7 @@ import { Container } from "@/components/Container";
 import { MotifDivider } from "@/components/MotifDivider";
 
 export const metadata: Metadata = {
-  title: "Jewellery Care · Gul Craft Stories",
+  title: "Jewellery Care",
   description:
     "How to care for handmade pieces made of air-dry clay, brass, crochet and semi-precious stones, so they last and age beautifully.",
 };
@@ -70,7 +70,7 @@ export default function CarePage() {
 
         <p className="mt-10 text-center text-sm text-ink-soft">
           Not sure about a specific piece? Check its{" "}
-          <Link href="/size-guide" className="underline hover:text-marigold">measurements</Link>{" "}
+          <Link href="/size-guide" className="underline hover:text-marigold-ink">measurements</Link>{" "}
           or message me on WhatsApp — I&apos;m happy to help.
         </p>
       </Container>

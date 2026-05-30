@@ -5,7 +5,7 @@ import { ProductBrowser } from "@/components/ProductBrowser";
 import { getArchive } from "@/lib/products";
 
 export const metadata: Metadata = {
-  title: "The Archive · Gul Craft Stories",
+  title: "The Archive",
   description:
     "A portfolio of pieces that have found their homes. Kept here — not hidden — so you can see the range and style, even when a piece is gone.",
 };

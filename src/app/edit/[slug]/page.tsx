@@ -22,9 +22,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const edit = EDITS.find((e) => e.slug === slug);
-  if (!edit) return { title: "Edit not found · Gul Craft Stories" };
+  if (!edit) return { title: "Edit not found" };
   const c = editContent[edit.slug];
-  return { title: `${edit.name} — an edit · Gul Craft Stories`, description: c.meaning };
+  return { title: `${edit.name} — an edit`, description: c.meaning };
 }
 
 export default async function EditPage({

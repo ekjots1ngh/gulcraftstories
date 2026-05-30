@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import type { Product } from "@/lib/products";
 import { formatMoney, materialName, ONE_OF_ONE } from "@/lib/products";
@@ -11,13 +11,15 @@ import { MotifMark } from "./MotifDivider";
 /** Lightweight quick-view dialog. Only mounts when open (kept fast on mobile). */
 export function QuickView({ product, onClose }: { product: Product; onClose: () => void }) {
   const sold = product.status === "sold";
+  const closeRef = useRef<HTMLButtonElement>(null);
 
-  // Lock scroll + close on Escape while open.
+  // Lock scroll, move focus into the dialog, and close on Escape while open.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
     return () => {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
@@ -37,10 +39,11 @@ export function QuickView({ product, onClose }: { product: Product; onClose: () 
         onClick={(e) => e.stopPropagation()}
       >
         <button
+          ref={closeRef}
           type="button"
           onClick={onClose}
           aria-label="Close quick view"
-          className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-cream/90 text-ink shadow-sm transition-colors hover:bg-marigold"
+          className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-cream/90 text-ink shadow-sm transition-colors hover:bg-marigold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-peacock"
         >
           ✕
         </button>
@@ -85,7 +88,7 @@ export function QuickView({ product, onClose }: { product: Product; onClose: () 
             <AddToCart product={product} />
             <Link
               href={`/shop/${product.slug}`}
-              className="text-center text-sm font-semibold underline hover:text-marigold"
+              className="text-center text-sm font-semibold underline hover:text-marigold-ink"
             >
               View full details & story →
             </Link>

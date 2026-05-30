@@ -7,7 +7,7 @@ import { ClearCartOnSuccess } from "@/components/ClearCartOnSuccess";
 import { getStripe } from "@/lib/stripe";
 
 export const metadata: Metadata = {
-  title: "Order confirmed · Gul Craft Stories",
+  title: "Order confirmed",
   robots: { index: false },
 };
 
@@ -84,7 +84,7 @@ export default async function CheckoutSuccessPage({
 
           {state === "pending" && (
             <>
-              <span className="eyebrow text-marigold">Payment pending</span>
+              <span className="eyebrow text-marigold-ink">Payment pending</span>
               <h1 className="text-3xl leading-tight sm:text-4xl">
                 We&apos;re still confirming your payment.
               </h1>
@@ -107,7 +107,7 @@ export default async function CheckoutSuccessPage({
               <p className="max-w-md text-lg leading-relaxed text-ink-soft">
                 If you completed payment you will still receive a confirmation
                 email. Otherwise your cart is safe — please try again, or{" "}
-                <Link href="/contact" className="underline hover:text-marigold">
+                <Link href="/contact" className="underline hover:text-marigold-ink">
                   get in touch
                 </Link>{" "}
                 and we&apos;ll help.
@@ -120,7 +120,7 @@ export default async function CheckoutSuccessPage({
 
           {state === "unconfigured" && (
             <>
-              <span className="eyebrow text-marigold">Checkout not connected yet</span>
+              <span className="eyebrow text-marigold-ink">Checkout not connected yet</span>
               <h1 className="text-3xl leading-tight sm:text-4xl">
                 Payments aren&apos;t switched on yet.
               </h1>

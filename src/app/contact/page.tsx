@@ -6,7 +6,7 @@ import { ReviewNote } from "@/components/ReviewNote";
 import { SITE, whatsappLink } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact (draft) · Gul Craft Stories",
+  title: "Contact (draft)",
   robots: { index: false },
 };
 
@@ -29,12 +29,12 @@ export default function ContactPage() {
           {/* details */}
           <div className="flex flex-col gap-5">
             <Detail label="Email">
-              <a href={`mailto:${SITE.email}`} className="underline hover:text-marigold">
+              <a href={`mailto:${SITE.email}`} className="underline hover:text-marigold-ink">
                 {SITE.email}
               </a>
             </Detail>
             <Detail label="WhatsApp">
-              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="underline hover:text-marigold">
+              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="underline hover:text-marigold-ink">
                 Message us on WhatsApp
               </a>
             </Detail>
@@ -47,7 +47,7 @@ export default function ContactPage() {
               United Kingdom
             </Detail>
             <Detail label="Instagram">
-              <a href={SITE.instagram} className="underline hover:text-marigold">@gulcraftstories</a>
+              <a href={SITE.instagram} className="underline hover:text-marigold-ink">@gulcraftstories</a>
             </Detail>
             <Detail label="Hours">Replies Mon–Fri, usually within one working day.</Detail>
 
@@ -63,9 +63,9 @@ export default function ContactPage() {
           <div className="flex flex-col gap-4 rounded-lg border border-gold/40 bg-cream-deep/30 p-6">
             <h2 className="font-display text-xl">Send a message</h2>
             <form className="flex flex-col gap-3">
-              <input type="text" placeholder="Your name" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
-              <input type="email" placeholder="Your email" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
-              <textarea rows={5} placeholder="Your message" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
+              <input type="text" aria-label="Your name" placeholder="Your name" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
+              <input type="email" aria-label="Your email" placeholder="Your email" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
+              <textarea rows={5} aria-label="Your message" placeholder="Your message" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
               <button type="button" className="rounded-sm bg-peacock px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-peacock-deep">
                 Send
               </button>
@@ -85,7 +85,7 @@ export default function ContactPage() {
 function Detail({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="eyebrow text-marigold">{label}</p>
+      <p className="eyebrow text-marigold-ink">{label}</p>
       <p className="mt-1 leading-relaxed text-ink">{children}</p>
     </div>
   );

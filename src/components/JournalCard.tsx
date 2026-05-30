@@ -14,7 +14,7 @@ export function JournalCard({ post }: { post: PostMeta }) {
         />
       </div>
       <div className="flex items-center gap-3 text-ink-soft">
-        <span className="eyebrow text-marigold">{post.kind}</span>
+        <span className="eyebrow text-marigold-ink">{post.kind}</span>
         <span aria-hidden className="text-gold">•</span>
         <span className="text-xs">{post.readTime} read</span>
       </div>

@@ -7,7 +7,7 @@ import { PieceImage } from "@/components/PieceImage";
 import { getAllPosts, getFeaturedPost, getUpcomingPosts } from "@/lib/journal";
 
 export const metadata: Metadata = {
-  title: "Stories · Gul Craft Stories",
+  title: "Stories",
   description:
     "A craft journal — the name, the promise, the hours behind each piece, and the making, in long form.",
 };
@@ -45,7 +45,7 @@ export default function JournalPage() {
               />
             </div>
             <div className="flex flex-col gap-3">
-              <span className="eyebrow text-marigold">Start here · {featured.kind}</span>
+              <span className="eyebrow text-marigold-ink">Start here · {featured.kind}</span>
               <h2 className="font-display text-3xl leading-tight sm:text-4xl">{featured.title}</h2>
               <p className="leading-relaxed text-ink-soft">{featured.excerpt}</p>
               <span className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-ink transition-transform group-hover:translate-x-1">

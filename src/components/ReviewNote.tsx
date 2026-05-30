@@ -23,7 +23,7 @@ export function ReviewNote({
     >
       <p className="eyebrow mb-1 flex items-center gap-2" aria-hidden>
         <span>{legal ? "⚠" : "✎"}</span>
-        <span className={legal ? "text-rani" : "text-marigold"}>
+        <span className={legal ? "text-rani" : "text-marigold-ink"}>
           {legal ? "Legal — confirm before publishing" : "Decision to confirm"}
           {title ? ` · ${title}` : ""}
         </span>

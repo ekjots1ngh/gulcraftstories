@@ -73,7 +73,7 @@ export default function CartPage() {
                       </div>
 
                       <div className="mt-auto flex items-center justify-between gap-3">
-                        <span className="eyebrow text-marigold">One of one</span>
+                        <span className="eyebrow text-marigold-ink">One of one</span>
                         <button
                           type="button"
                           onClick={() => remove(product.slug)}
@@ -88,7 +88,7 @@ export default function CartPage() {
               </ul>
 
               <div className="mt-5 flex justify-between">
-                <Link href="/shop" className="text-sm underline hover:text-marigold">
+                <Link href="/shop" className="text-sm underline hover:text-marigold-ink">
                   ← Continue shopping
                 </Link>
                 <button
