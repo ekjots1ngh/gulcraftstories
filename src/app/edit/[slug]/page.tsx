@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
 import { MotifDivider, MotifMark } from "@/components/MotifDivider";
-import { ProductCard } from "@/components/ProductCard";
+import { ProductBrowser } from "@/components/ProductBrowser";
 import { PieceImage } from "@/components/PieceImage";
 import { EDITS, getProducts, ONE_OF_ONE } from "@/lib/products";
 import { editContent } from "@/lib/edits";
@@ -124,11 +124,7 @@ export default async function EditPage({
           <MotifDivider className="my-10" />
 
           {pieces.length > 0 ? (
-            <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3">
-              {pieces.map((p) => (
-                <ProductCard key={p.slug} product={p} tone="atelier" />
-              ))}
-            </div>
+            <ProductBrowser products={pieces} showEdit={false} />
           ) : (
             <p className="mx-auto max-w-md text-center text-ink-soft">
               This edit is resting between pieces just now — new work opens here

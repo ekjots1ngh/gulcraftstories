@@ -10,6 +10,7 @@ import { TYPES, EDITS, MATERIALS } from "@/lib/products";
 const LINKS = [
   { label: "Our Story", href: "/our-story" },
   { label: "The Craft", href: "/journal" },
+  { label: "Archive", href: "/archive" },
   { label: "Bespoke", href: "/bespoke" },
 ];
 

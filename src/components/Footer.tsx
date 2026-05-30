@@ -10,6 +10,7 @@ const COLUMNS = [
       { label: "All pieces", href: "/shop" },
       { label: "Earrings", href: "/shop?type=earrings" },
       { label: "Necklaces", href: "/shop?type=necklaces" },
+      { label: "Archive (sold)", href: "/archive" },
       { label: "Bespoke", href: "/bespoke" },
     ],
   },

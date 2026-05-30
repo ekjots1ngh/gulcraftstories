@@ -1,0 +1,97 @@
+"use client";
+
+import { useEffect } from "react";
+import Link from "next/link";
+import type { Product } from "@/lib/products";
+import { formatMoney, materialName, ONE_OF_ONE } from "@/lib/products";
+import { PieceImage } from "./PieceImage";
+import { AddToCart } from "./AddToCart";
+import { MotifMark } from "./MotifDivider";
+
+/** Lightweight quick-view dialog. Only mounts when open (kept fast on mobile). */
+export function QuickView({ product, onClose }: { product: Product; onClose: () => void }) {
+  const sold = product.status === "sold";
+
+  // Lock scroll + close on Escape while open.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Quick view: ${product.name}`}
+      className="fixed inset-0 z-[60] flex items-end justify-center bg-ink/50 p-0 backdrop-blur-sm sm:items-center sm:p-6"
+      onClick={onClose}
+    >
+      <div
+        className="relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-y-auto rounded-t-lg bg-cream sm:flex-row sm:rounded-lg"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close quick view"
+          className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full bg-cream/90 text-ink shadow-sm transition-colors hover:bg-marigold"
+        >
+          ✕
+        </button>
+
+        <div className="sm:w-1/2">
+          <PieceImage swatch={product.images[0].swatch} label={product.name} ratio="square" />
+        </div>
+
+        <div className="flex flex-1 flex-col gap-4 p-6 sm:p-7">
+          <div className="flex flex-col gap-1">
+            <span className="eyebrow text-peacock">{product.name}</span>
+            <div className="flex items-center gap-3">
+              <span className={`font-display text-2xl ${sold ? "text-ink-soft line-through" : ""}`}>
+                {formatMoney(product.price, product.currency)}
+              </span>
+              <span
+                className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                  sold ? "bg-ink/10 text-ink-soft" : "bg-peacock/10 text-peacock"
+                }`}
+              >
+                {sold ? "Sold" : "1 of 1"}
+              </span>
+            </div>
+          </div>
+
+          <p className="text-sm leading-relaxed text-ink-soft">{product.description}</p>
+
+          <ul className="flex flex-wrap gap-1.5">
+            {product.materials.map((m) => (
+              <li key={m} className="rounded-full border border-gold/50 px-2.5 py-1 text-xs text-ink">
+                {materialName(m)}
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex items-center gap-2 text-xs text-ink-soft">
+            <MotifMark size={16} color="var(--color-gold)" />
+            {ONE_OF_ONE}
+          </div>
+
+          <div className="mt-auto flex flex-col gap-3 pt-2">
+            <AddToCart product={product} />
+            <Link
+              href={`/shop/${product.slug}`}
+              className="text-center text-sm font-semibold underline hover:text-marigold"
+            >
+              View full details & story →
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -128,6 +128,28 @@ charms/beads, crochet. `/shop` filters on any combination via `?type=`, `?edit=`
 `?material=` (AND); the header mega-menu links into each axis (type/material →
 shop filters, edit → the immersive edit page).
 
+### Filtering, sorting & product cards
+`src/components/ProductBrowser.tsx` is a reusable **client** component that
+filters + sorts a product list **in-memory** (the catalogue is small and already
+on the page, so it's instant on mobile — no navigation/refetch). It powers
+`/shop`, each `/edit/[slug]`, and `/archive`. Filters: **availability**
+(available/sold), **price** buckets, **material**, **type**, **collection**
+(`showEdit`/`showAvailability` toggle which apply). Sorts: **featured, newest,
+price ↑/↓** (`SortKey`/`SORTS`/`sortProducts` + per-piece `addedAt`). The filter
+panel is collapsible on mobile, inline on desktop; deep links (e.g. mega-menu
+`?type=`) seed the initial state.
+
+Upgraded `ProductCard` (client): crossfades to a **second image on hover**, shows
+a clear **"One of one" / "Sold"** badge, and opens a lightweight **quick-view**
+dialog (`QuickView.tsx` — image, materials, add-to-cart, link to full story;
+only mounts when open).
+
+### Archive (sold pieces as portfolio)
+`/archive` shows every **sold** piece as a portfolio — kept on show, never hidden
+— so visitors see her range/style even after pieces are gone. Uses `getArchive()`
++ `ProductBrowser` (availability filter hidden, all sold). Linked from the nav and
+footer. Reinforces the one-of-a-kind promise: gone, but not forgotten.
+
 ### Edits (curated, evolving — not restocked lines)
 Five named edits: **Gulzar** (garden/bloom), **Mitti** (earth/clay), **Dhaaga**
 (thread/crochet), **Roshni** (light), **Saanjh** (dusk). Each has an immersive
@@ -214,6 +236,7 @@ src/
     globals.css   design tokens
     shop/         /shop grid (browse by type/edit/material) + /shop/[slug] detail
     edit/         /edit/[slug] immersive curated-edit pages (Gulzar … Saanjh)
+    archive/      /archive portfolio of sold pieces
     cart/         /cart page
     journal/      /journal index and /journal/[slug] post (markdown)
     checkout/     /checkout/success confirmation page
@@ -240,6 +263,9 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
 - [x] One-of-a-kind model: stock 1, permanent "Sold", "One of one" everywhere
 - [x] Five immersive edit pages (Gulzar · Mitti · Dhaaga · Roshni · Saanjh),
       linked from homepage + mega-menu; copy in src/lib/edits.ts
+- [x] Filtering + sorting (availability/price/material/collection · featured/
+      newest/price) on shop + edit pages, instant in-memory; upgraded cards
+      (hover image, badge, quick-view); Archive portfolio of sold pieces
 - [x] Product detail page (`/shop/[slug]`) with the story given real space
 - [x] Client-side cart (`/cart`): add/remove, quantity, running total, localStorage
 - [x] Journal / Stories: markdown-driven (`/journal` + `/journal/[slug]`),
