@@ -6,6 +6,7 @@ import { Button } from "@/components/Button";
 import { MotifDivider, MotifMark } from "@/components/MotifDivider";
 import { Gallery } from "@/components/Gallery";
 import { AddToCart } from "@/components/AddToCart";
+import { WishlistButton } from "@/components/WishlistButton";
 import { ProductCard } from "@/components/ProductCard";
 import { JournalCard } from "@/components/JournalCard";
 import { PieceImage } from "@/components/PieceImage";
@@ -124,7 +125,18 @@ export default async function ProductPage({
             </div>
           </dl>
 
-          <AddToCart product={product} />
+          <div className="flex items-stretch gap-3">
+            <div className="flex-1">
+              <AddToCart product={product} />
+            </div>
+            <WishlistButton slug={product.slug} variant="full" className="shrink-0" />
+          </div>
+
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-soft">
+            <Link href="/size-guide" className="underline hover:text-marigold">Size guide</Link>
+            <Link href="/care" className="underline hover:text-marigold">Care</Link>
+            <Link href="/gift-cards" className="underline hover:text-marigold">Gift vouchers</Link>
+          </div>
 
           <ul className="mt-1 flex flex-col gap-1.5 text-xs text-ink-soft">
             <li>· Free UK shipping over £75 · worldwide delivery</li>

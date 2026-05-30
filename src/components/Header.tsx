@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { cn } from "@/lib/cn";
 import { useCart } from "@/lib/cart";
+import { useWishlist } from "@/lib/wishlist";
 import { TYPES, EDITS, MATERIALS } from "@/lib/products";
 
 const LINKS = [
@@ -44,6 +45,7 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false); // desktop mega-menu
   const { count: cartCount } = useCart();
+  const { count: wishCount } = useWishlist();
   const onDark = tone === "dark";
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -116,7 +118,24 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
+            <Link
+              href="/wishlist"
+              aria-label={`Wishlist, ${wishCount} saved`}
+              className={cn(
+                "relative flex h-10 w-10 items-center justify-center rounded-full transition-colors",
+                onDark ? "text-cream hover:bg-cream/10" : "text-ink hover:bg-ink/5",
+              )}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d="M12 20s-7-4.35-9.5-8.5C1 8.5 2.5 5.5 5.5 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3 0 4.5 3 3 6-2.5 4.15-9.5 8.5-9.5 8.5Z" strokeLinejoin="round" />
+              </svg>
+              {wishCount > 0 && (
+                <span className="absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full bg-rani px-1 text-[0.6rem] font-bold text-cream">
+                  {wishCount}
+                </span>
+              )}
+            </Link>
             <Link
               href="/cart"
               aria-label={`Cart, ${cartCount} items`}

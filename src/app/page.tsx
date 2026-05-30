@@ -6,7 +6,7 @@ import { MotifDivider, MotifMark } from "@/components/MotifDivider";
 import { ProductCard } from "@/components/ProductCard";
 import { PieceImage } from "@/components/PieceImage";
 import { JournalCard } from "@/components/JournalCard";
-import { Newsletter } from "@/components/Newsletter";
+import { Testimonials } from "@/components/Testimonials";
 import { products, TYPES, EDITS } from "@/lib/products";
 import { editContent } from "@/lib/edits";
 import { getAllPosts, getFeaturedPost } from "@/lib/journal";
@@ -213,6 +213,9 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* ───────── TESTIMONIALS ───────── */}
+      <Testimonials />
+
       {/* ───────── MAKER QUOTE BAND ───────── */}
       <section className="border-y border-gold/40 py-16 sm:py-20">
         <Container size="narrow" className="text-center">
@@ -224,8 +227,6 @@ export default function Home() {
           <p className="mt-6 eyebrow text-marigold">— The maker, Gul Craft Stories</p>
         </Container>
       </section>
-
-      <Newsletter tone="atelier" />
     </main>
   );
 }

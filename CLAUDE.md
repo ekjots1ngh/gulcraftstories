@@ -208,7 +208,30 @@ UK/international in GBP.)
 
 **Env vars** (see `.env.example`; copy to `.env.local`, never commit real keys):
 `STRIPE_SECRET_KEY` (required), `STRIPE_WEBHOOK_SECRET` (optional, webhook only),
-`NEXT_PUBLIC_SITE_URL` (optional, for custom-domain absolute URLs).
+`NEXT_PUBLIC_SITE_URL` (optional, for custom-domain absolute URLs),
+`NEXT_PUBLIC_WHATSAPP_NUMBER` (optional, the floating WhatsApp button).
+
+### Gift vouchers
+`/gift-cards` sells digital vouchers (£25/£50/£75/£100) via Stripe hosted
+Checkout. `POST /api/gift-card` validates the amount server-side against
+`GIFT_DENOMINATIONS` (in `src/lib/site.ts`) and creates a session; the code is
+issued at fulfilment (webhook) and emailed. Same graceful "not configured" path
+as the main checkout when keys are unset.
+
+### Conversion & trust features
+- **Floating WhatsApp button** (`WhatsAppButton`, in `layout.tsx`) — number from
+  `NEXT_PUBLIC_WHATSAPP_NUMBER` (placeholder fallback), via `whatsappLink()`.
+- **Wishlist** — client context in `src/lib/wishlist.tsx` (`WishlistProvider` +
+  `useWishlist`), localStorage, heart toggle on cards + product pages, header
+  badge, and a `/wishlist` page. (Saving doesn't reserve — pieces are one of one.)
+- **Testimonials** (`Testimonials`) on the homepage — placeholder quotes to replace.
+- **Newsletter** — a single signup lives in the global footer (site-wide).
+- **Trust signals** (`TrustSignals`) — payment-method badges + "secure checkout
+  by Stripe, we never see your card details", shown near the cart checkout and
+  in the footer.
+- **Size guide** (`/size-guide`) and **Care** (`/care`, written per real
+  material: air-dry clay, brass, crochet, semi-precious stones), linked from
+  product pages and the footer.
 
 ---
 
@@ -248,12 +271,15 @@ src/
     shop/         /shop grid (browse by type/edit/material) + /shop/[slug] detail
     edit/         /edit/[slug] immersive curated-edit pages (Gulzar … Saanjh)
     archive/      /archive portfolio of sold pieces
+    wishlist/     /wishlist saved pieces
+    gift-cards/   /gift-cards voucher purchase
+    size-guide/   /size-guide · care/ care guide (per material)
     cart/         /cart page
     journal/      /journal index and /journal/[slug] post (markdown)
     checkout/     /checkout/success confirmation page
-    api/          /api/checkout (Stripe session) + /api/stripe/webhook
+    api/          /api/checkout · /api/gift-card (Stripe) · /api/stripe/webhook
   components/      reusable UI primitives + sections
-  lib/            products, cart, journal, edits (edit story copy), stripe
+  lib/            products, cart, wishlist, journal, edits, stripe, site (config)
 content/journal/  *.md story posts (frontmatter + body) — add files to publish
 .env.example      env var template (copy to .env.local — never commit real keys)
 design/previews/  screenshots (homepage, shop, product, cart, journal, directions)
@@ -277,6 +303,9 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
 - [x] Filtering + sorting (availability/price/material/collection · featured/
       newest/price) on shop + edit pages, instant in-memory; upgraded cards
       (hover image, badge, quick-view); Archive portfolio of sold pieces
+- [x] Conversion/trust: floating WhatsApp button, testimonials, footer
+      newsletter, gift vouchers, wishlist, size guide, per-material care page,
+      payment + secure-checkout trust signals near cart and in footer
 - [x] Product detail page (`/shop/[slug]`) with the story given real space
 - [x] Client-side cart (`/cart`): add/remove, quantity, running total, localStorage
 - [x] Journal / Stories: markdown-driven (`/journal` + `/journal/[slug]`),

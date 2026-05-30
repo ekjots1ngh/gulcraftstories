@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Container } from "./Container";
 import { Logo } from "./Logo";
 import { MotifDivider } from "./MotifDivider";
+import { TrustSignals } from "./TrustSignals";
+import { SITE } from "@/lib/site";
 
 const COLUMNS = [
   {
@@ -10,6 +12,7 @@ const COLUMNS = [
       { label: "All pieces", href: "/shop" },
       { label: "Earrings", href: "/shop?type=earrings" },
       { label: "Necklaces", href: "/shop?type=necklaces" },
+      { label: "Gift vouchers", href: "/gift-cards" },
       { label: "Archive (sold)", href: "/archive" },
       { label: "Bespoke", href: "/bespoke" },
     ],
@@ -19,15 +22,17 @@ const COLUMNS = [
     links: [
       { label: "Our story", href: "/our-story" },
       { label: "The craft / journal", href: "/journal" },
+      { label: "Wishlist", href: "/wishlist" },
       { label: "Contact", href: "/contact" },
     ],
   },
   {
     title: "Help",
     links: [
-      { label: "Shipping & returns", href: "/shipping" },
+      { label: "Size guide", href: "/size-guide" },
       { label: "Jewellery care", href: "/care" },
-      { label: "Instagram", href: "https://instagram.com/gulcraftstories" },
+      { label: "Shipping & returns", href: "/shipping" },
+      { label: "Instagram", href: SITE.instagram },
     ],
   },
 ];
@@ -38,6 +43,27 @@ export function Footer() {
       <Container className="py-14">
         <MotifDivider color="var(--color-gold-soft)" className="mb-12" />
 
+        {/* newsletter signup */}
+        <div className="mb-12 flex flex-col items-center gap-4 border-b border-cream/15 pb-12 text-center">
+          <h3 className="font-display text-2xl">Letters from the bench</h3>
+          <p className="max-w-md text-sm leading-relaxed text-cream/70">
+            New pieces and the stories behind them — a few quiet letters a month.
+          </p>
+          <form className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
+            <label htmlFor="footer-email" className="sr-only">Email address</label>
+            <input
+              id="footer-email"
+              type="email"
+              required
+              placeholder="you@email.com"
+              className="flex-1 rounded-sm border border-cream/25 bg-transparent px-4 py-3 text-sm text-cream placeholder:text-cream/40 focus:border-gold-soft focus:outline-none"
+            />
+            <button type="submit" className="rounded-sm bg-cream px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-gold-soft">
+              Join
+            </button>
+          </form>
+        </div>
+
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
           <div className="flex flex-col gap-4">
             <Logo color="text-cream" markColor="var(--color-gold-soft)" />
@@ -47,7 +73,7 @@ export function Footer() {
             </p>
             <div className="flex flex-col gap-1 text-sm">
               <a
-                href="https://instagram.com/gulcraftstories"
+                href={SITE.instagram}
                 className="inline-flex items-center gap-2 text-cream/85 transition-colors hover:text-gold-soft"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
@@ -57,11 +83,8 @@ export function Footer() {
                 </svg>
                 @gulcraftstories
               </a>
-              <a
-                href="mailto:hello@gulcraftstories.com"
-                className="text-cream/85 transition-colors hover:text-gold-soft"
-              >
-                hello@gulcraftstories.com
+              <a href={`mailto:${SITE.email}`} className="text-cream/85 transition-colors hover:text-gold-soft">
+                {SITE.email}
               </a>
             </div>
           </div>
@@ -72,10 +95,7 @@ export function Footer() {
               <ul className="flex flex-col gap-2">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <Link
-                      href={l.href}
-                      className="text-sm text-cream/80 transition-colors hover:text-gold-soft"
-                    >
+                    <Link href={l.href} className="text-sm text-cream/80 transition-colors hover:text-gold-soft">
                       {l.label}
                     </Link>
                   </li>
@@ -85,7 +105,12 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-cream/15 pt-6 text-xs text-cream/60 sm:flex-row sm:items-center sm:justify-between">
+        {/* trust signals */}
+        <div className="mt-12 border-t border-cream/15 pt-8">
+          <TrustSignals tone="dark" compact />
+        </div>
+
+        <div className="mt-8 flex flex-col gap-2 text-xs text-cream/60 sm:flex-row sm:items-center sm:justify-between">
           <span>© {new Date().getFullYear()} Gul Craft Stories. Made by hand.</span>
           <span>Prices in GBP · Worldwide shipping</span>
         </div>

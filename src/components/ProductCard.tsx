@@ -6,6 +6,7 @@ import type { Product } from "@/lib/products";
 import { formatMoney, ONE_OF_ONE } from "@/lib/products";
 import { PieceImage } from "./PieceImage";
 import { QuickView } from "./QuickView";
+import { WishlistButton } from "./WishlistButton";
 import { cn } from "@/lib/cn";
 
 /**
@@ -61,6 +62,9 @@ export function ProductCard({
           >
             {sold ? "Sold" : "One of one"}
           </span>
+
+          {/* wishlist */}
+          <WishlistButton slug={product.slug} className="absolute right-3 top-3" />
 
           {/* quick view */}
           <button

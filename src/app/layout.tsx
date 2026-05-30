@@ -3,7 +3,9 @@ import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CartProvider } from "@/lib/cart";
+import { WishlistProvider } from "@/lib/wishlist";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -42,9 +44,12 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-cream text-ink">
         <CartProvider>
-          <Header />
-          {children}
-          <Footer />
+          <WishlistProvider>
+            <Header />
+            {children}
+            <Footer />
+            <WhatsAppButton />
+          </WishlistProvider>
         </CartProvider>
       </body>
     </html>

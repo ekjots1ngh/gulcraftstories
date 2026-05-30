@@ -6,6 +6,7 @@ import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
 import { PieceImage } from "@/components/PieceImage";
 import { CheckoutButton } from "@/components/CheckoutButton";
+import { TrustSignals } from "@/components/TrustSignals";
 import { useCart, formatMoney } from "@/lib/cart";
 import { typeName } from "@/lib/products";
 
@@ -124,6 +125,10 @@ export default function CartPage() {
               </div>
 
               <CheckoutButton />
+
+              <div className="mt-5 border-t border-gold/40 pt-5">
+                <TrustSignals />
+              </div>
             </aside>
           </div>
         )}
