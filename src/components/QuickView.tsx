@@ -56,16 +56,18 @@ export function QuickView({ product, onClose }: { product: Product; onClose: () 
           <div className="flex flex-col gap-1">
             <span className="eyebrow text-peacock">{product.name}</span>
             <div className="flex items-center gap-3">
-              <span className={`font-display text-2xl ${sold ? "text-ink-soft line-through" : ""}`}>
-                {formatMoney(product.price, product.currency)}
-              </span>
-              <span
-                className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-                  sold ? "bg-ink/10 text-ink-soft" : "bg-peacock/10 text-peacock"
-                }`}
-              >
-                {sold ? "Sold" : "1 of 1"}
-              </span>
+              {sold ? (
+                <span className="font-display text-2xl text-ink-soft">Sold</span>
+              ) : (
+                <>
+                  <span className="font-display text-2xl">
+                    {formatMoney(product.price, product.currency)}
+                  </span>
+                  <span className="rounded-full bg-peacock/10 px-2.5 py-0.5 text-xs font-semibold text-peacock">
+                    1 of 1
+                  </span>
+                </>
+              )}
             </div>
           </div>
 

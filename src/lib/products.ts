@@ -237,7 +237,7 @@ export const products: Product[] = [
     images: [
       { alt: "Peacock Hour — handmade by GulCraft Stories", swatch: ["#0E5A5B", "#3B2A4A"], src: "/products/peacock-hour.jpg" },
     ],
-    status: "available",
+    status: "sold",
     addedAt: "2026-05-28",
     featured: true,
   },

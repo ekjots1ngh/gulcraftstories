@@ -85,10 +85,16 @@ export default async function ProductPage({
               <p className="text-sm text-ink-soft">{product.subtitle}</p>
             )}
             <div className="mt-1 flex items-center gap-3">
-              <span className={`text-2xl font-semibold ${sold ? "text-ink-soft line-through" : ""}`}>
-                {formatMoney(product.price, product.currency)}
-              </span>
-              <StatusBadge sold={sold} />
+              {sold ? (
+                <span className="text-2xl font-semibold text-ink-soft">Sold</span>
+              ) : (
+                <>
+                  <span className="text-2xl font-semibold">
+                    {formatMoney(product.price, product.currency)}
+                  </span>
+                  <StatusBadge sold={false} />
+                </>
+              )}
             </div>
           </div>
 

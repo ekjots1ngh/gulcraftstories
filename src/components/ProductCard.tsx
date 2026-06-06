@@ -71,8 +71,8 @@ export function ProductCard({
         <Link href={`/shop/${product.slug}`} className="flex flex-col gap-2">
           <div className="flex items-baseline justify-between gap-3">
             <h3 className="font-display text-lg leading-snug">{product.name}</h3>
-            <span className={cn("shrink-0 text-sm font-semibold text-ink-soft", sold && "line-through")}>
-              {formatMoney(product.price, product.currency)}
+            <span className="shrink-0 text-sm font-semibold text-ink-soft">
+              {sold ? "Sold" : formatMoney(product.price, product.currency)}
             </span>
           </div>
           <p className="line-clamp-2 text-sm leading-relaxed text-ink-soft">{product.description}</p>
