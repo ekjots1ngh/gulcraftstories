@@ -51,6 +51,7 @@ export default function CartPage() {
                     >
                       <PieceImage
                         swatch={product.images[0].swatch}
+                        src={product.images[0].src}
                         label={product.name}
                         ratio="square"
                       />
