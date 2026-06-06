@@ -27,7 +27,13 @@ export default function OurStoryPage() {
             </p>
             <Button href="/shop" variant="primary">Explore the pieces</Button>
           </div>
-          <PieceImage swatch={["#E08A1E", "#0E5A5B"]} label="The maker at her table" ratio="portrait" className="shadow-[var(--shadow-soft)]" />
+          <PieceImage
+            swatch={["#9A5B33", "#0E5A5B"]}
+            src="/about/sourcing-2.jpg"
+            label="The maker sourcing beads and strands at the market"
+            ratio="portrait"
+            className="shadow-[var(--shadow-soft)]"
+          />
         </Container>
       </section>
 
@@ -37,7 +43,7 @@ export default function OurStoryPage() {
           <ReviewNote title="Personalise this">
             The words below are a heartfelt placeholder in the brand voice. Replace
             them with the maker&apos;s real story — where she learned, who taught
-            her, why she started — and add real photographs when ready.
+            her, why she started. (The photographs are now real.)
           </ReviewNote>
 
           <p>
@@ -61,6 +67,31 @@ export default function OurStoryPage() {
             memories, never as costume. The aim is something that feels rooted
             and entirely modern, rich but uncluttered.
           </p>
+        </Container>
+      </section>
+
+      {/* sourcing the materials */}
+      <section className="py-16 sm:py-24">
+        <Container className="grid items-center gap-10 md:grid-cols-2 md:gap-14">
+          <PieceImage
+            swatch={["#C9A24B", "#9A5B33"]}
+            src="/about/sourcing-1.jpg"
+            label="Choosing beads and stones by hand at the bead market"
+            ratio="landscape"
+            className="shadow-[var(--shadow-soft)]"
+          />
+          <div className="flex flex-col items-start gap-5">
+            <span className="eyebrow text-rani">Sourcing the materials</span>
+            <h2 className="text-3xl leading-tight sm:text-4xl">Chosen by hand, bead by bead.</h2>
+            <p className="max-w-md leading-relaxed text-ink-soft">
+              Before anything is made, the materials have to be found. I go to the
+              bead markets myself and choose every strand, stone and charm by hand
+              — turning them over in the light, holding out for the colour that&apos;s
+              exactly right. It&apos;s slow, happy work, and it&apos;s where each
+              piece really begins.
+            </p>
+            <Button href="/shop" variant="ghost">See what they became →</Button>
+          </div>
         </Container>
       </section>
 
