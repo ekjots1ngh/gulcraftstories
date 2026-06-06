@@ -4,7 +4,7 @@
  * obvious placeholders to replace.
  */
 export const SITE = {
-  email: "hello@gulcraftstories.com",
+  email: "gulcraftstories@gmail.com",
   instagram: "https://instagram.com/gulcraftstories",
   // International format, digits only (no "+"). Replace with the real number,
   // or set NEXT_PUBLIC_WHATSAPP_NUMBER in the environment.

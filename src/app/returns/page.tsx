@@ -93,7 +93,7 @@ export default function ReturnsPage() {
 
         <h2>How to start a return</h2>
         <p>
-          Email <Link href="/contact">hello@gulcraftstories.com</Link> with your
+          Email <Link href="/contact">gulcraftstories@gmail.com</Link> with your
           order number within the window above, and we&apos;ll guide you through it.
         </p>
 
