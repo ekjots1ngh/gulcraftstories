@@ -10,6 +10,7 @@ import { WishlistButton } from "@/components/WishlistButton";
 import { ProductCard } from "@/components/ProductCard";
 import { JournalCard } from "@/components/JournalCard";
 import { PieceImage } from "@/components/PieceImage";
+import { Reviews } from "@/components/Reviews";
 import { getPostsForProduct, getFeaturedPost } from "@/lib/journal";
 import {
   products,
@@ -242,6 +243,9 @@ export default async function ProductPage({
           )}
         </Container>
       </section>
+
+      {/* ───────── REVIEWS ───────── */}
+      <Reviews productSlug={product.slug} productName={product.name} />
 
       {/* ───────── RELATED STORIES (links pieces ↔ journal) ───────── */}
       {stories.length > 0 && (
