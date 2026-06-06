@@ -26,7 +26,7 @@ export default function Home() {
       <section className="relative overflow-hidden">
         <Container className="grid items-center gap-10 py-12 sm:py-20 md:grid-cols-[1.05fr_0.95fr] md:gap-14">
           <div className="flex flex-col items-start gap-6">
-            <span className="eyebrow text-peacock">Handmade Indian jewellery</span>
+            <span className="eyebrow text-peacock">Handmade jewellery</span>
             <h1 className="text-[2.5rem] leading-[1.05] sm:text-6xl">
               The story of every piece, told as carefully as it was made.
             </h1>
