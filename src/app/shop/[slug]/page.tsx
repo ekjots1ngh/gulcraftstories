@@ -81,6 +81,9 @@ export default async function ProductPage({
               </Link>
             </span>
             <h1 className="text-3xl leading-tight sm:text-4xl">{product.name}</h1>
+            {product.subtitle && (
+              <p className="text-sm text-ink-soft">{product.subtitle}</p>
+            )}
             <div className="mt-1 flex items-center gap-3">
               <span className={`text-2xl font-semibold ${sold ? "text-ink-soft line-through" : ""}`}>
                 {formatMoney(product.price, product.currency)}
@@ -112,10 +115,6 @@ export default async function ProductPage({
           {/* at-a-glance facts */}
           <dl className="grid grid-cols-2 gap-3 border-y border-gold/40 py-4 text-sm">
             <div>
-              <dt className="eyebrow text-marigold-ink">Time to make</dt>
-              <dd className="mt-1">{product.hoursToMake} hours by hand</dd>
-            </div>
-            <div>
               <dt className="eyebrow text-marigold-ink">From the edit</dt>
               <dd className="mt-1">
                 <Link href={`/edit/${product.edit}`} className="underline hover:text-marigold-ink">
@@ -123,6 +122,22 @@ export default async function ProductPage({
                 </Link>
               </dd>
             </div>
+            <div>
+              <dt className="eyebrow text-marigold-ink">One of a kind</dt>
+              <dd className="mt-1">Made once, never remade</dd>
+            </div>
+            {product.hoursToMake && (
+              <div>
+                <dt className="eyebrow text-marigold-ink">Time to make</dt>
+                <dd className="mt-1">{product.hoursToMake} hours by hand</dd>
+              </div>
+            )}
+            {product.dimensions && (
+              <div>
+                <dt className="eyebrow text-marigold-ink">Dimensions</dt>
+                <dd className="mt-1">{product.dimensions}</dd>
+              </div>
+            )}
           </dl>
 
           <div className="flex items-stretch gap-3">
@@ -145,48 +160,48 @@ export default async function ProductPage({
         </div>
       </Container>
 
-      {/* ───────── THE STORY (given real space) ───────── */}
+      {/* ───────── MATERIALS & DETAILS ───────── */}
       <section className="bg-cream-deep/40 py-16 sm:py-24">
         <Container size="narrow">
           <div className="flex flex-col items-center gap-4 text-center">
-            <span className="eyebrow text-rani">The story of this piece</span>
-            <h2 className="text-3xl leading-tight sm:text-4xl">How it&apos;s made</h2>
+            <span className="eyebrow text-rani">Made by hand, one of one</span>
+            <h2 className="text-3xl leading-tight sm:text-4xl">The details</h2>
           </div>
           <MotifDivider className="my-10" />
 
-          {/* opening image */}
-          <PieceImage
-            swatch={product.images[product.images.length - 1].swatch}
-            label={`${product.name} — at the bench`}
-            ratio="landscape"
-            className="shadow-[var(--shadow-soft)]"
-          />
+          {/* optional long making story (with a lead image) */}
+          {product.makingStory && (
+            <>
+              <PieceImage
+                swatch={product.images[product.images.length - 1].swatch}
+                src={product.images[product.images.length - 1].src}
+                label={`${product.name} — at the bench`}
+                ratio="landscape"
+                className="shadow-[var(--shadow-soft)]"
+              />
+              <div className="mx-auto my-10 max-w-prose">
+                {product.makingStory.split("\n").map((para, i) => (
+                  <p key={i} className="mb-5 text-lg leading-[1.8] text-ink">
+                    {para}
+                  </p>
+                ))}
+              </div>
+            </>
+          )}
 
-          {/* the making story — generous measure & rhythm */}
-          <div className="mx-auto mt-10 max-w-prose">
-            {product.makingStory.split("\n").map((para, i) => (
-              <p
-                key={i}
-                className="mb-5 text-lg leading-[1.8] text-ink first:first-letter:float-left first:first-letter:mr-2 first:first-letter:font-display first:first-letter:text-6xl first:first-letter:leading-[0.8] first:first-letter:text-peacock"
-              >
-                {para}
-              </p>
-            ))}
-          </div>
-        </Container>
-
-        {/* stat band */}
-        <Container className="mt-12">
-          <div className="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-gold/40 bg-gold/40 text-center sm:grid-cols-3">
-            <Stat value={`${product.hoursToMake} hrs`} label="On the bench, by hand" />
+          {/* stat band (only the stats we actually have) */}
+          <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-gold/40 bg-gold/40 text-center sm:grid-cols-3">
             <Stat value={`${product.materials.length}`} label="Real materials, named" />
             <Stat value="1 of 1" label="One of a kind, never remade" />
+            {product.hoursToMake ? (
+              <Stat value={`${product.hoursToMake} hrs`} label="On the bench, by hand" />
+            ) : (
+              <Stat value="GBP" label="Free UK shipping over £75" />
+            )}
           </div>
-        </Container>
 
-        {/* materials + maker's note */}
-        <Container size="narrow" className="mt-14 grid gap-10 sm:grid-cols-2">
-          <div>
+          {/* materials */}
+          <div className="mt-12">
             <h3 className="font-display text-xl">Materials</h3>
             <ul className="mt-4 flex flex-wrap gap-2">
               {product.materials.map((m) => (
@@ -202,16 +217,23 @@ export default async function ProductPage({
               ))}
             </ul>
             <p className="mt-4 text-sm leading-relaxed text-ink-soft">{product.materialNote}</p>
-            <h3 className="mt-8 font-display text-xl">Dimensions</h3>
-            <p className="mt-3 text-ink-soft">{product.dimensions}</p>
+            {product.dimensions && (
+              <>
+                <h3 className="mt-8 font-display text-xl">Dimensions</h3>
+                <p className="mt-3 text-ink-soft">{product.dimensions}</p>
+              </>
+            )}
           </div>
 
-          <figure className="flex flex-col gap-4 rounded-lg bg-peacock p-7 text-cream">
-            <span className="eyebrow text-gold-soft">A note from the maker</span>
-            <blockquote className="font-display text-xl leading-relaxed">
-              &ldquo;{product.makersNote}&rdquo;
-            </blockquote>
-          </figure>
+          {/* optional maker's note */}
+          {product.makersNote && (
+            <figure className="mt-10 flex flex-col gap-4 rounded-lg bg-peacock p-7 text-cream">
+              <span className="eyebrow text-gold-soft">A note from the maker</span>
+              <blockquote className="font-display text-xl leading-relaxed">
+                &ldquo;{product.makersNote}&rdquo;
+              </blockquote>
+            </figure>
+          )}
         </Container>
       </section>
 

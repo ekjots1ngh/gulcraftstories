@@ -14,6 +14,7 @@ export function Gallery({ images, name }: { images: ProductImage[]; name: string
     <div className="flex flex-col gap-4">
       <PieceImage
         swatch={current.swatch}
+        src={current.src}
         label={current.alt || name}
         ratio="square"
         className="shadow-[var(--shadow-soft)]"
@@ -32,7 +33,7 @@ export function Gallery({ images, name }: { images: ProductImage[]; name: string
                 i === active ? "ring-peacock" : "ring-transparent hover:ring-gold/60",
               )}
             >
-              <PieceImage swatch={img.swatch} ratio="square" label={img.alt} />
+              <PieceImage swatch={img.swatch} src={img.src} ratio="square" label={img.alt} />
             </button>
           ))}
         </div>

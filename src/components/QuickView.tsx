@@ -49,7 +49,7 @@ export function QuickView({ product, onClose }: { product: Product; onClose: () 
         </button>
 
         <div className="sm:w-1/2">
-          <PieceImage swatch={product.images[0].swatch} label={product.name} ratio="square" />
+          <PieceImage swatch={product.images[0].swatch} src={product.images[0].src} label={product.name} ratio="square" />
         </div>
 
         <div className="flex flex-1 flex-col gap-4 p-6 sm:p-7">

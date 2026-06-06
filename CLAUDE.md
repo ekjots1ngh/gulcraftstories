@@ -113,20 +113,21 @@ and the mega-menu. Sold pieces are shown (not hidden), with the price struck and
 a "found its home / never remade" note.
 
 ### Per-piece content model
-Implemented in `src/lib/products.ts` as the `Product` type: `name`, `type`
-(necklaces/earrings/bracelets/anklets), `edit` (collection), `materials[]`
-(from the real-materials taxonomy), `price` + `currency`, `description`,
-`materialNote` (specific tactile detail), `dimensions`, `makingStory`,
-`makersNote`, `hoursToMake`, `images[]` (multiple; `swatch` placeholders now,
-`src` later), and `status` (`available` | `sold`). Seed pieces are provided and
-are replaceable; product data lives in this file (a CMS can return this shape later).
+Implemented in `src/lib/products.ts` as the `Product` type: `name`, `subtitle`,
+`type` (necklaces/earrings), `edit` (collection), `materials[]` (taxonomy),
+`price` + `currency`, `description` (the piece's story), `materialNote` (specific
+materials), `images[]` (real photos at `/public/products/<slug>.jpg`), `status`
+(`available` | `sold`), `addedAt`. Optional: `dimensions`, `makingStory`,
+`makersNote`, `hoursToMake` (UI hides them when absent). **The catalogue is the
+maker's 17 real pieces with real photography**; product data lives in this file
+(a CMS can return this shape later).
 
 ### Three ways to browse (taxonomies)
-Exported from `products.ts`: `TYPES`, `EDITS`, and `MATERIALS`. **Materials use
-her real palette:** semi-precious stones, beads, ceramics, air-dry clay, brass
-charms/beads, crochet. `/shop` filters on any combination via `?type=`, `?edit=`,
-`?material=` (AND); the header mega-menu links into each axis (type/material →
-shop filters, edit → the immersive edit page).
+Exported from `products.ts`: `TYPES` (necklaces, earrings), `EDITS` (the five),
+and `MATERIALS` (semi-precious stones, ceramic & porcelain, glass beads, brass &
+metal, textile & thread). `/shop` filters on any combination via `?type=`,
+`?edit=`, `?material=` (AND); the header mega-menu links into each axis
+(type/material → shop filters, edit → the immersive edit page).
 
 ### Filtering, sorting & product cards
 `src/components/ProductBrowser.tsx` is a reusable **client** component that
@@ -290,9 +291,11 @@ every route inherits the sticky header (announcement bar, nav, cart) and footer.
   card and favicon are **generated** by `src/app/opengraph-image.tsx` /
   `twitter-image.tsx` / `icon.tsx` (next/og) from the brand motif — no static
   assets. Draft pages set `robots: { index: false }`.
-- **Images:** placeholders are CSS gradients (`PieceImage`) — no network images
-  yet. When real photos arrive, swap to `next/image` (responsive `sizes`,
-  lazy by default). Fonts use `next/font` (self-hosted, `display: swap`).
+- **Images:** real product photos live in `/public/products/<slug>.jpg` and are
+  rendered by `PieceImage` (lazy-loaded `<img>` over a matching gradient that
+  shows while loading / if missing); the logo is `/public/logo.png`. Decorative
+  spots without a photo (journal covers, edit heroes) fall back to CSS gradients.
+  Fonts use `next/font` (self-hosted, `display: swap`).
 
 ### Project structure
 ```

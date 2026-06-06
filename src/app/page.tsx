@@ -54,16 +54,19 @@ export default function Home() {
           </div>
 
           <div className="relative">
-            <PieceImage
-              swatch={["#0E5A5B", "#C9A24B"]}
-              label="Featured piece"
-              ratio="portrait"
-              className="shadow-[var(--shadow-soft)]"
-            />
+            <Link href="/shop/meadow-cascade" aria-label="Meadow Cascade">
+              <PieceImage
+                swatch={["#7E5AA2", "#0E5A5B"]}
+                src="/products/meadow-cascade.jpg"
+                label="Meadow Cascade — a gemstone bib necklace"
+                ratio="portrait"
+                className="shadow-[var(--shadow-soft)]"
+              />
+            </Link>
             <div className="absolute -bottom-5 -left-3 max-w-[14rem] rounded-md bg-cream p-4 shadow-[var(--shadow-card)] sm:-left-6">
-              <span className="eyebrow text-marigold-ink">This week</span>
-              <p className="mt-1 font-display text-lg leading-snug">Peacock Haar</p>
-              <p className="text-xs text-ink-soft">21 hours on the bench</p>
+              <span className="eyebrow text-marigold-ink">The showpiece</span>
+              <p className="mt-1 font-display text-lg leading-snug">Meadow Cascade</p>
+              <p className="text-xs text-ink-soft">Dozens of gemstones, by hand</p>
             </div>
           </div>
         </Container>
@@ -151,7 +154,7 @@ export default function Home() {
       {/* ───────── NARRATIVE BAND ───────── */}
       <section className="bg-peacock py-16 text-cream sm:py-24">
         <Container className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
-          <PieceImage swatch={["#C9A24B", "#0A4344"]} label="At the bench" ratio="landscape" />
+          <PieceImage swatch={["#9A5B33", "#0A4344"]} src="/products/patchwork-garden.jpg" label="Patchwork Garden, handmade" ratio="landscape" />
           <div className="flex flex-col items-start gap-5">
             <span className="eyebrow text-gold-soft">The hours behind the craft</span>
             <h2 className="text-3xl leading-tight text-cream sm:text-4xl">

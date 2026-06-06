@@ -4,7 +4,7 @@ date: "2026-05-22"
 kind: "The name"
 excerpt: "Gul means flower. The rest of the name — craft, and stories — is just what we do with it."
 cover: ["#E08A1E", "#B5267A"]
-products: ["clay-bloom-pendant", "marigold-jhumka"]
+products: ["marigold-morning", "meadow-cascade"]
 edits: ["gulzar"]
 ---
 

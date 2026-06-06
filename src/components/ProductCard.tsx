@@ -24,7 +24,7 @@ export function ProductCard({
 }) {
   const [quickView, setQuickView] = useState(false);
   const sold = product.status === "sold";
-  const hoverImage = product.images[1] ?? product.images[0];
+  const img = product.images[0];
 
   return (
     <>
@@ -37,20 +37,12 @@ export function ProductCard({
       >
         <div className="relative overflow-hidden rounded-md">
           <Link href={`/shop/${product.slug}`} aria-label={product.name} className="block">
-            {/* base image */}
             <PieceImage
-              swatch={product.images[0].swatch}
+              swatch={img.swatch}
+              src={img.src}
               label={product.name}
-              className={cn("transition-opacity duration-500 group-hover:opacity-0", sold && "saturate-[0.7]")}
+              className={cn("transition-transform duration-500 group-hover:scale-105", sold && "saturate-[0.7]")}
             />
-            {/* hover image (crossfade) */}
-            <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-              <PieceImage
-                swatch={hoverImage.swatch}
-                label={hoverImage.alt}
-                className={cn("h-full w-full", sold && "saturate-[0.7]")}
-              />
-            </div>
           </Link>
 
           {/* badge */}
