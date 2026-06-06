@@ -54,19 +54,19 @@ export default function Home() {
           </div>
 
           <div className="relative">
-            <Link href="/shop/meadow-cascade" aria-label="Meadow Cascade">
+            <Link href="/shop/peacock-hour" aria-label="Peacock Hour">
               <PieceImage
-                swatch={["#7E5AA2", "#0E5A5B"]}
-                src="/products/meadow-cascade.jpg"
-                label="Meadow Cascade — a gemstone bib necklace"
+                swatch={["#0E5A5B", "#3B2A4A"]}
+                src="/products/peacock-hour.jpg"
+                label="Peacock Hour — a beaded necklace"
                 ratio="portrait"
                 className="shadow-[var(--shadow-soft)]"
               />
             </Link>
             <div className="absolute -bottom-5 -left-3 max-w-[14rem] rounded-md bg-cream p-4 shadow-[var(--shadow-card)] sm:-left-6">
-              <span className="eyebrow text-marigold-ink">The showpiece</span>
-              <p className="mt-1 font-display text-lg leading-snug">Meadow Cascade</p>
-              <p className="text-xs text-ink-soft">Dozens of gemstones, by hand</p>
+              <span className="eyebrow text-marigold-ink">This week</span>
+              <p className="mt-1 font-display text-lg leading-snug">Peacock Hour</p>
+              <p className="text-xs text-ink-soft">Painted peacock eyes, by hand</p>
             </div>
           </div>
         </Container>
