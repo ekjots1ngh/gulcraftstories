@@ -8,7 +8,7 @@ export const SITE = {
   instagram: "https://instagram.com/gulcraftstories",
   // International format, digits only (no "+"). Replace with the real number,
   // or set NEXT_PUBLIC_WHATSAPP_NUMBER in the environment.
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "440000000000",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "447466397162",
   whatsappMessage: "Hi Gul Craft Stories — I have a question about a piece.",
 };
 
