@@ -20,11 +20,11 @@ const hanken = Hanken_Grotesk({
 });
 
 const SITE_DESC =
-  "Handmade Indian jewellery, with the story of every piece told as carefully as it was made. The craft, the materials, and the hours behind each piece — one of one.";
+  "Handmade jewellery, with the story of every piece told as carefully as it was made. The craft, the materials, and the hours behind each piece — one of one.";
 
 export const metadata: Metadata = {
   title: {
-    default: "Gul Craft Stories — Handmade Indian Jewellery",
+    default: "Gul Craft Stories — Handmade Jewellery",
     template: "%s · Gul Craft Stories",
   },
   description: SITE_DESC,
@@ -32,7 +32,6 @@ export const metadata: Metadata = {
   applicationName: "Gul Craft Stories",
   keywords: [
     "handmade jewellery",
-    "Indian jewellery",
     "one of a kind",
     "air-dry clay",
     "ceramic jewellery",
@@ -41,7 +40,7 @@ export const metadata: Metadata = {
     "semi-precious stones",
   ],
   openGraph: {
-    title: "Gul Craft Stories — Handmade Indian Jewellery",
+    title: "Gul Craft Stories — Handmade Jewellery",
     description: SITE_DESC,
     type: "website",
     siteName: "Gul Craft Stories",
@@ -49,7 +48,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gul Craft Stories — Handmade Indian Jewellery",
+    title: "Gul Craft Stories — Handmade Jewellery",
     description: SITE_DESC,
   },
 };

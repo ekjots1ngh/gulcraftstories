@@ -8,7 +8,7 @@ import { ReviewNote } from "@/components/ReviewNote";
 export const metadata: Metadata = {
   title: "Our Story",
   description:
-    "The maker behind Gul Craft Stories — a small, hand-led jewellery practice rooted in Indian craft, clay, thread, brass and stone.",
+    "The maker behind Gul Craft Stories — a small, hand-led jewellery practice rooted in craft: clay, thread, brass and stone.",
 };
 
 export default function OurStoryPage() {
@@ -58,8 +58,8 @@ export default function OurStoryPage() {
           <p>
             The motifs I love — the marigold, the jaali screen, the colours of
             dusk — come from where I&apos;m from. I use them as accents and
-            memories, never as costume. The aim is something that feels both
-            Indian and entirely modern, rich but uncluttered.
+            memories, never as costume. The aim is something that feels rooted
+            and entirely modern, rich but uncluttered.
           </p>
         </Container>
       </section>

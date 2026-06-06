@@ -70,7 +70,7 @@ export function Footer() {
           <div className="flex flex-col gap-4">
             <Logo color="text-cream" markColor="var(--color-gold-soft)" />
             <p className="max-w-xs text-sm leading-relaxed text-cream/70">
-              Handmade Indian jewellery, with the story of every piece told as
+              Handmade jewellery, with the story of every piece told as
               carefully as it was made.
             </p>
             <div className="flex flex-col gap-1 text-sm">
