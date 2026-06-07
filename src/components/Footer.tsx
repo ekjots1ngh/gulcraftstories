@@ -113,7 +113,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 flex flex-col gap-2 text-xs text-cream/60 sm:flex-row sm:items-center sm:justify-between">
-          <span>© {new Date().getFullYear()} Gul Craft Stories. Made by hand.</span>
+          <span>© {new Date().getFullYear()} GulCraft Stories. Made by hand.</span>
           <span>Prices in GBP · Worldwide shipping</span>
         </div>
       </Container>

@@ -91,7 +91,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     q: "Do you sell gift vouchers?",
     a: (
       <>
-        Yes {" "}
+        Yes,{" "}
         <Link href="/gift-cards" className="underline hover:text-marigold-ink">digital gift vouchers</Link>{" "}
         let someone choose their own piece.
       </>

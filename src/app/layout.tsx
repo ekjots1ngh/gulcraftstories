@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { Analytics } from "@vercel/analytics/next";
 import { CartProvider } from "@/lib/cart";
 import { WishlistProvider } from "@/lib/wishlist";
 import { CurrencyProvider } from "@/lib/currency";
@@ -25,12 +26,12 @@ const SITE_DESC =
 
 export const metadata: Metadata = {
   title: {
-    default: "Gul Craft Stories, Handmade Jewellery",
-    template: "%s · Gul Craft Stories",
+    default: "GulCraft Stories, Handmade Jewellery",
+    template: "%s · GulCraft Stories",
   },
   description: SITE_DESC,
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com"),
-  applicationName: "Gul Craft Stories",
+  applicationName: "GulCraft Stories",
   keywords: [
     "handmade jewellery",
     "one of a kind",
@@ -41,15 +42,15 @@ export const metadata: Metadata = {
     "semi-precious stones",
   ],
   openGraph: {
-    title: "Gul Craft Stories, Handmade Jewellery",
+    title: "GulCraft Stories, Handmade Jewellery",
     description: SITE_DESC,
     type: "website",
-    siteName: "Gul Craft Stories",
+    siteName: "GulCraft Stories",
     locale: "en_GB",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gul Craft Stories, Handmade Jewellery",
+    title: "GulCraft Stories, Handmade Jewellery",
     description: SITE_DESC,
   },
 };
@@ -76,6 +77,7 @@ export default function RootLayout({
             </WishlistProvider>
           </CartProvider>
         </CurrencyProvider>
+        <Analytics />
       </body>
     </html>
   );

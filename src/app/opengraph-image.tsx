@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { motifDataUri } from "@/lib/motif-svg";
 
-export const alt = "Gul Craft Stories, handmade jewellery, one of a kind";
+export const alt = "GulCraft Stories, handmade jewellery, one of a kind";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -29,7 +29,7 @@ export default function OgImage() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={motifDataUri("#E3CF93")} width={92} height={92} alt="" />
         <div style={{ fontSize: 74, fontWeight: 600, marginTop: 28, letterSpacing: -1 }}>
-          Gul Craft Stories
+          GulCraft Stories
         </div>
         <div style={{ fontSize: 30, marginTop: 14, color: "rgba(250,244,232,0.85)", maxWidth: 820 }}>
           Handmade jewellery, the story of every piece, told as carefully as it was made.

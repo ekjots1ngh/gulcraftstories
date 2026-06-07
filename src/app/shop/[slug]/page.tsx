@@ -35,9 +35,17 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getProduct(slug);
   if (!product) return { title: "Not found" };
+  const img = `/products/${product.slug}.jpg`;
   return {
     title: `${product.name}`,
     description: product.description,
+    openGraph: {
+      title: `${product.name} · GulCraft Stories`,
+      description: product.description,
+      images: [{ url: img }],
+      type: "website",
+    },
+    twitter: { card: "summary_large_image", images: [img] },
   };
 }
 
@@ -55,8 +63,37 @@ export default async function ProductPage({
   const oneOfAKind = getFeaturedPost();
   const sold = product.status === "sold";
 
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com";
+  const productLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: [`${base}/products/${product.slug}.jpg`],
+    description: product.description,
+    brand: { "@type": "Brand", name: "GulCraft Stories" },
+    category: typeName(product.type),
+    offers: {
+      "@type": "Offer",
+      price: product.price,
+      priceCurrency: product.currency,
+      availability: sold ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
+      url: `${base}/shop/${product.slug}`,
+    },
+  };
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Shop", item: `${base}/shop` },
+      { "@type": "ListItem", position: 2, name: typeName(product.type), item: `${base}/shop?type=${product.type}` },
+      { "@type": "ListItem", position: 3, name: product.name, item: `${base}/shop/${product.slug}` },
+    ],
+  };
+
   return (
     <main className="flex-1">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       {/* breadcrumb */}
       <Container className="pt-6">
         <nav className="flex flex-wrap items-center gap-2 text-xs text-ink-soft">

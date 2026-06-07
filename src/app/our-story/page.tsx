@@ -8,7 +8,7 @@ import { ReviewNote } from "@/components/ReviewNote";
 export const metadata: Metadata = {
   title: "Our Story",
   description:
-    "The maker behind Gul Craft Stories, a small, hand-led jewellery practice rooted in craft: clay, thread, brass and stone.",
+    "The maker behind GulCraft Stories, a small, hand-led jewellery practice rooted in craft: clay, thread, brass and stone.",
 };
 
 export default function OurStoryPage() {
@@ -21,7 +21,7 @@ export default function OurStoryPage() {
             <span className="eyebrow text-peacock">The maker</span>
             <h1 className="text-[2.5rem] leading-[1.05] sm:text-6xl">A craftsperson&apos;s table, not a factory line.</h1>
             <p className="max-w-md text-lg leading-relaxed text-ink-soft">
-              Gul Craft Stories is a small, hand-led practice. Every piece is made
+              GulCraft Stories is a small, hand-led practice. Every piece is made
               by one pair of hands, shaped, painted, strung and finished, and
               sent out with the story of how it came to be.
             </p>

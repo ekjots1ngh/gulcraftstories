@@ -20,8 +20,20 @@ export default function Home() {
   const posts = getAllPosts()
     .filter((p) => p.slug !== featuredStory?.slug)
     .slice(0, 3);
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com";
+  const orgLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "GulCraft Stories",
+    url: base,
+    logo: `${base}/logo.png`,
+    sameAs: ["https://instagram.com/gulcraftstories"],
+  };
+  const siteLd = { "@context": "https://schema.org", "@type": "WebSite", name: "GulCraft Stories", url: base };
   return (
     <main className="flex-1">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteLd) }} />
       {/* ───────── HERO ───────── */}
       <section className="relative overflow-hidden">
         <Container className="grid items-center gap-10 py-12 sm:py-20 md:grid-cols-[1.05fr_0.95fr] md:gap-14">
@@ -227,7 +239,7 @@ export default function Home() {
             “I make the things I grew up surrounded by, and I want you to know
             the hands and the hours that went into them.”
           </p>
-          <p className="mt-6 eyebrow text-marigold-ink">The maker, Gul Craft Stories</p>
+          <p className="mt-6 eyebrow text-marigold-ink">The maker, GulCraft Stories</p>
         </Container>
       </section>
     </main>
