@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CartProvider } from "@/lib/cart";
 import { WishlistProvider } from "@/lib/wishlist";
+import { CurrencyProvider } from "@/lib/currency";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -65,14 +66,16 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-cream text-ink">
         <a href="#main-content" className="skip-link">Skip to content</a>
-        <CartProvider>
-          <WishlistProvider>
-            <Header />
-            <div id="main-content">{children}</div>
-            <Footer />
-            <WhatsAppButton />
-          </WishlistProvider>
-        </CartProvider>
+        <CurrencyProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <Header />
+              <div id="main-content">{children}</div>
+              <Footer />
+              <WhatsAppButton />
+            </WishlistProvider>
+          </CartProvider>
+        </CurrencyProvider>
       </body>
     </html>
   );

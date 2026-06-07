@@ -7,7 +7,8 @@ import { Button } from "@/components/Button";
 import { PieceImage } from "@/components/PieceImage";
 import { CheckoutButton } from "@/components/CheckoutButton";
 import { TrustSignals } from "@/components/TrustSignals";
-import { useCart, formatMoney } from "@/lib/cart";
+import { useCart } from "@/lib/cart";
+import { Price } from "@/components/Price";
 import { typeName } from "@/lib/products";
 
 export default function CartPage() {
@@ -69,7 +70,7 @@ export default function CartPage() {
                           <p className="text-xs text-ink-soft">{typeName(product.type)}</p>
                         </div>
                         <span className="shrink-0 font-semibold">
-                          {formatMoney(lineTotal, product.currency)}
+                          <Price gbp={lineTotal} />
                         </span>
                       </div>
 
@@ -112,7 +113,7 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between">
                   <dt className="text-ink-soft">Subtotal</dt>
-                  <dd className="font-semibold">{formatMoney(subtotal)}</dd>
+                  <dd className="font-semibold"><Price gbp={subtotal} /></dd>
                 </div>
                 <div className="flex justify-between border-t border-gold/40 pt-3">
                   <dt className="text-ink-soft">Shipping</dt>
@@ -120,10 +121,13 @@ export default function CartPage() {
                 </div>
               </dl>
 
-              <div className="mb-6 mt-6 flex items-baseline justify-between">
+              <div className="mt-6 flex items-baseline justify-between">
                 <span className="text-sm text-ink-soft">Total</span>
-                <span className="font-display text-2xl">{formatMoney(subtotal)}</span>
+                <span className="font-display text-2xl"><Price gbp={subtotal} /></span>
               </div>
+              <p className="mb-6 mt-2 text-xs text-ink-soft">
+                Non-GBP prices are approximate; you&apos;re charged in GBP (your bank converts).
+              </p>
 
               <CheckoutButton />
 

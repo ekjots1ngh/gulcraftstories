@@ -3,8 +3,9 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import type { Product } from "@/lib/products";
-import { formatMoney, materialName, ONE_OF_ONE } from "@/lib/products";
+import { materialName, ONE_OF_ONE } from "@/lib/products";
 import { PieceImage } from "./PieceImage";
+import { Price } from "./Price";
 import { AddToCart } from "./AddToCart";
 import { MotifMark } from "./MotifDivider";
 
@@ -61,7 +62,7 @@ export function QuickView({ product, onClose }: { product: Product; onClose: () 
               ) : (
                 <>
                   <span className="font-display text-2xl">
-                    {formatMoney(product.price, product.currency)}
+                    <Price gbp={product.price} />
                   </span>
                   <span className="rounded-full bg-peacock/10 px-2.5 py-0.5 text-xs font-semibold text-peacock">
                     1 of 1

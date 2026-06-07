@@ -11,12 +11,12 @@ import { ProductCard } from "@/components/ProductCard";
 import { JournalCard } from "@/components/JournalCard";
 import { PieceImage } from "@/components/PieceImage";
 import { Reviews } from "@/components/Reviews";
+import { Price } from "@/components/Price";
 import { getPostsForProduct, getFeaturedPost } from "@/lib/journal";
 import {
   products,
   getProduct,
   getRelated,
-  formatMoney,
   typeName,
   editName,
   materialName,
@@ -90,9 +90,7 @@ export default async function ProductPage({
                 <span className="text-2xl font-semibold text-ink-soft">Sold</span>
               ) : (
                 <>
-                  <span className="text-2xl font-semibold">
-                    {formatMoney(product.price, product.currency)}
-                  </span>
+                  <Price gbp={product.price} className="text-2xl font-semibold" />
                   <StatusBadge sold={false} />
                 </>
               )}

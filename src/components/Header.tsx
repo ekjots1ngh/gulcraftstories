@@ -6,6 +6,7 @@ import { Logo } from "./Logo";
 import { cn } from "@/lib/cn";
 import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
+import { CurrencySwitcher } from "./CurrencySwitcher";
 import { TYPES, EDITS, MATERIALS } from "@/lib/products";
 
 const LINKS = [
@@ -119,6 +120,7 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
           </nav>
 
           <div className="flex items-center gap-1">
+            <CurrencySwitcher onDark={onDark} className="mr-1" />
             <Link
               href="/wishlist"
               aria-label={`Wishlist, ${wishCount} saved`}

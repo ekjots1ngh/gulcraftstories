@@ -3,8 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { Product } from "@/lib/products";
-import { formatMoney, ONE_OF_ONE } from "@/lib/products";
+import { ONE_OF_ONE } from "@/lib/products";
 import { PieceImage } from "./PieceImage";
+import { Price } from "./Price";
 import { QuickView } from "./QuickView";
 import { WishlistButton } from "./WishlistButton";
 import { cn } from "@/lib/cn";
@@ -72,7 +73,7 @@ export function ProductCard({
           <div className="flex items-baseline justify-between gap-3">
             <h3 className="font-display text-lg leading-snug">{product.name}</h3>
             <span className="shrink-0 text-sm font-semibold text-ink-soft">
-              {sold ? "Sold" : formatMoney(product.price, product.currency)}
+              {sold ? "Sold" : <Price gbp={product.price} />}
             </span>
           </div>
           <p className="line-clamp-2 text-sm leading-relaxed text-ink-soft">{product.description}</p>
