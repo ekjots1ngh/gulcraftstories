@@ -12,7 +12,7 @@ import { products, formatMoney, type Product } from "./products";
 
 const STORAGE_KEY = "gcs-cart-v1";
 
-/** Raw stored shape — only slug + quantity, so it survives data edits. */
+/** Raw stored shape, only slug + quantity, so it survives data edits. */
 type StoredItem = { slug: string; quantity: number };
 
 /** Resolved line item with the full product joined in. */

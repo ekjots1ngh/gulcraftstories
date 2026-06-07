@@ -8,7 +8,7 @@ import { products } from "@/lib/products";
  * Body: { items: { slug: string; quantity: number }[] }
  *
  * Creates a Stripe hosted Checkout Session and returns its URL. Prices are
- * looked up from our own product data — the client only sends slugs + quantity,
+ * looked up from our own product data, the client only sends slugs + quantity,
  * so it can never set its own price. We never see or store card details; Stripe
  * collects payment on its hosted page.
  */
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
   for (const raw of items) {
     const slug = String((raw as { slug?: unknown })?.slug ?? "");
     const product = products.find((p) => p.slug === slug);
-    // Skip unknown, sold, or duplicate slugs — every piece is one of a kind.
+    // Skip unknown, sold, or duplicate slugs, every piece is one of a kind.
     if (!product || product.status === "sold" || seen.has(slug)) continue;
     seen.add(slug);
 

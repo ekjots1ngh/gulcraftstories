@@ -49,7 +49,7 @@ export function Footer() {
         <div className="mb-12 flex flex-col items-center gap-4 border-b border-cream/15 pb-12 text-center">
           <h3 className="font-display text-2xl">Letters from the bench</h3>
           <p className="max-w-md text-sm leading-relaxed text-cream/70">
-            New pieces and the stories behind them — a few quiet letters a month.
+            New pieces and the stories behind them, a few quiet letters a month.
           </p>
           <form className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
             <label htmlFor="footer-email" className="sr-only">Email address</label>

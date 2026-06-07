@@ -2,7 +2,7 @@
  * Product data model + REAL catalogue for GulCraft Stories.
  *
  * BRAND RULE: every piece is one of a kind. Stock is always 1, and once a piece
- * sells it is marked `sold` permanently — it is never restocked or remade.
+ * sells it is marked `sold` permanently, it is never restocked or remade.
  *
  * Photos live in /public/products/<slug>.jpg. Names, prices, materials and
  * stories are the maker's real listings. Per-piece dimensions / hours can be
@@ -81,7 +81,7 @@ export type Product = {
 };
 
 /** The brand promise, surfaced on cards and product pages. */
-export const ONE_OF_ONE = "One of one — when it's gone, it's gone";
+export const ONE_OF_ONE = "One of one, when it's gone, it's gone";
 
 export const products: Product[] = [
   {
@@ -93,10 +93,10 @@ export const products: Product[] = [
     materials: ["ceramics", "brass"],
     price: 49,
     currency: "GBP",
-    description: `Worn long enough to graze the heart, Bazaar Song carries every colour of a morning market — ochre, cobalt, coral and gold. A piece for the woman who collects places, not things.`,
+    description: `Worn long enough to graze the heart, Bazaar Song carries every colour of a morning market, ochre, cobalt, coral and gold. A piece for the woman who collects places, not things.`,
     materialNote: `Glazed ceramic beads, antiqued brass Tuareg-style pendant and crescent spacers, waxed cord.`,
     images: [
-      { alt: "Bazaar Song — handmade by GulCraft Stories", swatch: ["#E08A1E", "#0E5A5B"], src: "/products/bazaar-song.jpg" },
+      { alt: "Bazaar Song, handmade by GulCraft Stories", swatch: ["#E08A1E", "#0E5A5B"], src: "/products/bazaar-song.jpg" },
     ],
     status: "available",
     addedAt: "2026-06-05",
@@ -111,10 +111,10 @@ export const products: Product[] = [
     materials: ["semi-precious-stones", "brass"],
     price: 46,
     currency: "GBP",
-    description: `Mookaite is the stone of slow, sun-warmed earth, and Desert Ember strings it in every shade of a canyon at dusk. Two red jasper points frame a small brass charm like a fire kept burning. Grounding, earthy and quietly bold — it pairs as easily with linen as with leather.`,
+    description: `Mookaite is the stone of slow, sun-warmed earth, and Desert Ember strings it in every shade of a canyon at dusk. Two red jasper points frame a small brass charm like a fire kept burning. Grounding, earthy and quietly bold, it pairs as easily with linen as with leather.`,
     materialNote: `Mookaite jasper (mustard, plum and cream), red jasper point beads, brass focal charm and spacers.`,
     images: [
-      { alt: "Desert Ember — handmade by GulCraft Stories", swatch: ["#C9A24B", "#7E5AA2"], src: "/products/desert-ember.jpg" },
+      { alt: "Desert Ember, handmade by GulCraft Stories", swatch: ["#C9A24B", "#7E5AA2"], src: "/products/desert-ember.jpg" },
     ],
     status: "available",
     addedAt: "2026-06-04",
@@ -131,7 +131,7 @@ export const products: Product[] = [
     description: `Hot pink meets cool turquoise the way a wildflower meets a mountain sky. The centrepiece is a single turquoise nugget, veined and unrepeatable, finished with a hand-inlaid Tibetan bead. A joyful, unexpected colour story for anyone who refuses to dress quietly.`,
     materialNote: `Dyed chalcedony cube beads, natural turquoise pendant, barrel ceramic beads, a Tibetan turquoise-inlay capped bead, and brass spacers.`,
     images: [
-      { alt: "Himalayan Bloom — handmade by GulCraft Stories", swatch: ["#B5267A", "#0E5A5B"], src: "/products/himalayan-bloom.jpg" },
+      { alt: "Himalayan Bloom, handmade by GulCraft Stories", swatch: ["#B5267A", "#0E5A5B"], src: "/products/himalayan-bloom.jpg" },
     ],
     status: "available",
     addedAt: "2026-06-03",
@@ -149,7 +149,7 @@ export const products: Product[] = [
     description: `Soft as a shell found at the tide line, Coral Shore drops to a slim silver arrow set with three turquoise stones. It is beachy without trying, the kind of necklace that lives on bare skin all summer. For the free spirit who is always half-packed for somewhere warmer.`,
     materialNote: `Pink coral rounds and heishi discs, turquoise cabochons, silver arrow-and-feather pendant.`,
     images: [
-      { alt: "Coral Shore — handmade by GulCraft Stories", swatch: ["#D96AA8", "#0E5A5B"], src: "/products/coral-shore.jpg" },
+      { alt: "Coral Shore, handmade by GulCraft Stories", swatch: ["#D96AA8", "#0E5A5B"], src: "/products/coral-shore.jpg" },
     ],
     status: "available",
     addedAt: "2026-06-02",
@@ -163,10 +163,10 @@ export const products: Product[] = [
     materials: ["glass", "brass", "textile"],
     price: 52,
     currency: "GBP",
-    description: `Every coin on Caravan Tales has travelled before it reached you — reclaimed tribal silver, strung with glass and a hand-tied cotton tassel on an adjustable cord. It rings softly when you move, like jewellery with a memory. A true one-of-a-kind for the collector of stories.`,
+    description: `Every coin on Caravan Tales has travelled before it reached you, reclaimed tribal silver, strung with glass and a hand-tied cotton tassel on an adjustable cord. It rings softly when you move, like jewellery with a memory. A true one-of-a-kind for the collector of stories.`,
     materialNote: `Vintage Kuchi tribal coin charms, lac and glass beads, cotton tassel, and adjustable red cord.`,
     images: [
-      { alt: "Caravan Tales — handmade by GulCraft Stories", swatch: ["#B5267A", "#E08A1E"], src: "/products/caravan-tales.jpg" },
+      { alt: "Caravan Tales, handmade by GulCraft Stories", swatch: ["#B5267A", "#E08A1E"], src: "/products/caravan-tales.jpg" },
     ],
     status: "available",
     addedAt: "2026-06-01",
@@ -181,10 +181,10 @@ export const products: Product[] = [
     materials: ["textile"],
     price: 34,
     currency: "GBP",
-    description: `Featherlight and entirely plastic-free, Patchwork Garden is sewn from offcuts of cotton and sari fabric, each tiny blossom knotted by hand. It is the necklace that gets the compliments — 'where is that from?' — because there is genuinely nothing else like it. Sustainable, playful, and kind on the skin.`,
+    description: `Featherlight and entirely plastic-free, Patchwork Garden is sewn from offcuts of cotton and sari fabric, each tiny blossom knotted by hand. It is the necklace that gets the compliments, 'where is that from?', because there is genuinely nothing else like it. Sustainable, playful, and kind on the skin.`,
     materialNote: `Hand-stitched kantha cotton band, recycled fabric blossom charms, wooden beads.`,
     images: [
-      { alt: "Patchwork Garden — handmade by GulCraft Stories", swatch: ["#E08A1E", "#9A5B33"], src: "/products/patchwork-garden.jpg" },
+      { alt: "Patchwork Garden, handmade by GulCraft Stories", swatch: ["#E08A1E", "#9A5B33"], src: "/products/patchwork-garden.jpg" },
     ],
     status: "available",
     addedAt: "2026-05-31",
@@ -198,10 +198,10 @@ export const products: Product[] = [
     materials: ["glass"],
     price: 30,
     currency: "GBP",
-    description: `A fine scatter of colour that sits close to the throat, finished with one little millefiori flower bead at the side. Confetti Trail is the everyday piece you reach for without thinking — light, happy, and easy to layer. The kind of small thing that makes a plain day feel like a celebration.`,
+    description: `A fine scatter of colour that sits close to the throat, finished with one little millefiori flower bead at the side. Confetti Trail is the everyday piece you reach for without thinking, light, happy, and easy to layer. The kind of small thing that makes a plain day feel like a celebration.`,
     materialNote: `Multicoloured glass seed beads and African trade beads, a red millefiori glass focal bead.`,
     images: [
-      { alt: "Confetti Trail — handmade by GulCraft Stories", swatch: ["#B5267A", "#E08A1E"], src: "/products/confetti-trail.jpg" },
+      { alt: "Confetti Trail, handmade by GulCraft Stories", swatch: ["#B5267A", "#E08A1E"], src: "/products/confetti-trail.jpg" },
     ],
     status: "available",
     addedAt: "2026-05-30",
@@ -215,10 +215,10 @@ export const products: Product[] = [
     materials: ["glass", "brass"],
     price: 40,
     currency: "GBP",
-    description: `Deep blue and warm red, the exact colours of the last light on a mountain. Each frosted glass bead is recycled and softened by hand, leading down to a carved red focal bead like a small sun setting. Bold but wearable — a quiet kind of drama.`,
+    description: `Deep blue and warm red, the exact colours of the last light on a mountain. Each frosted glass bead is recycled and softened by hand, leading down to a carved red focal bead like a small sun setting. Bold but wearable, a quiet kind of drama.`,
     materialNote: `Frosted recycled glass beads in blues, red glass beads, a carved cinnabar-red focal bead, and silver Bali-style spacers.`,
     images: [
-      { alt: "Mountain Dusk — handmade by GulCraft Stories", swatch: ["#0E5A5B", "#B5267A"], src: "/products/mountain-dusk.jpg" },
+      { alt: "Mountain Dusk, handmade by GulCraft Stories", swatch: ["#0E5A5B", "#B5267A"], src: "/products/mountain-dusk.jpg" },
     ],
     status: "available",
     addedAt: "2026-05-29",
@@ -235,7 +235,7 @@ export const products: Product[] = [
     description: `Every bead holds a tiny painted peacock eye, glazed so it shifts between teal and indigo as you turn. Set against black onyx and warm brass, Peacock Hour feels regal without weighing a thing. For the person who has always been drawn to that impossible blue-green.`,
     materialNote: `Hand-glazed ceramic square beads, peacock-feather motif beads, black onyx rounds, antiqued brass spacers.`,
     images: [
-      { alt: "Peacock Hour — handmade by GulCraft Stories", swatch: ["#0E5A5B", "#3B2A4A"], src: "/products/peacock-hour.jpg" },
+      { alt: "Peacock Hour, handmade by GulCraft Stories", swatch: ["#0E5A5B", "#3B2A4A"], src: "/products/peacock-hour.jpg" },
     ],
     status: "sold",
     addedAt: "2026-05-28",
@@ -250,10 +250,10 @@ export const products: Product[] = [
     materials: ["semi-precious-stones", "textile", "brass"],
     price: 55,
     currency: "GBP",
-    description: `A whole wildflower meadow gathered at the collarbone: dozens of real gemstone chips cascading from a hand-embroidered band, weighted with brass drops and a single coin. This is the showpiece — the necklace worn to be remembered. One exists, and then it is gone.`,
-    materialNote: `Mixed gemstone chips — amethyst, rose quartz, green aventurine, carnelian, citrine, lapis and turquoise — on a hand-embroidered band, with brass coin and teardrop dangles.`,
+    description: `A whole wildflower meadow gathered at the collarbone: dozens of real gemstone chips cascading from a hand-embroidered band, weighted with brass drops and a single coin. This is the showpiece, the necklace worn to be remembered. One exists, and then it is gone.`,
+    materialNote: `Mixed gemstone chips, amethyst, rose quartz, green aventurine, carnelian, citrine, lapis and turquoise, on a hand-embroidered band, with brass coin and teardrop dangles.`,
     images: [
-      { alt: "Meadow Cascade — handmade by GulCraft Stories", swatch: ["#7E5AA2", "#0E5A5B"], src: "/products/meadow-cascade.jpg" },
+      { alt: "Meadow Cascade, handmade by GulCraft Stories", swatch: ["#7E5AA2", "#0E5A5B"], src: "/products/meadow-cascade.jpg" },
     ],
     status: "available",
     addedAt: "2026-05-27",
@@ -268,10 +268,10 @@ export const products: Product[] = [
     materials: ["glass", "ceramics", "brass"],
     price: 45,
     currency: "GBP",
-    description: `Cool teal glass, the colour of shallow water, falling to a brass crescent moon. Tidewater Moon is calm, made wearable — the piece you put on and immediately feel a little more settled. Beautiful with white linen, a tan, and salt in your hair.`,
+    description: `Cool teal glass, the colour of shallow water, falling to a brass crescent moon. Tidewater Moon is calm, made wearable, the piece you put on and immediately feel a little more settled. Beautiful with white linen, a tan, and salt in your hair.`,
     materialNote: `Recycled sea-glass-style beads, glazed ceramic focal beads, brass crescent pendant and tube spacers.`,
     images: [
-      { alt: "Tidewater Moon — handmade by GulCraft Stories", swatch: ["#0E5A5B", "#C9A24B"], src: "/products/tidewater-moon.jpg" },
+      { alt: "Tidewater Moon, handmade by GulCraft Stories", swatch: ["#0E5A5B", "#C9A24B"], src: "/products/tidewater-moon.jpg" },
     ],
     status: "available",
     addedAt: "2026-05-26",
@@ -285,10 +285,10 @@ export const products: Product[] = [
     materials: ["glass", "semi-precious-stones"],
     price: 18,
     currency: "GBP",
-    description: `A pair of tiny stained-glass windows for your ears — cobalt glass scattered with hand-set millefiori flowers. Light enough to forget you are wearing them, bright enough that you won't want to. Everyday wildflowers, all year round.`,
+    description: `A pair of tiny stained-glass windows for your ears, cobalt glass scattered with hand-set millefiori flowers. Light enough to forget you are wearing them, bright enough that you won't want to. Everyday wildflowers, all year round.`,
     materialNote: `Blue millefiori glass beads, warm carnelian-tone accents, silver-plated ear wires.`,
     images: [
-      { alt: "Cornflower Drops — handmade by GulCraft Stories", swatch: ["#0E5A5B", "#3B2A4A"], src: "/products/cornflower-drops.jpg" },
+      { alt: "Cornflower Drops, handmade by GulCraft Stories", swatch: ["#0E5A5B", "#3B2A4A"], src: "/products/cornflower-drops.jpg" },
     ],
     status: "available",
     addedAt: "2026-05-25",
@@ -305,7 +305,7 @@ export const products: Product[] = [
     description: `Blue-and-white china, the kind you grew up seeing on a grandmother's shelf, reborn as a delicate drop earring. Porcelain Sky is gentle, classic and quietly nostalgic. A lovely little gift that feels like more than its price.`,
     materialNote: `Hand-painted blue-and-white porcelain beads, cobalt glass crystals, silver-plated ear wires.`,
     images: [
-      { alt: "Porcelain Sky — handmade by GulCraft Stories", swatch: ["#0E5A5B", "#C9A24B"], src: "/products/porcelain-sky.jpg" },
+      { alt: "Porcelain Sky, handmade by GulCraft Stories", swatch: ["#0E5A5B", "#C9A24B"], src: "/products/porcelain-sky.jpg" },
     ],
     status: "available",
     addedAt: "2026-05-24",
@@ -319,10 +319,10 @@ export const products: Product[] = [
     materials: ["ceramics", "glass"],
     price: 20,
     currency: "GBP",
-    description: `Each porcelain bead is painted with a single bloom — no two flowers, no two earrings quite alike. Marigold Morning brings a little warmth to grey days and arrives gift-ready in its GulCraft Stories box. The sort of present people keep the box for, too.`,
+    description: `Each porcelain bead is painted with a single bloom, no two flowers, no two earrings quite alike. Marigold Morning brings a little warmth to grey days and arrives gift-ready in its GulCraft Stories box. The sort of present people keep the box for, too.`,
     materialNote: `Hand-painted floral porcelain beads, red glass accents, silver-plated ear wires.`,
     images: [
-      { alt: "Marigold Morning — handmade by GulCraft Stories", swatch: ["#E08A1E", "#B5267A"], src: "/products/marigold-morning.jpg" },
+      { alt: "Marigold Morning, handmade by GulCraft Stories", swatch: ["#E08A1E", "#B5267A"], src: "/products/marigold-morning.jpg" },
     ],
     status: "available",
     addedAt: "2026-05-23",
@@ -337,10 +337,10 @@ export const products: Product[] = [
     materials: ["ceramics", "semi-precious-stones", "glass"],
     price: 15,
     currency: "GBP",
-    description: `Fresh as a sliced kiwi — speckled green ceramic and a chip of aventurine, the stone of new beginnings. Orchard Green is crisp, modern and a little bit cheeky. Spring in a pair of earrings, whatever the calendar says.`,
+    description: `Fresh as a sliced kiwi, speckled green ceramic and a chip of aventurine, the stone of new beginnings. Orchard Green is crisp, modern and a little bit cheeky. Spring in a pair of earrings, whatever the calendar says.`,
     materialNote: `Speckled green-glazed ceramic discs, green aventurine nuggets, clear glass tube beads, silver-plated ear wires.`,
     images: [
-      { alt: "Orchard Green — handmade by GulCraft Stories", swatch: ["#0E5A5B", "#C9A24B"], src: "/products/orchard-green.jpg" },
+      { alt: "Orchard Green, handmade by GulCraft Stories", swatch: ["#0E5A5B", "#C9A24B"], src: "/products/orchard-green.jpg" },
     ],
     status: "available",
     addedAt: "2026-05-22",
@@ -354,10 +354,10 @@ export const products: Product[] = [
     materials: ["glass"],
     price: 18,
     currency: "GBP",
-    description: `Old trade beads that once crossed deserts and seas, paired with rich red millefiori flowers. Festival Red is small but full of character — the earrings that make a plain shirt look intentional. For the lover of colour and a good origin story.`,
+    description: `Old trade beads that once crossed deserts and seas, paired with rich red millefiori flowers. Festival Red is small but full of character, the earrings that make a plain shirt look intentional. For the lover of colour and a good origin story.`,
     materialNote: `Red millefiori glass beads, blue-and-white chevron trade beads, glass accents, silver-plated ear wires.`,
     images: [
-      { alt: "Festival Red — handmade by GulCraft Stories", swatch: ["#B5267A", "#E08A1E"], src: "/products/festival-red.jpg" },
+      { alt: "Festival Red, handmade by GulCraft Stories", swatch: ["#B5267A", "#E08A1E"], src: "/products/festival-red.jpg" },
     ],
     status: "available",
     addedAt: "2026-05-21",
@@ -371,10 +371,10 @@ export const products: Product[] = [
     materials: ["semi-precious-stones", "glass"],
     price: 24,
     currency: "GBP",
-    description: `Labradorite flashes blue and grey like light through a storm cloud, grounded by one warm fluted red bead beneath. Storm & Ember is moody and elegant — understated until it catches the light, and then it is all anyone notices. For everyday wear with a little mystery.`,
+    description: `Labradorite flashes blue and grey like light through a storm cloud, grounded by one warm fluted red bead beneath. Storm & Ember is moody and elegant, understated until it catches the light, and then it is all anyone notices. For everyday wear with a little mystery.`,
     materialNote: `Labradorite rectangle beads, red Czech fluted glass beads, silver-plated ear wires.`,
     images: [
-      { alt: "Storm & Ember — handmade by GulCraft Stories", swatch: ["#3B2A4A", "#B5267A"], src: "/products/storm-and-ember.jpg" },
+      { alt: "Storm & Ember, handmade by GulCraft Stories", swatch: ["#3B2A4A", "#B5267A"], src: "/products/storm-and-ember.jpg" },
     ],
     status: "available",
     addedAt: "2026-05-20",
@@ -413,7 +413,7 @@ export const SORTS: { key: SortKey; label: string }[] = [
 
 export const PRICE_BUCKETS: { slug: string; label: string; min: number; max: number }[] = [
   { slug: "under-25", label: "Under £25", min: 0, max: 24.99 },
-  { slug: "25-45", label: "£25–£45", min: 25, max: 45 },
+  { slug: "25-45", label: "£25£45", min: 25, max: 45 },
   { slug: "over-45", label: "Over £45", min: 45.01, max: Number.POSITIVE_INFINITY },
 ];
 
@@ -437,7 +437,7 @@ export function sortProducts(list: Product[], key: SortKey): Product[] {
   }
 }
 
-/** Related pieces — prefer the same edit, then same type. */
+/** Related pieces, prefer the same edit, then same type. */
 export function getRelated(slug: string, limit = 3): Product[] {
   const current = getProduct(slug);
   if (!current) return [];

@@ -9,7 +9,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
  * "Adaptive Pricing" is enabled in the dashboard, which charges in the buyer's
  * local currency automatically). Non-GBP prices are shown as "≈" estimates.
  *
- * RATES: approximate, per £1. Update occasionally — they don't need to be exact
+ * RATES: approximate, per £1. Update occasionally, they don't need to be exact
  * because they're clearly labelled as estimates and the charge is in GBP.
  */
 export type CurrencyCode = "GBP" | "USD" | "EUR" | "INR" | "AUD" | "CAD" | "AED";

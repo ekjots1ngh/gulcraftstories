@@ -17,7 +17,7 @@ export default function WishlistPage() {
           <h1 className="text-4xl leading-tight sm:text-5xl">Your wishlist</h1>
           <p className="max-w-md text-base leading-relaxed text-ink-soft">
             Because every piece is one of a kind, saving one here doesn&apos;t hold
-            it — if it speaks to you, it&apos;s worth not waiting.
+            it, if it speaks to you, it&apos;s worth not waiting.
           </p>
         </div>
 
@@ -32,7 +32,7 @@ export default function WishlistPage() {
         ) : (
           <div className="flex flex-col items-center gap-5 py-10 text-center">
             <p className="text-ink-soft">
-              Nothing saved yet — tap the heart on any piece to keep it here.
+              Nothing saved yet, tap the heart on any piece to keep it here.
             </p>
             <Button href="/shop" variant="primary">
               Explore the pieces

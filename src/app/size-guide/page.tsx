@@ -6,27 +6,27 @@ import { MotifDivider } from "@/components/MotifDivider";
 export const metadata: Metadata = {
   title: "Size Guide",
   description:
-    "How to find your fit for necklaces, bracelets, anklets and rings — and how to measure at home.",
+    "How to find your fit for necklaces, bracelets, anklets and rings, and how to measure at home.",
 };
 
 const NECKLACES = [
-  ["36–40 cm", "Choker — sits high on the neck"],
-  ["42–46 cm", "Princess — the most common length, sits at the collarbone"],
-  ["50–60 cm", "Matinee — rests on the chest, lovely over knitwear"],
+  ["36 to 40 cm", "Choker, sits high on the neck"],
+  ["42 to 46 cm", "Princess, the most common length, sits at the collarbone"],
+  ["50 to 60 cm", "Matinee, rests on the chest, lovely over knitwear"],
 ];
 
 const SECTIONS = [
   {
     title: "Bracelets & anklets",
-    body: "Wrap a soft tape measure (or a strip of paper against a ruler) snugly around your wrist or ankle, then add about 1.5–2 cm for comfortable movement. If you're between sizes, message me — many pieces can be adjusted a little when I make them.",
+    body: "Wrap a soft tape measure (or a strip of paper against a ruler) snugly around your wrist or ankle, then add about 1.5 to 2 cm for comfortable movement. If you're between sizes, message me, many pieces can be adjusted a little when I make them.",
   },
   {
     title: "Rings",
-    body: "I work in UK ring sizes, usually K–T. The most reliable way is to take a ring you already wear and measure its inside diameter in millimetres, then tell me — or pop into any jeweller for a quick sizing. When in doubt, I'd rather make it right than make it twice.",
+    body: "I work in UK ring sizes, usually KT. The most reliable way is to take a ring you already wear and measure its inside diameter in millimetres, then tell me, or pop into any jeweller for a quick sizing. When in doubt, I'd rather make it right than make it twice.",
   },
   {
     title: "Earrings",
-    body: "Each pair lists its drop (how far it hangs) and weight on the product page. Because these are handmade, the two earrings in a pair may differ by a whisper — that's the mark of a hand, not a flaw.",
+    body: "Each pair lists its drop (how far it hangs) and weight on the product page. Because these are handmade, the two earrings in a pair may differ by a whisper, that's the mark of a hand, not a flaw.",
   },
 ];
 
@@ -69,7 +69,7 @@ export default function SizeGuidePage() {
         <div className="mt-12 rounded-lg bg-peacock p-7 text-cream">
           <h3 className="font-display text-xl">Still unsure?</h3>
           <p className="mt-2 leading-relaxed text-cream/85">
-            Send me a message and we&apos;ll work it out together — I&apos;d always
+            Send me a message and we&apos;ll work it out together, I&apos;d always
             rather you loved the fit. See also our{" "}
             <Link href="/care" className="underline hover:text-gold-soft">care guide</Link>.
           </p>

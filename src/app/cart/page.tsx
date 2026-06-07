@@ -27,14 +27,14 @@ export default function CartPage() {
 
         {cancelled && (
           <p className="mt-5 rounded-md border border-marigold/40 bg-marigold/10 px-4 py-3 text-sm text-ink">
-            Your checkout was cancelled — nothing was charged. Your cart is just
+            Your checkout was cancelled, nothing was charged. Your cart is just
             as you left it whenever you&apos;re ready.
           </p>
         )}
 
         {items.length === 0 ? (
           <div className="mt-10 flex flex-col items-start gap-5">
-            <p className="text-ink-soft">Your cart is empty — nothing chosen yet.</p>
+            <p className="text-ink-soft">Your cart is empty, nothing chosen yet.</p>
             <Button href="/shop" variant="primary">
               Explore the pieces
             </Button>

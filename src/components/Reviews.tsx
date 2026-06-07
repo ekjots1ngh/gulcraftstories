@@ -33,7 +33,7 @@ export function Reviews({ productSlug, productName }: { productSlug: string; pro
             </p>
           ) : (
             <p className="max-w-sm text-sm leading-relaxed text-ink-soft">
-              No reviews yet — if this piece is yours, we&apos;d love to hear how it
+              No reviews yet, if this piece is yours, we&apos;d love to hear how it
               wears. Be the first.
             </p>
           )}
@@ -49,7 +49,7 @@ export function Reviews({ productSlug, productName }: { productSlug: string; pro
                 {r.title && <p className="mt-2 font-display text-lg leading-snug">{r.title}</p>}
                 <p className="mt-2 leading-relaxed text-ink-soft">{r.body}</p>
                 <p className="mt-3 text-xs text-ink-soft">
-                  — {r.name}{r.location ? `, ${r.location}` : ""} · {fmtDate(r.date)}
+                 , {r.name}{r.location ? `, ${r.location}` : ""} · {fmtDate(r.date)}
                 </p>
               </li>
             ))}

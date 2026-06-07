@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ReturnsPage() {
   return (
     <main className="flex-1">
-      <DraftBanner note="Returns are legally sensitive — especially for one-of-a-kind work. Read every flagged note and confirm with advice before publishing." />
+      <DraftBanner note="Returns are legally sensitive, especially for one-of-a-kind work. Read every flagged note and confirm with advice before publishing." />
       <Container size="narrow" className="py-12 text-center sm:py-16">
         <span className="eyebrow text-peacock">If it isn&apos;t quite right</span>
         <h1 className="mt-3 text-4xl leading-tight sm:text-5xl">Returns &amp; exchanges</h1>
@@ -24,7 +24,7 @@ export default function ReturnsPage() {
         <p>
           Every piece is one of a kind and made by hand, so I hope it finds you and
           stays. But I want you to feel safe buying something you can&apos;t try on
-          first — here&apos;s how returns work.
+          first, here&apos;s how returns work.
         </p>
 
         <ReviewNote title="The core tension" legal>
@@ -33,7 +33,7 @@ export default function ReturnsPage() {
           consumers, a <strong>ready-made</strong> piece is generally still
           returnable within the statutory cooling-off period even though it&apos;s
           unique. Genuinely <strong>bespoke/commissioned/personalised</strong>
-          pieces can be exempted. The draft below reflects that distinction —
+          pieces can be exempted. The draft below reflects that distinction 
           please confirm it with proper advice.
         </ReviewNote>
 
@@ -58,7 +58,7 @@ export default function ReturnsPage() {
         </p>
         <ReviewNote title="Bespoke exemption" legal>
           Custom/personalised items are a recognised exemption from the cooling-off
-          right — but only if they are genuinely made to the customer&apos;s spec.
+          right, but only if they are genuinely made to the customer&apos;s spec.
           Don&apos;t apply this to standard one-of-a-kind stock. Confirm scope.
         </ReviewNote>
 
@@ -68,7 +68,7 @@ export default function ReturnsPage() {
           they&apos;re faulty or arrived sealed and unopened.
         </p>
         <ReviewNote title="Hygiene exemption">
-          This is a common, defensible policy for pierced earrings — confirm you
+          This is a common, defensible policy for pierced earrings, confirm you
           want it, and how it interacts with “faulty” claims.
         </ReviewNote>
 
@@ -80,14 +80,14 @@ export default function ReturnsPage() {
         </p>
         <ReviewNote title="Statutory rights" legal>
           The Consumer Rights Act 2015 gives a 30-day right to reject faulty goods
-          for a full refund. These rights can&apos;t be excluded — keep this section
+          for a full refund. These rights can&apos;t be excluded, keep this section
           and make sure nothing above contradicts it.
         </ReviewNote>
 
         <h2>Exchanges</h2>
         <p>
           Because each piece is one of one, a like-for-like exchange usually
-          isn&apos;t possible — instead we&apos;ll refund an eligible return so you
+          isn&apos;t possible, instead we&apos;ll refund an eligible return so you
           can choose something else, or hold a credit.
         </p>
 

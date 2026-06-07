@@ -7,13 +7,13 @@ import { whatsappLink } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Bespoke Enquiries",
   description:
-    "Commission a one-of-a-kind handmade piece — a small number of bespoke and bridal commissions are taken each season.",
+    "Commission a one-of-a-kind handmade piece, a small number of bespoke and bridal commissions are taken each season.",
 };
 
 const STEPS = [
-  { t: "Tell me your idea", d: "A colour, a stone, an occasion, a piece you've always wanted — however rough." },
+  { t: "Tell me your idea", d: "A colour, a stone, an occasion, a piece you've always wanted, however rough." },
   { t: "We shape it together", d: "I'll suggest materials and an approach, with a quote and a rough timeline." },
-  { t: "I make it, once", d: "Your piece is made by hand and is yours alone — bespoke work is never resold or repeated." },
+  { t: "I make it, once", d: "Your piece is made by hand and is yours alone, bespoke work is never resold or repeated." },
 ];
 
 export default function BespokePage() {
@@ -52,7 +52,7 @@ export default function BespokePage() {
           <form className="flex flex-col gap-3">
             <input type="text" aria-label="Your name" placeholder="Your name" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
             <input type="email" aria-label="Your email" placeholder="Your email" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
-            <textarea rows={5} aria-label="About your piece" placeholder="Tell me about the piece you have in mind — materials, colours, occasion, timeline…" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
+            <textarea rows={5} aria-label="About your piece" placeholder="Tell me about the piece you have in mind, materials, colours, occasion, timeline…" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
             <button type="button" className="rounded-sm bg-peacock px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-peacock-deep">
               Send enquiry
             </button>

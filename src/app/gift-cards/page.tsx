@@ -6,11 +6,11 @@ import { GiftCardBuy } from "@/components/GiftCardBuy";
 export const metadata: Metadata = {
   title: "Gift Vouchers",
   description:
-    "Give the gift of a handmade, one-of-a-kind piece — a digital voucher, emailed after purchase, to spend on whatever speaks to them.",
+    "Give the gift of a handmade, one-of-a-kind piece, a digital voucher, emailed after purchase, to spend on whatever speaks to them.",
 };
 
 const STEPS = [
-  { t: "Choose an amount", d: "Pick a value and pay securely — no card details ever touch us." },
+  { t: "Choose an amount", d: "Pick a value and pay securely, no card details ever touch us." },
   { t: "We email the voucher", d: "A digital voucher code arrives by email, ready to forward or print." },
   { t: "They choose their piece", d: "They spend it on whatever one-of-a-kind piece speaks to them." },
 ];

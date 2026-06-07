@@ -6,7 +6,7 @@ import { cn } from "@/lib/cn";
 
 /**
  * Lets a customer write a review. With no backend, "Send review" opens the
- * visitor's email app with everything pre-filled to the shop — so it works today
+ * visitor's email app with everything pre-filled to the shop, so it works today
  * with zero setup. The maker reads it, and adds genuine reviews to the page.
  */
 export function ReviewForm({ productName }: { productName: string }) {
@@ -29,7 +29,7 @@ export function ReviewForm({ productName }: { productName: string }) {
       "",
       body.trim(),
       "",
-      "— sent from the GulCraft Stories website",
+      "sent from the GulCraft Stories website",
     ];
     window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(
       subject,

@@ -1,4 +1,4 @@
-/** Tiny classnames joiner — no dependency needed. */
+/** Tiny classnames joiner, no dependency needed. */
 export function cn(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(" ");
 }

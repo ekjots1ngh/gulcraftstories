@@ -32,7 +32,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           <h1 className="text-4xl leading-tight sm:text-5xl">Every piece</h1>
           <p className="max-w-md text-base leading-relaxed text-ink-soft">
             Each piece is made once, by hand. Filter by availability, price,
-            material or collection — and sort however you like.
+            material or collection, and sort however you like.
           </p>
         </div>
 

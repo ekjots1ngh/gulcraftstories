@@ -2,7 +2,7 @@ import { cn } from "@/lib/cn";
 
 /**
  * Inline flag for things the founder needs to decide or confirm. `legal` styles
- * it as a legally-sensitive callout (not legal advice — to verify with a pro).
+ * it as a legally-sensitive callout (not legal advice, to verify with a pro).
  * These are intended to be removed/resolved before publishing.
  */
 export function ReviewNote({
@@ -24,7 +24,7 @@ export function ReviewNote({
       <p className="eyebrow mb-1 flex items-center gap-2" aria-hidden>
         <span>{legal ? "⚠" : "✎"}</span>
         <span className={legal ? "text-rani" : "text-marigold-ink"}>
-          {legal ? "Legal — confirm before publishing" : "Decision to confirm"}
+          {legal ? "Legal, confirm before publishing" : "Decision to confirm"}
           {title ? ` · ${title}` : ""}
         </span>
       </p>

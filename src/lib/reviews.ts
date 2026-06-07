@@ -1,5 +1,5 @@
 /**
- * Customer reviews — genuine, approved reviews only.
+ * Customer reviews, genuine, approved reviews only.
  *
  * Reviews are submitted by customers via the form on each product page (which
  * emails them to gulcraftstories@gmail.com). After a quick check, paste approved
@@ -7,14 +7,14 @@
  *
  * IMPORTANT: keep these real. Inventing or editing customer reviews is unlawful
  * in the UK (CMA / Digital Markets, Competition and Consumers Act). Leave the
- * array empty until you have real ones — the UI shows a friendly "be the first".
+ * array empty until you have real ones, the UI shows a friendly "be the first".
  */
 
 export type Review = {
   product: string; // product slug this review is for
   name: string;
   location?: string;
-  rating: number; // 1–5
+  rating: number; // 1 to 5
   title?: string;
   body: string;
   date: string; // ISO date

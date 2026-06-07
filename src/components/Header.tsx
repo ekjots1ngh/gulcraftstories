@@ -197,7 +197,7 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
             </div>
             <div className="border-t border-gold/40">
               <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-8 py-4">
-                <span className="text-sm text-ink-soft">Every piece is one of one — when it&apos;s gone, it&apos;s gone.</span>
+                <span className="text-sm text-ink-soft">Every piece is one of one, when it&apos;s gone, it&apos;s gone.</span>
                 <Link href="/shop" onClick={() => setShopOpen(false)} className="text-sm font-semibold text-peacock underline hover:text-marigold-ink">
                   View everything →
                 </Link>

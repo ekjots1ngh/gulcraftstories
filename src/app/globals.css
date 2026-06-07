@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Gul Craft Stories — Design Tokens
+   Gul Craft Stories, Design Tokens
    Edit palette/type here only. Components consume tokens.
    ============================================================ */
 
@@ -80,7 +80,7 @@ h1, h2, h3, h4 {
    Reusable token-driven utilities
    ============================================================ */
 
-/* Skip-to-content link — visible only when focused (keyboard users) */
+/* Skip-to-content link, visible only when focused (keyboard users) */
 .skip-link {
   position: fixed;
   top: 0.5rem;
@@ -109,7 +109,7 @@ h1, h2, h3, h4 {
 }
 
 /* ------------------------------------------------------------
-   Story prose — a calm, bespoke reading experience for the
+   Story prose, a calm, bespoke reading experience for the
    journal. Generous measure, quiet rhythm, jewel-tone accents.
    ------------------------------------------------------------ */
 .story-prose {
@@ -203,7 +203,7 @@ h1, h2, h3, h4 {
 }
 
 /* Very subtle jaali (lattice) texture for story backgrounds only.
-   Original geometric pattern — not lifted from any source. */
+   Original geometric pattern, not lifted from any source. */
 .jaali-bg {
   background-image:
     linear-gradient(45deg, rgba(201, 162, 75, 0.06) 25%, transparent 25%, transparent 75%, rgba(201, 162, 75, 0.06) 75%),

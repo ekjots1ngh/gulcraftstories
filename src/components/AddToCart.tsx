@@ -7,7 +7,7 @@ import type { Product } from "@/lib/products";
 
 /**
  * Add-to-cart for a one-of-a-kind piece: there is only ever one, so there is no
- * quantity selector. Sold pieces are permanently unavailable — never remade.
+ * quantity selector. Sold pieces are permanently unavailable, never remade.
  */
 export function AddToCart({ product }: { product: Product }) {
   const { add, items } = useCart();
@@ -25,7 +25,7 @@ export function AddToCart({ product }: { product: Product }) {
         </button>
         <p className="text-xs text-ink-soft">
           This one has found its home. Every piece is one of a kind and never
-          remade —{" "}
+          remade {" "}
           <Link href="/shop" className="underline hover:text-marigold-ink">
             see what&apos;s still here →
           </Link>
@@ -41,7 +41,7 @@ export function AddToCart({ product }: { product: Product }) {
           href="/cart"
           className="w-full rounded-sm border border-peacock px-6 py-3.5 text-center text-sm font-semibold text-peacock transition-colors hover:bg-peacock hover:text-cream"
         >
-          In your cart — view cart →
+          In your cart, view cart →
         </Link>
         <p className="text-xs text-ink-soft">
           Only one exists, and it&apos;s being held for you here.

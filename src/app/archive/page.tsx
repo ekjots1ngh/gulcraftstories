@@ -7,7 +7,7 @@ import { getArchive } from "@/lib/products";
 export const metadata: Metadata = {
   title: "The Archive",
   description:
-    "A portfolio of pieces that have found their homes. Kept here — not hidden — so you can see the range and style, even when a piece is gone.",
+    "A portfolio of pieces that have found their homes. Kept here, not hidden, so you can see the range and style, even when a piece is gone.",
 };
 
 export default function ArchivePage() {
@@ -26,7 +26,7 @@ export default function ArchivePage() {
           <h1 className="font-display text-[2.8rem] leading-[1] sm:text-6xl">The Archive</h1>
           <p className="max-w-lg text-lg leading-relaxed text-cream/85">
             Every piece here has found its home. Because each one is one of a kind
-            and never remade, it can&apos;t be bought again — but we keep it on
+            and never remade, it can&apos;t be bought again, but we keep it on
             show, so you can see the range, the materials, and the way her style
             has grown over time.
           </p>
@@ -49,7 +49,7 @@ export default function ArchivePage() {
           <ProductBrowser products={archive} showAvailability={false} />
         ) : (
           <p className="text-center text-ink-soft">
-            Nothing in the archive yet — every piece is still available.
+            Nothing in the archive yet, every piece is still available.
           </p>
         )}
       </Container>

@@ -16,7 +16,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     a: (
       <>
         Yes. Each piece is made once and never restocked or remade. When it&apos;s
-        gone, it&apos;s gone — sold pieces live on in{" "}
+        gone, it&apos;s gone, sold pieces live on in{" "}
         <Link href="/archive" className="underline hover:text-marigold-ink">the archive</Link>.
       </>
     ),
@@ -25,7 +25,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     q: "How long does a piece take to make?",
     a: (
       <>
-        Anywhere from a few hours to twenty-plus, depending on the piece — each
+        Anywhere from a few hours to twenty-plus, depending on the piece, each
         product page lists its exact hours. More in{" "}
         <Link href="/journal/the-hours-inside-one-piece" className="underline hover:text-marigold-ink">
           The Hours Inside One Piece
@@ -51,7 +51,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     q: "How do I care for my piece?",
     a: (
       <>
-        Each material has its own needs — the{" "}
+        Each material has its own needs, the{" "}
         <Link href="/care" className="underline hover:text-marigold-ink">care guide</Link>{" "}
         covers clay, brass, crochet and stones.
       </>
@@ -61,7 +61,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     q: "Can I return or exchange something?",
     a: (
       <>
-        In most cases, yes — see{" "}
+        In most cases, yes, see{" "}
         <Link href="/returns" className="underline hover:text-marigold-ink">returns &amp; exchanges</Link>.
         Because pieces are unique, we usually refund eligible returns rather than
         swap like-for-like.
@@ -72,7 +72,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     q: "Do you ship internationally?",
     a: (
       <>
-        Yes, worldwide from the UK — see{" "}
+        Yes, worldwide from the UK, see{" "}
         <Link href="/international" className="underline hover:text-marigold-ink">international orders</Link>{" "}
         for delivery and customs information.
       </>
@@ -82,7 +82,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     q: "Do you take bespoke commissions?",
     a: (
       <>
-        A small number each season — tell us what you have in mind via{" "}
+        A small number each season, tell us what you have in mind via{" "}
         <Link href="/bespoke" className="underline hover:text-marigold-ink">bespoke enquiries</Link>.
       </>
     ),
@@ -91,7 +91,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     q: "Do you sell gift vouchers?",
     a: (
       <>
-        Yes —{" "}
+        Yes {" "}
         <Link href="/gift-cards" className="underline hover:text-marigold-ink">digital gift vouchers</Link>{" "}
         let someone choose their own piece.
       </>
@@ -99,14 +99,14 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "Is checkout secure?",
-    a: "Payment is handled by Stripe on their secure hosted page — we never see or store your card details.",
+    a: "Payment is handled by Stripe on their secure hosted page, we never see or store your card details.",
   },
 ];
 
 export default function FaqPage() {
   return (
     <main className="flex-1">
-      <DraftBanner note="Answers reference the other (draft) policy pages — review them together so nothing contradicts." />
+      <DraftBanner note="Answers reference the other (draft) policy pages, review them together so nothing contradicts." />
       <Container size="narrow" className="py-12 text-center sm:py-16">
         <span className="eyebrow text-peacock">Good questions</span>
         <h1 className="mt-3 text-4xl leading-tight sm:text-5xl">FAQ</h1>

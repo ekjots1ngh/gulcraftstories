@@ -1,5 +1,5 @@
 /**
- * Journal / "Stories" data layer — reads markdown files from `content/journal/`.
+ * Journal / "Stories" data layer, reads markdown files from `content/journal/`.
  *
  * Adding a post = drop a new `.md` file in that folder with frontmatter:
  *
@@ -15,7 +15,7 @@
  *   status: "upcoming"              # stub a not-yet-written post (optional)
  *   ---
  *
- * Read time is computed automatically from the body — no need to set it.
+ * Read time is computed automatically from the body, no need to set it.
  * This module is server-only (it touches the filesystem at build time).
  */
 

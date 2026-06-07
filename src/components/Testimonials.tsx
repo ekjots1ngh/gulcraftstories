@@ -1,7 +1,7 @@
 import { Container } from "./Container";
 import { SectionHeading } from "./SectionHeading";
 
-/** Placeholder testimonials — replace with real words from customers. */
+/** Placeholder testimonials, replace with real words from customers. */
 const TESTIMONIALS = [
   {
     quote:
@@ -17,7 +17,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "You can feel the hours in it. The clay has tiny fingerprints — proof a person made this, not a machine.",
+      "You can feel the hours in it. The clay has tiny fingerprints, proof a person made this, not a machine.",
     name: "Hannah M.",
     place: "Edinburgh",
   },
@@ -45,7 +45,7 @@ export function Testimonials() {
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
               <figcaption className="mt-auto text-sm text-ink-soft">
-                — {t.name}, {t.place}
+               , {t.name}, {t.place}
               </figcaption>
             </figure>
           ))}

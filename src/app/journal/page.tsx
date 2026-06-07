@@ -9,7 +9,7 @@ import { getAllPosts, getFeaturedPost, getUpcomingPosts } from "@/lib/journal";
 export const metadata: Metadata = {
   title: "Stories",
   description:
-    "A craft journal — the name, the promise, the hours behind each piece, and the making, in long form.",
+    "A craft journal, the name, the promise, the hours behind each piece, and the making, in long form.",
 };
 
 export default function JournalPage() {
@@ -23,7 +23,7 @@ export default function JournalPage() {
         <span className="eyebrow text-rani">The craft journal</span>
         <h1 className="mt-3 text-4xl leading-tight sm:text-5xl">Stories</h1>
         <p className="mx-auto mt-4 max-w-md text-lg leading-relaxed text-ink-soft">
-          The name, the promise, the hours, the making — told slowly, the way the
+          The name, the promise, the hours, the making, told slowly, the way the
           pieces are made.
         </p>
         <MotifDivider className="mt-8" />

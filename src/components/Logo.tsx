@@ -6,7 +6,7 @@ import { cn } from "@/lib/cn";
 import { MotifMark } from "./MotifDivider";
 
 /**
- * Brand logo — the circular Instagram-style photo at `public/logo.png` plus the
+ * Brand logo, the circular Instagram-style photo at `public/logo.png` plus the
  * "GulCraft Stories" wordmark beside it. Until that file exists it gracefully
  * falls back to the marigold motif, so the header/footer never show a broken image.
  */
@@ -28,7 +28,7 @@ export function Logo({
     <Link
       href="/"
       className={cn("group inline-flex items-center gap-2.5", color, className)}
-      aria-label="GulCraft Stories — home"
+      aria-label="GulCraft Stories, home"
     >
       {useFallback ? (
         <MotifMark

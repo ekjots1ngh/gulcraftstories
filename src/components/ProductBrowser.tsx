@@ -23,7 +23,7 @@ type Initial = {
 
 /**
  * Client-side filtering + sorting over a product list. Works in-memory (the
- * catalogue is small and already on the page) so it's instant on mobile — no
+ * catalogue is small and already on the page) so it's instant on mobile, no
  * navigation, no refetch. Used by /shop, each /edit page, and the archive.
  */
 export function ProductBrowser({
@@ -166,7 +166,7 @@ export function ProductBrowser({
         </div>
       ) : (
         <p className="mt-10 text-center text-ink-soft">
-          No pieces match those filters right now — they sell as one-offs, so the
+          No pieces match those filters right now, they sell as one-offs, so the
           mix changes often. Try clearing a filter.
         </p>
       )}

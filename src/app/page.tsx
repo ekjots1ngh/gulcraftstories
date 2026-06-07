@@ -12,7 +12,7 @@ import { editContent } from "@/lib/edits";
 import { getAllPosts, getFeaturedPost } from "@/lib/journal";
 
 /**
- * Homepage — built on Direction A ("Atelier"): calm, editorial, story-first,
+ * Homepage, built on Direction A ("Atelier"): calm, editorial, story-first,
  * warmed with the brand's jewel tones. Global header/footer live in layout.tsx.
  */
 export default function Home() {
@@ -31,7 +31,7 @@ export default function Home() {
               The story of every piece, told as carefully as it was made.
             </h1>
             <p className="max-w-md text-lg leading-relaxed text-ink-soft">
-              Earrings, necklaces and more — shaped by hand in jewel tones and
+              Earrings, necklaces and more, shaped by hand in jewel tones and
               gold. Each one comes with its craft, its materials, and the hours
               that went into it. Pieces meant to be kept, and passed on.
             </p>
@@ -58,7 +58,7 @@ export default function Home() {
               <PieceImage
                 swatch={["#0E5A5B", "#3B2A4A"]}
                 src="/products/peacock-hour.jpg"
-                label="Peacock Hour — a beaded necklace"
+                label="Peacock Hour, a beaded necklace"
                 ratio="portrait"
                 className="shadow-[var(--shadow-soft)]"
               />
@@ -103,7 +103,7 @@ export default function Home() {
           <SectionHeading
             eyebrow="Newly made"
             title="A few favourites"
-            intro="Each piece comes with its own story — the making, the materials, and the hours it took."
+            intro="Each piece comes with its own story, the making, the materials, and the hours it took."
             eyebrowColor="text-peacock"
           />
           <MotifDivider className="my-10" />
@@ -126,7 +126,7 @@ export default function Home() {
           <SectionHeading
             eyebrow="Curated, evolving"
             title="The Edits"
-            intro="Small, living curations — each with its own story, each changing as one-of-a-kind pieces find their homes. Not collections that restock; gardens that bloom and thin."
+            intro="Small, living curations, each with its own story, each changing as one-of-a-kind pieces find their homes. Not collections that restock; gardens that bloom and thin."
             eyebrowColor="text-rani"
           />
           <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-5">
@@ -161,7 +161,7 @@ export default function Home() {
               Nothing here is made quickly.
             </h2>
             <p className="max-w-md leading-relaxed text-cream/80">
-              Every piece is raised, pierced, set or strung by hand — often over
+              Every piece is raised, pierced, set or strung by hand, often over
               several evenings. We write down the hours, the materials, and the
               thinking behind each one, so you always know what you are wearing.
             </p>
@@ -200,7 +200,7 @@ export default function Home() {
             <SectionHeading
               eyebrow="Behind the craft"
               title="Stories from the bench"
-              intro="The techniques, the materials, and the making-of — for the people who want to know how."
+              intro="The techniques, the materials, and the making-of, for the people who want to know how."
               align="left"
               eyebrowColor="text-rani"
             />
@@ -224,10 +224,10 @@ export default function Home() {
         <Container size="narrow" className="text-center">
           <MotifDivider className="mb-8" />
           <p className="font-display text-2xl leading-relaxed text-ink sm:text-3xl">
-            “I make the things I grew up surrounded by — and I want you to know
+            “I make the things I grew up surrounded by, and I want you to know
             the hands and the hours that went into them.”
           </p>
-          <p className="mt-6 eyebrow text-marigold-ink">— The maker, Gul Craft Stories</p>
+          <p className="mt-6 eyebrow text-marigold-ink">The maker, Gul Craft Stories</p>
         </Container>
       </section>
     </main>

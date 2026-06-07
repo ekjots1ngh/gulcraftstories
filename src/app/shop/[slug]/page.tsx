@@ -97,7 +97,7 @@ export default async function ProductPage({
             </div>
           </div>
 
-          {/* one-of-one promise — the brand rule, made visible */}
+          {/* one-of-one promise, the brand rule, made visible */}
           <div className="flex items-start gap-3 rounded-md border border-gold/50 bg-cream-deep/40 px-4 py-3">
             <MotifMark size={22} color="var(--color-gold)" />
             <div className="flex flex-col gap-0.5">
@@ -180,7 +180,7 @@ export default async function ProductPage({
               <PieceImage
                 swatch={product.images[product.images.length - 1].swatch}
                 src={product.images[product.images.length - 1].src}
-                label={`${product.name} — at the bench`}
+                label={`${product.name}, at the bench`}
                 ratio="landscape"
                 className="shadow-[var(--shadow-soft)]"
               />

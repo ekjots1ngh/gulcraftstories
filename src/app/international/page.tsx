@@ -59,7 +59,7 @@ export default function InternationalPage() {
         </p>
         <ReviewNote title="Duties & VAT" legal>
           Post-Brexit, EU and other buyers may owe import VAT/duty. Decide whether
-          you ship DDU (customer pays on arrival — simplest) or DDP (you collect at
+          you ship DDU (customer pays on arrival, simplest) or DDP (you collect at
           checkout). State it plainly, and check any VAT-registration thresholds if
           you sell a lot into a region.
         </ReviewNote>

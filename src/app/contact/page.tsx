@@ -18,7 +18,7 @@ export default function ContactPage() {
         <span className="eyebrow text-peacock">Say hello</span>
         <h1 className="mt-3 text-4xl leading-tight sm:text-5xl">Get in touch</h1>
         <p className="mx-auto mt-4 max-w-md text-lg leading-relaxed text-ink-soft">
-          A real person reads every message — usually the maker herself. The
+          A real person reads every message, usually the maker herself. The
           quickest answers come via WhatsApp.
         </p>
         <MotifDivider className="mt-8" />
@@ -49,13 +49,13 @@ export default function ContactPage() {
             <Detail label="Instagram">
               <a href={SITE.instagram} className="underline hover:text-marigold-ink">@gulcraftstories</a>
             </Detail>
-            <Detail label="Hours">Replies Mon–Fri, usually within one working day.</Detail>
+            <Detail label="Hours">Replies MonFri, usually within one working day.</Detail>
 
             <ReviewNote title="Your real details">
               Fill in phone, studio/returns address and hours. If you&apos;d rather
               not publish a home address, use a returns PO box or “address on
               request”. The email currently shown is{" "}
-              <code>{SITE.email}</code> — confirm it&apos;s monitored.
+              <code>{SITE.email}</code>, confirm it&apos;s monitored.
             </ReviewNote>
           </div>
 
@@ -71,7 +71,7 @@ export default function ContactPage() {
               </button>
             </form>
             <ReviewNote title="Form is not connected yet">
-              This form is visual only — it doesn&apos;t send anywhere. Wire it to a
+              This form is visual only, it doesn&apos;t send anywhere. Wire it to a
               form service (e.g. Formspree, Resend, or a Next.js route) before
               publishing, or remove it and point people to email/WhatsApp.
             </ReviewNote>

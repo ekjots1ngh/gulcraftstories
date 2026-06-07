@@ -24,7 +24,7 @@ export async function generateMetadata({
   const edit = EDITS.find((e) => e.slug === slug);
   if (!edit) return { title: "Edit not found" };
   const c = editContent[edit.slug];
-  return { title: `${edit.name} — an edit`, description: c.meaning };
+  return { title: `${edit.name}, an edit`, description: c.meaning };
 }
 
 export default async function EditPage({
@@ -82,7 +82,7 @@ export default async function EditPage({
           <div className="order-1 md:order-2">
             <PieceImage
               swatch={content.storySwatch}
-              label={`${edit.name} — the edit`}
+              label={`${edit.name}, the edit`}
               ratio="portrait"
               className="shadow-[var(--shadow-soft)]"
             />
@@ -104,7 +104,7 @@ export default async function EditPage({
           <MotifMark size={26} color="var(--color-gold-soft)" />
           <p className="max-w-xl text-base leading-relaxed text-cream/90">
             An edit is a living thing, not a restocked line. Every piece is one of
-            one — as each finds its home it&apos;s gone for good, and the edit
+            one, as each finds its home it&apos;s gone for good, and the edit
             slowly becomes something new. {ONE_OF_ONE}.
           </p>
         </Container>
@@ -130,7 +130,7 @@ export default async function EditPage({
             <ProductBrowser products={pieces} showEdit={false} />
           ) : (
             <p className="mx-auto max-w-md text-center text-ink-soft">
-              This edit is resting between pieces just now — new work opens here
+              This edit is resting between pieces just now, new work opens here
               often. Follow along on Instagram, or browse the other edits below.
             </p>
           )}

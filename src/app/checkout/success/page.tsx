@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   robots: { index: false },
 };
 
-// Always render fresh — depends on the live Stripe session.
+// Always render fresh, depends on the live Stripe session.
 export const dynamic = "force-dynamic";
 
 function money(amount: number | null, currency: string | null) {
@@ -59,7 +59,7 @@ export default async function CheckoutSuccessPage({
             <>
               <span className="eyebrow text-peacock">Order confirmed</span>
               <h1 className="text-3xl leading-tight sm:text-4xl">
-                Thank you — your order is on its way to being made.
+                Thank you, your order is on its way to being made.
               </h1>
               <MotifDivider className="my-2 max-w-xs" />
               <p className="max-w-md text-lg leading-relaxed text-ink-soft">
@@ -90,7 +90,7 @@ export default async function CheckoutSuccessPage({
               </h1>
               <p className="max-w-md text-lg leading-relaxed text-ink-soft">
                 This can take a moment. If you were charged, you&apos;ll receive a
-                confirmation email shortly — there&apos;s no need to pay again.
+                confirmation email shortly, there&apos;s no need to pay again.
               </p>
               <Button href="/cart" variant="outline">
                 Back to cart
@@ -106,7 +106,7 @@ export default async function CheckoutSuccessPage({
               </h1>
               <p className="max-w-md text-lg leading-relaxed text-ink-soft">
                 If you completed payment you will still receive a confirmation
-                email. Otherwise your cart is safe — please try again, or{" "}
+                email. Otherwise your cart is safe, please try again, or{" "}
                 <Link href="/contact" className="underline hover:text-marigold-ink">
                   get in touch
                 </Link>{" "}

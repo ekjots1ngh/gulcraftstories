@@ -1,7 +1,7 @@
 import { cn } from "@/lib/cn";
 
 /**
- * Original gold hairline motif — an abstract marigold flanked by jaali lattice
+ * Original gold hairline motif, an abstract marigold flanked by jaali lattice
  * lines. Drawn here as SVG, not lifted from any source. Used as a section
  * divider and small flourish across the site.
  */

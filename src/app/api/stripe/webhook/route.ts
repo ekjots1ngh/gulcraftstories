@@ -3,7 +3,7 @@ import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 
 /**
- * POST /api/stripe/webhook  (OPTIONAL — for automated order fulfilment)
+ * POST /api/stripe/webhook  (OPTIONAL, for automated order fulfilment)
  *
  * Stripe will still process payments without this; the webhook is how your
  * server reliably learns an order was paid (to email you, decrement stock, etc).
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing stripe-signature header." }, { status: 400 });
   }
 
-  // The raw body is required for signature verification — do not parse as JSON.
+  // The raw body is required for signature verification, do not parse as JSON.
   const rawBody = await req.text();
 
   let event: Stripe.Event;
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
   switch (event.type) {
     case "checkout.session.completed": {
       const session = event.data.object as Stripe.Checkout.Session;
-      // TODO: fulfil the order — e.g. email a confirmation, record the order,
+      // TODO: fulfil the order, e.g. email a confirmation, record the order,
       // decrement stock. `session.id`, `session.customer_details`,
       // `session.amount_total` are available here.
       console.log("✅ Paid checkout session:", session.id);

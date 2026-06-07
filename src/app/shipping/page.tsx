@@ -23,24 +23,24 @@ export default function ShippingPage() {
       <Container size="narrow" className="story-prose pb-16">
         <h2>Dispatch times</h2>
         <p>
-          Most pieces are ready to send and are dispatched within 2–3 working days.
+          Most pieces are ready to send and are dispatched within 2 to 3 working days.
           Each one is checked, gently cleaned, and wrapped by hand before it leaves
           the studio.
         </p>
         <ReviewNote title="Dispatch window">
           Confirm your real handling time. If you sometimes make a listed piece to
-          order, say so here and give an honest range (e.g. 1–2 weeks).
+          order, say so here and give an honest range (e.g. 1 to 2 weeks).
         </ReviewNote>
 
         <h2>UK delivery</h2>
         <ul>
-          <li>Standard (tracked): £[X], 2–4 working days.</li>
-          <li>Express (tracked): £[X], 1–2 working days.</li>
+          <li>Standard (tracked): £[X], 2 to 4 working days.</li>
+          <li>Express (tracked): £[X], 1 to 2 working days.</li>
           <li>Free standard shipping on UK orders over £75.</li>
         </ul>
         <ReviewNote title="Rates & carrier">
           Fill in your real prices, carrier (e.g. Royal Mail Tracked 48/24), and
-          confirm the free-shipping threshold — it currently appears as “over £75”
+          confirm the free-shipping threshold, it currently appears as “over £75”
           across the site, so keep them matching.
         </ReviewNote>
 
@@ -60,7 +60,7 @@ export default function ShippingPage() {
         </p>
         <ReviewNote title="Lost / damaged in transit" legal>
           A lost or damaged parcel is the seller&apos;s responsibility until it
-          reaches the customer under UK consumer law — so this section should
+          reaches the customer under UK consumer law, so this section should
           promise a replacement or refund, not push the customer to the courier.
           Confirm the claim window and wording.
         </ReviewNote>
