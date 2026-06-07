@@ -45,7 +45,7 @@ export function Testimonials() {
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
               <figcaption className="mt-auto text-sm text-ink-soft">
-               , {t.name}, {t.place}
+                {t.name}, {t.place}
               </figcaption>
             </figure>
           ))}
