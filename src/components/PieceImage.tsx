@@ -12,12 +12,15 @@ export function PieceImage({
   label,
   className,
   ratio = "portrait",
+  priority = false,
 }: {
   swatch: [string, string];
   src?: string;
   label?: string;
   className?: string;
   ratio?: "portrait" | "square" | "landscape";
+  /** Eager-load with high fetch priority — use for above-the-fold hero/LCP images only. */
+  priority?: boolean;
 }) {
   const aspect =
     ratio === "square"
@@ -38,7 +41,8 @@ export function PieceImage({
         <img
           src={src}
           alt={label ?? ""}
-          loading="lazy"
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
           decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
         />

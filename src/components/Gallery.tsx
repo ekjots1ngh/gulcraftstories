@@ -17,6 +17,7 @@ export function Gallery({ images, name }: { images: ProductImage[]; name: string
         src={current.src}
         label={current.alt || name}
         ratio="square"
+        priority
         className="shadow-[var(--shadow-soft)]"
       />
       {images.length > 1 && (

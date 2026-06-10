@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
@@ -23,6 +23,10 @@ const hanken = Hanken_Grotesk({
 
 const SITE_DESC =
   "Handmade jewellery, with the story of every piece told as carefully as it was made. The craft, the materials, and the hours behind each piece, one of one.";
+
+export const viewport: Viewport = {
+  themeColor: "#FAF4E8",
+};
 
 export const metadata: Metadata = {
   title: {

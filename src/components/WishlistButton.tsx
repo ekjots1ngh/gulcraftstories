@@ -22,6 +22,7 @@ export function WishlistButton({
         type="button"
         onClick={() => toggle(slug)}
         aria-pressed={saved}
+        aria-label={saved ? "Saved to wishlist" : "Save to wishlist"}
         className={cn(
           "inline-flex items-center justify-center gap-2 rounded-sm border px-6 py-3 text-sm font-semibold transition-colors",
           saved ? "border-rani bg-rani/10 text-rani" : "border-ink/25 text-ink hover:border-ink",

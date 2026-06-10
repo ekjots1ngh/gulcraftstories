@@ -57,7 +57,7 @@ export default function Home() {
             </div>
             <div className="mt-2 flex items-center gap-6 text-xs text-ink-soft">
               <span className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-marigold" /> Made to order
+                <span className="h-1.5 w-1.5 rounded-full bg-marigold" /> One of one, never remade
               </span>
               <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-rani" /> Worldwide shipping
@@ -72,6 +72,7 @@ export default function Home() {
                 src="/products/peacock-hour.jpg"
                 label="Peacock Hour, a beaded necklace"
                 ratio="portrait"
+                priority
                 className="shadow-[var(--shadow-soft)]"
               />
             </Link>
