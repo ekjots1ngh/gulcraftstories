@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { MotifDivider } from "@/components/MotifDivider";
-import { DraftBanner } from "@/components/DraftBanner";
-import { ReviewNote } from "@/components/ReviewNote";
+import { ContactForm } from "@/components/ContactForm";
 import { SITE, whatsappLink } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact (draft)",
-  robots: { index: false },
+  title: "Contact",
+  description:
+    "Get in touch with the maker behind GulCraft Stories by email, WhatsApp, phone, or Instagram. A real person reads every message.",
 };
 
 export default function ContactPage() {
   return (
     <main className="flex-1">
-      <DraftBanner note="Replace the placeholder address and phone with your real details before publishing." />
       <Container size="narrow" className="py-12 text-center sm:py-16">
         <span className="eyebrow text-peacock">Say hello</span>
         <h1 className="mt-3 text-4xl leading-tight sm:text-5xl">Get in touch</h1>
@@ -38,44 +37,19 @@ export default function ContactPage() {
                 Message us on WhatsApp
               </a>
             </Detail>
-            <Detail label="Phone">[your phone number]</Detail>
-            <Detail label="Studio address">
-              [Studio / returns address line 1]
-              <br />
-              [Town], [Postcode]
-              <br />
-              United Kingdom
+            <Detail label="Phone">
+              <a href="tel:+447466397162" className="underline hover:text-marigold-ink">
+                07466 397162
+              </a>
             </Detail>
             <Detail label="Instagram">
               <a href={SITE.instagram} className="underline hover:text-marigold-ink">@gulcraftstories</a>
             </Detail>
-            <Detail label="Hours">Replies MonFri, usually within one working day.</Detail>
-
-            <ReviewNote title="Your real details">
-              Fill in phone, studio/returns address and hours. If you&apos;d rather
-              not publish a home address, use a returns PO box or “address on
-              request”. The email currently shown is{" "}
-              <code>{SITE.email}</code>, confirm it&apos;s monitored.
-            </ReviewNote>
+            <Detail label="Hours">Replies Monday to Friday, usually within one working day.</Detail>
           </div>
 
           {/* form */}
-          <div className="flex flex-col gap-4 rounded-lg border border-gold/40 bg-cream-deep/30 p-6">
-            <h2 className="font-display text-xl">Send a message</h2>
-            <form className="flex flex-col gap-3">
-              <input type="text" aria-label="Your name" placeholder="Your name" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
-              <input type="email" aria-label="Your email" placeholder="Your email" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
-              <textarea rows={5} aria-label="Your message" placeholder="Your message" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
-              <button type="button" className="rounded-sm bg-peacock px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-peacock-deep">
-                Send
-              </button>
-            </form>
-            <ReviewNote title="Form is not connected yet">
-              This form is visual only, it doesn&apos;t send anywhere. Wire it to a
-              form service (e.g. Formspree, Resend, or a Next.js route) before
-              publishing, or remove it and point people to email/WhatsApp.
-            </ReviewNote>
-          </div>
+          <ContactForm />
         </div>
       </Container>
     </main>

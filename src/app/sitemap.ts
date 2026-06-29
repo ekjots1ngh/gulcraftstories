@@ -4,7 +4,7 @@ import { getAllPosts } from "@/lib/journal";
 
 const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com";
 
-// Indexable pages only (the draft policy pages are noindex, so excluded).
+// Indexable pages only (any remaining draft pages are noindex, so excluded).
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPaths = [
     "",
@@ -16,6 +16,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/gift-cards",
     "/size-guide",
     "/care",
+    "/shipping",
+    "/returns",
+    "/international",
+    "/contact",
   ];
 
   return [
