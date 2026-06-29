@@ -3,6 +3,7 @@ import { Container } from "@/components/Container";
 import { MotifDivider } from "@/components/MotifDivider";
 import { ProductBrowser } from "@/components/ProductBrowser";
 import { products, TYPES, EDITS, MATERIALS, ONE_OF_ONE } from "@/lib/products";
+import { getSoldSlugs } from "@/lib/sold";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -10,10 +11,18 @@ export const metadata: Metadata = {
     "One-of-a-kind handmade jewellery. Filter by availability, price, material and collection, and sort to taste. Every piece is one of one.",
 };
 
+// Reflect pieces sold through Stripe, re-checked at least once a minute.
+export const revalidate = 60;
+
 type SP = { type?: string; edit?: string; material?: string; availability?: string };
 
 export default async function ShopPage({ searchParams }: { searchParams: Promise<SP> }) {
   const sp = await searchParams;
+  // Override the catalogue status with anything sold through Stripe.
+  const soldSlugs = await getSoldSlugs();
+  const shown = products.map((p) =>
+    soldSlugs.includes(p.slug) ? { ...p, status: "sold" as const } : p,
+  );
   const availability: "available" | "sold" | undefined =
     sp.availability === "available" || sp.availability === "sold" ? sp.availability : undefined;
   // Deep links from the mega-menu set the browser's initial filters.
@@ -38,7 +47,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
 
         <MotifDivider className="my-10" />
 
-        <ProductBrowser products={products} initial={initial} />
+        <ProductBrowser products={shown} initial={initial} />
       </Container>
     </main>
   );

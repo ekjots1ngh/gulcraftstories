@@ -22,6 +22,10 @@ import {
   materialName,
   ONE_OF_ONE,
 } from "@/lib/products";
+import { getSoldSlugs } from "@/lib/sold";
+
+// Re-check sold status (from Stripe) at least once a minute.
+export const revalidate = 60;
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -61,7 +65,8 @@ export default async function ProductPage({
   const related = getRelated(product.slug);
   const stories = getPostsForProduct(product.slug);
   const oneOfAKind = getFeaturedPost();
-  const sold = product.status === "sold";
+  const soldSlugs = await getSoldSlugs();
+  const sold = product.status === "sold" || soldSlugs.includes(product.slug);
 
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com";
   const productLd = {

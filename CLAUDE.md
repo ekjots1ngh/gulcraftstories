@@ -198,7 +198,16 @@ UK/international in GBP.)
 - `POST /api/checkout` — builds line items **server-side from our own product
   data** (client sends only slug + quantity, so prices can't be tampered with),
   creates a Checkout Session, returns its URL. Collects shipping/billing address
-  + phone; GBP.
+  + phone; offers UK + worldwide flat-rate shipping; GBP. **Refuses any piece
+  that is already sold or reserved** (returns 409) so a one-of-one is never sold
+  twice. Stamps the session with `metadata.slugs` + a 30-min `expires_at`.
+- **Sold-sync without a database** (`src/lib/sold.ts`): Stripe is the source of
+  truth for what's sold. `getSoldSlugs()` (cached, used by home/shop/product/
+  archive, which are ISR `revalidate=60`) reads paid pieces back from *completed*
+  Checkout Sessions; `getUnavailableSlugs()` (fresh, used by `/api/checkout`)
+  adds pieces held in another shopper's *open, unexpired* session as a short
+  reservation. With no Stripe key everything reads "available", as before. A
+  piece's static `status: "sold"` still works as a permanent manual override.
 - `src/components/CheckoutButton.tsx` — posts the cart, redirects to Stripe.
 - `/checkout/success?session_id=…` — verifies the session server-side and shows
   a confirmation (paid / pending / error / not-configured states); clears the

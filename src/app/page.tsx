@@ -10,16 +10,24 @@ import { Testimonials } from "@/components/Testimonials";
 import { products, TYPES, EDITS } from "@/lib/products";
 import { editContent } from "@/lib/edits";
 import { getAllPosts, getFeaturedPost } from "@/lib/journal";
+import { getSoldSlugs } from "@/lib/sold";
+
+// Reflect pieces sold through Stripe, re-checked at least once a minute.
+export const revalidate = 60;
 
 /**
  * Homepage, built on Direction A ("Atelier"): calm, editorial, story-first,
  * warmed with the brand's jewel tones. Global header/footer live in layout.tsx.
  */
-export default function Home() {
+export default async function Home() {
   const featuredStory = getFeaturedPost();
   const posts = getAllPosts()
     .filter((p) => p.slug !== featuredStory?.slug)
     .slice(0, 3);
+  const soldSlugs = await getSoldSlugs();
+  const featured = products
+    .slice(0, 6)
+    .map((p) => (soldSlugs.includes(p.slug) ? { ...p, status: "sold" as const } : p));
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com";
   const orgLd = {
     "@context": "https://schema.org",
@@ -121,7 +129,7 @@ export default function Home() {
           />
           <MotifDivider className="my-10" />
           <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3">
-            {products.slice(0, 6).map((p) => (
+            {featured.map((p) => (
               <ProductCard key={p.slug} product={p} tone="atelier" />
             ))}
           </div>

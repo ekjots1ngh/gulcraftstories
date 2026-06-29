@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { MotifDivider, MotifMark } from "@/components/MotifDivider";
 import { ProductBrowser } from "@/components/ProductBrowser";
-import { getArchive } from "@/lib/products";
+import { products } from "@/lib/products";
+import { getSoldSlugs } from "@/lib/sold";
 
 export const metadata: Metadata = {
   title: "The Archive",
@@ -10,8 +11,16 @@ export const metadata: Metadata = {
     "A portfolio of pieces that have found their homes. Kept here, not hidden, so you can see the range and style, even when a piece is gone.",
 };
 
-export default function ArchivePage() {
-  const archive = getArchive();
+// Include pieces sold through Stripe, re-checked at least once a minute.
+export const revalidate = 60;
+
+export default async function ArchivePage() {
+  const soldSlugs = await getSoldSlugs();
+  // Sold = permanently sold in the catalogue, or paid for through Stripe.
+  const archive = products
+    .filter((p) => p.status === "sold" || soldSlugs.includes(p.slug))
+    .map((p) => ({ ...p, status: "sold" as const }))
+    .sort((a, b) => (a.addedAt < b.addedAt ? 1 : -1));
 
   return (
     <main className="flex-1">

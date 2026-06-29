@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { products } from "@/lib/products";
+import { getUnavailableSlugs } from "@/lib/sold";
 
 /**
  * POST /api/checkout
@@ -77,14 +78,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Your cart is empty." }, { status: 400 });
   }
 
+  // Pieces already sold, or held in someone else's open checkout right now.
+  // Every piece is one of one, so these can never enter a new payment.
+  const unavailable = await getUnavailableSlugs();
+
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
   const seen = new Set<string>();
   let subtotalPence = 0;
+  let blocked = false;
   for (const raw of items) {
     const slug = String((raw as { slug?: unknown })?.slug ?? "");
     const product = products.find((p) => p.slug === slug);
-    // Skip unknown, sold, or duplicate slugs, every piece is one of a kind.
-    if (!product || product.status === "sold" || seen.has(slug)) continue;
+    if (!product || seen.has(slug)) continue;
+    // Skip anything sold (static), or sold/reserved according to Stripe.
+    if (product.status === "sold" || unavailable.has(slug)) {
+      blocked = true;
+      continue;
+    }
     seen.add(slug);
     subtotalPence += Math.round(product.price * 100);
 
@@ -104,8 +114,12 @@ export async function POST(req: NextRequest) {
 
   if (line_items.length === 0) {
     return NextResponse.json(
-      { error: "Nothing in your cart is available to purchase." },
-      { status: 400 },
+      {
+        error: blocked
+          ? "Sorry, that piece has just been sold or is in someone else's basket. Each one is one of a kind."
+          : "Nothing in your cart is available to purchase.",
+      },
+      { status: 409 },
     );
   }
 
@@ -127,6 +141,11 @@ export async function POST(req: NextRequest) {
       // Attach each sale to a Stripe Customer so the buyer gets a receipt and
       // their purchase is on record (the basis for "order history" later).
       customer_creation: "always",
+      // Stamp the pieces onto the session so we can read sold/reserved state
+      // back from Stripe (see src/lib/sold.ts). The 30-minute expiry means an
+      // abandoned checkout releases its reservation rather than locking a piece.
+      metadata: { slugs: Array.from(seen).join(",") },
+      expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
     });
 
     return NextResponse.json({ url: session.url });
