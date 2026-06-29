@@ -17,6 +17,48 @@ import { products } from "@/lib/products";
 const SHIPPING_COUNTRIES: Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry[] =
   ["GB", "IE", "US", "CA", "AU", "NZ", "FR", "DE", "ES", "IT", "NL", "SE", "IN", "AE", "SG"];
 
+/**
+ * Flat-rate shipping shown at checkout. THE PRICES BELOW ARE PLACEHOLDERS,
+ * set your real Royal Mail / courier prices here (amounts are in pence, GBP).
+ * UK delivery becomes free automatically once the order subtotal reaches the
+ * threshold, matching the "Free UK shipping over £75" promise on the site.
+ */
+const FREE_UK_THRESHOLD_PENCE = 7500; // £75.00
+const UK_SHIPPING_PENCE = 450; // £4.50  ← confirm your real UK tracked price
+const INTL_SHIPPING_PENCE = 1200; // £12.00 ← confirm your real worldwide tracked price
+
+function shippingOptions(
+  subtotalPence: number,
+): Stripe.Checkout.SessionCreateParams.ShippingOption[] {
+  const ukFree = subtotalPence >= FREE_UK_THRESHOLD_PENCE;
+  return [
+    {
+      shipping_rate_data: {
+        type: "fixed_amount",
+        display_name: ukFree
+          ? "UK delivery, Royal Mail Tracked (free over £75)"
+          : "UK delivery, Royal Mail Tracked",
+        fixed_amount: { amount: ukFree ? 0 : UK_SHIPPING_PENCE, currency: "gbp" },
+        delivery_estimate: {
+          minimum: { unit: "business_day", value: 2 },
+          maximum: { unit: "business_day", value: 5 },
+        },
+      },
+    },
+    {
+      shipping_rate_data: {
+        type: "fixed_amount",
+        display_name: "International tracked and signed",
+        fixed_amount: { amount: INTL_SHIPPING_PENCE, currency: "gbp" },
+        delivery_estimate: {
+          minimum: { unit: "business_day", value: 5 },
+          maximum: { unit: "business_day", value: 15 },
+        },
+      },
+    },
+  ];
+}
+
 export async function POST(req: NextRequest) {
   const stripe = getStripe();
   if (!stripe) {
@@ -34,12 +76,14 @@ export async function POST(req: NextRequest) {
 
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
   const seen = new Set<string>();
+  let subtotalPence = 0;
   for (const raw of items) {
     const slug = String((raw as { slug?: unknown })?.slug ?? "");
     const product = products.find((p) => p.slug === slug);
     // Skip unknown, sold, or duplicate slugs, every piece is one of a kind.
     if (!product || product.status === "sold" || seen.has(slug)) continue;
     seen.add(slug);
+    subtotalPence += Math.round(product.price * 100);
 
     line_items.push({
       quantity: 1, // one of one
@@ -75,7 +119,11 @@ export async function POST(req: NextRequest) {
       cancel_url: `${origin}/cart?checkout=cancelled`,
       billing_address_collection: "auto",
       shipping_address_collection: { allowed_countries: SHIPPING_COUNTRIES },
+      shipping_options: shippingOptions(subtotalPence),
       phone_number_collection: { enabled: true },
+      // Attach each sale to a Stripe Customer so the buyer gets a receipt and
+      // their purchase is on record (the basis for "order history" later).
+      customer_creation: "always",
     });
 
     return NextResponse.json({ url: session.url });
