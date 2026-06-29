@@ -18,14 +18,17 @@ const SHIPPING_COUNTRIES: Stripe.Checkout.SessionCreateParams.ShippingAddressCol
   ["GB", "IE", "US", "CA", "AU", "NZ", "FR", "DE", "ES", "IT", "NL", "SE", "IN", "AE", "SG"];
 
 /**
- * Flat-rate shipping shown at checkout. THE PRICES BELOW ARE PLACEHOLDERS,
- * set your real Royal Mail / courier prices here (amounts are in pence, GBP).
- * UK delivery becomes free automatically once the order subtotal reaches the
- * threshold, matching the "Free UK shipping over £75" promise on the site.
+ * Flat-rate shipping shown at checkout (amounts in pence, GBP).
+ * Defaults chosen to comfortably cover Royal Mail Tracked (UK) and Royal Mail
+ * International Tracked & Signed (worldwide), the recommended services for
+ * one-of-a-kind jewellery. Confirm your exact cost any time with the Royal Mail
+ * Click & Drop price finder and adjust the two numbers below.
+ * UK delivery becomes free once the order subtotal reaches the threshold,
+ * matching the "Free UK shipping over £75" promise on the site.
  */
 const FREE_UK_THRESHOLD_PENCE = 7500; // £75.00
-const UK_SHIPPING_PENCE = 450; // £4.50  ← confirm your real UK tracked price
-const INTL_SHIPPING_PENCE = 1200; // £12.00 ← confirm your real worldwide tracked price
+const UK_SHIPPING_PENCE = 400; // £4.00, Royal Mail Tracked
+const INTL_SHIPPING_PENCE = 1400; // £14.00, International Tracked & Signed (worldwide)
 
 function shippingOptions(
   subtotalPence: number,
@@ -48,11 +51,11 @@ function shippingOptions(
     {
       shipping_rate_data: {
         type: "fixed_amount",
-        display_name: "International tracked and signed",
+        display_name: "Worldwide, International Tracked and Signed",
         fixed_amount: { amount: INTL_SHIPPING_PENCE, currency: "gbp" },
         delivery_estimate: {
-          minimum: { unit: "business_day", value: 5 },
-          maximum: { unit: "business_day", value: 15 },
+          minimum: { unit: "business_day", value: 3 },
+          maximum: { unit: "business_day", value: 10 },
         },
       },
     },
