@@ -22,6 +22,7 @@ import {
   materialName,
   ONE_OF_ONE,
   isOneOfOne,
+  formatMoney,
 } from "@/lib/products";
 import { getSoldSlugs } from "@/lib/sold";
 
@@ -164,6 +165,31 @@ export default async function ProductPage({
           <p className="text-base leading-relaxed text-ink-soft">
             {product.description}
           </p>
+
+          {/* group postings: the designs on offer, numbered to match the photo */}
+          {product.designs && (
+            <div className="rounded-md border border-gold/40 bg-cream-deep/30">
+              <p className="eyebrow border-b border-gold/30 px-4 py-3 text-marigold-ink">
+                The designs · match the numbers in the photo
+              </p>
+              <ol className="divide-y divide-gold/20">
+                {product.designs.map((d, i) => (
+                  <li key={i} className="flex items-baseline gap-3 px-4 py-2.5 text-sm">
+                    <span className="w-5 shrink-0 font-semibold text-marigold-ink">{i + 1}.</span>
+                    <span className="flex-1">
+                      <span className="font-medium text-ink">{d.label}</span>
+                      {d.note && <span className="text-ink-soft"> · {d.note}</span>}
+                    </span>
+                    <span className="shrink-0 font-semibold text-ink">{formatMoney(d.price)}</span>
+                  </li>
+                ))}
+              </ol>
+              <p className="border-t border-gold/30 px-4 py-3 text-xs text-ink-soft">
+                Add your design&apos;s number or name to the order note at checkout,
+                or message us on WhatsApp and we&apos;ll confirm it is still available.
+              </p>
+            </div>
+          )}
 
           {/* at-a-glance facts */}
           <dl className="grid grid-cols-2 gap-3 border-y border-gold/40 py-4 text-sm">

@@ -86,6 +86,12 @@ export type Product = {
    * Stripe sold-sync and show a "Small batch" note instead of "One of one".
    */
   smallBatch?: boolean;
+  /**
+   * For group postings (several designs photographed together): the designs
+   * on offer, rendered as a numbered list on the product page. Buyers name
+   * their design in the order note.
+   */
+  designs?: { label: string; price: number; note?: string }[];
 };
 
 /** The brand promise, surfaced on cards and product pages. */
@@ -530,8 +536,20 @@ export const products: Product[] = [
     materials: ["ceramics"],
     price: 5,
     currency: "GBP",
-    description: `A little mela of hand-painted clay magnets, ten designs in one photograph, each numbered so you can pick your favourite: 1. Peacock Stream £7 · 2. Lily Pebble £6 · 3. Little Palm £5 · 4. Marmalade Cat £7 · 5. Blueberry £5 · 6. Blueberry £5 · 7. Lemon Grove £6 · 8. Orange Ibex £8 · 9. Red Dog £7 · 10. Starry Pot £5. Every one is shaped and painted by hand, and each design is one of one.`,
-    materialNote: `Air-dry clay, sealed with resin, magnet back. Designs are priced £5 to £8; from £5. Add the design number to your order note, or message us on WhatsApp and we will confirm the exact price and what is still available.`,
+    description: `A little mela of hand-painted clay fridge magnets, ten designs photographed together and numbered so you can pick your favourite. Every one is shaped and painted by hand, and each design is one of one. Pop the design number in your order note, or message us on WhatsApp.`,
+    materialNote: `Air-dry clay, sealed with resin, magnet back. Designs are priced £5 to £8 (from £5 at checkout); we confirm the exact price and availability with you when you name your design.`,
+    designs: [
+      { label: "Peacock Stream", price: 7, note: "A river of teal, jade and red down a leaf shape" },
+      { label: "Lily Pebble", price: 6, note: "Deep blue rim, green spots, a lily pad from above" },
+      { label: "Little Palm", price: 5, note: "One tiny palm tree, a pocket-sized holiday" },
+      { label: "Marmalade Cat", price: 7, note: "The one cat-lovers pick up without thinking twice" },
+      { label: "Blueberry", price: 5, note: "A plump berry with its star-crown on top" },
+      { label: "Blueberry", price: 5, note: "Its twin, shaped by hand, a character of its own" },
+      { label: "Lemon Grove", price: 6, note: "A flower pot curled up among yellow lemons" },
+      { label: "Orange Ibex", price: 8, note: "Folk-art antelope with long spotted horns" },
+      { label: "Red Dog", price: 7, note: "A small red dog ringed with blue dots" },
+      { label: "Starry Pot", price: 5, note: "Candy pink, scattered with blue stars" },
+    ],
     images: [
       { alt: "Mela Magnets, ten hand-painted clay fridge magnets by GulCraft Stories", swatch: ["#D94A2B", "#4E9B6E"], src: "/products/mela-magnets.jpg" },
     ],
@@ -548,8 +566,13 @@ export const products: Product[] = [
     materials: ["ceramics", "glass"],
     price: 12,
     currency: "GBP",
-    description: `Three bag charms, each £12, photographed together: Tota, a little green-and-gold parrot beneath a stack of glass cube beads, a folk-painted barrel and a tiny watermelon slice; Strawberry Fields, a hand-painted strawberry freckled with gold hearts on a green cotton cord; and Matki, the round clay pot of every Indian kitchen, strung below folk-painted beads on a bright twisted cord. Tell us which one is yours when you order.`,
-    materialNote: `Hand-painted air-dry clay, glass and acrylic beads, painted resin barrel beads, cotton thread and tassels, stainless lobster clips with split rings. £12 per charm; add your choice (Tota, Strawberry Fields or Matki) to the order note.`,
+    description: `Three bag charms photographed together, each hand-shaped from clay, painted, and strung with beads on a bright cord. They are £12 each; tell us which one is yours in the order note.`,
+    materialNote: `Hand-painted air-dry clay, glass and acrylic beads, painted resin barrel beads, cotton thread and tassels, stainless lobster clips with split rings.`,
+    designs: [
+      { label: "Tota", price: 12, note: "A green-and-gold parrot beneath glass cubes, a folk-painted barrel and a tiny watermelon slice" },
+      { label: "Strawberry Fields", price: 12, note: "A hand-painted strawberry freckled with gold hearts, on a green cotton cord" },
+      { label: "Matki", price: 12, note: "The round clay pot of every Indian kitchen, below folk-painted beads on a twisted cord" },
+    ],
     images: [
       { alt: "Three hand-painted clay bag charms by GulCraft Stories: Tota, Strawberry Fields and Matki", swatch: ["#4E9B2E", "#D93B2B"], src: "/products/bag-charm-trio.jpg" },
     ],
