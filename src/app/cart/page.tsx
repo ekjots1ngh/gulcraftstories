@@ -9,7 +9,8 @@ import { CheckoutButton } from "@/components/CheckoutButton";
 import { TrustSignals } from "@/components/TrustSignals";
 import { useCart } from "@/lib/cart";
 import { Price } from "@/components/Price";
-import { typeName } from "@/lib/products";
+import { typeName, isOneOfOne } from "@/lib/products";
+import { FreeShippingMeter, LittleExtras } from "@/components/CartExtras";
 
 export default function CartPage() {
   const { items, subtotal, count, remove, clear } = useCart();
@@ -75,7 +76,7 @@ export default function CartPage() {
                       </div>
 
                       <div className="mt-auto flex items-center justify-between gap-3">
-                        <span className="eyebrow text-marigold-ink">One of one</span>
+                        <span className="eyebrow text-marigold-ink">{isOneOfOne(product) ? "One of one" : "Small batch"}</span>
                         <button
                           type="button"
                           onClick={() => remove(product.slug)}
@@ -101,10 +102,13 @@ export default function CartPage() {
                   Clear cart
                 </button>
               </div>
+
+              <LittleExtras />
             </div>
 
             {/* summary */}
             <aside className="h-fit rounded-lg bg-cream-deep/50 p-6">
+              <FreeShippingMeter />
               <h2 className="font-display text-xl">Summary</h2>
               <dl className="mt-5 flex flex-col gap-3 text-sm">
                 <div className="flex justify-between">

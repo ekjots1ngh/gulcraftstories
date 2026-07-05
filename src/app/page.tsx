@@ -31,6 +31,11 @@ export default async function Home() {
     list.map((p) => (isOneOfOne(p) && soldSlugs.includes(p.slug) ? { ...p, status: "sold" as const } : p));
   const featured = withSold(products.filter((p) => p.status === "available").slice(0, 6));
   const tickerPieces = withSold([...products]).filter((p) => p.status === "available");
+  // The counter display: small pieces that make easy gifts and add-ons.
+  const treasures = withSold(products.filter((p) => p.price <= 15))
+    .filter((p) => p.status === "available")
+    .sort((a, b) => a.price - b.price)
+    .slice(0, 6);
 
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com";
   const orgLd = {
@@ -240,6 +245,57 @@ export default async function Home() {
           </div>
         </Container>
       </section>
+
+      {/* ───────── LITTLE TREASURES · the counter display ───────── */}
+      {treasures.length > 0 && (
+        <section className="relative overflow-hidden py-14 sm:py-20">
+          <Container>
+            <Reveal>
+              <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+                <div className="flex flex-col gap-2">
+                  <span className="eyebrow text-gold-soft">Little treasures · £15 and under</span>
+                  <h2 className="text-3xl leading-tight text-cream sm:text-4xl">
+                    Small things, big charm
+                  </h2>
+                  <p className="max-w-xl text-base leading-relaxed text-cream/60">
+                    Magnets, bookmarks and charms from the same table. Easy gifts,
+                    and they travel in the same parcel as anything else you choose.
+                  </p>
+                </div>
+                <Link
+                  href="/shop?type=clay"
+                  className="shrink-0 text-sm font-semibold text-gold-soft underline underline-offset-4 hover:text-cream"
+                >
+                  See all the little things →
+                </Link>
+              </div>
+            </Reveal>
+            <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:grid-cols-6">
+              {treasures.map((p, i) => (
+                <Reveal key={p.slug} delay={i * 80} className="w-40 shrink-0 snap-start sm:w-auto">
+                  <Link href={`/shop/${p.slug}`} className="night-card group/lt flex h-full flex-col gap-2 p-2.5">
+                    <div className="overflow-hidden rounded-sm">
+                      <PieceImage
+                        swatch={p.images[0].swatch}
+                        src={p.images[0].src}
+                        label={p.name}
+                        ratio="square"
+                        className="transition-transform duration-500 group-hover/lt:scale-105"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-0.5 px-1 pb-1">
+                      <span className="truncate text-sm font-medium text-cream">{p.name}</span>
+                      <span className="text-xs text-gold-soft">
+                        {p.designs ? `from ${formatMoney(p.price)}` : formatMoney(p.price)}
+                      </span>
+                    </div>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* ───────── THE EDITS · five lit doorways ───────── */}
       <section className="relative overflow-hidden py-16 sm:py-24">

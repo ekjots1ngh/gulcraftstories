@@ -17,3 +17,6 @@ export const whatsappLink = () =>
 
 /** Gift voucher amounts offered (GBP). Server validates against this list. */
 export const GIFT_DENOMINATIONS = [25, 50, 75, 100] as const;
+
+/** UK orders at or above this (GBP) ship free. Keep in sync with /api/checkout. */
+export const FREE_UK_SHIPPING_OVER = 75;
