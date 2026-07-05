@@ -53,7 +53,7 @@ export default function ShippingPage() {
         </p>
         <ul>
           <li>Within London: £99.</li>
-          <li>Anywhere else on Earth: £1,999.</li>
+          <li>Anywhere else on Earth: £5,000.</li>
         </ul>
         <p>
           We are quite serious. Choose it at checkout and we&apos;ll message you

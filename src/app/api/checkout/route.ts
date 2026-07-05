@@ -38,7 +38,7 @@ const INTL_SHIPPING_PENCE = 1400; // £14.00, International Tracked & Signed (wo
  * standard shipping look effortless. Arranged over WhatsApp after the order.
  */
 const HAND_LONDON_PENCE = 9900; // £99.00, hand-delivered within London
-const HAND_WORLD_PENCE = 199900; // £1,999.00, hand-delivered anywhere on Earth
+const HAND_WORLD_PENCE = 500000; // £5,000.00, hand-delivered anywhere on Earth
 
 function shippingOptions(
   subtotalPence: number,

@@ -49,6 +49,13 @@ export default function InternationalPage() {
           These are aims rather than guarantees, customs processing and local
           postal services can add time.
         </p>
+        <p>
+          And for the piece that deserves an escort: choose{" "}
+          <Link href="/shipping">hand delivery</Link> at checkout and a member
+          of the maker&apos;s family will bring it to you in person, £99 within
+          London, £5,000 anywhere else on Earth. Priced so it stays rare; quite
+          real if you want it.
+        </p>
 
         <h2>Customs, duties &amp; taxes</h2>
         <p>

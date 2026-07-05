@@ -239,6 +239,12 @@ export default async function ProductPage({
           <ul className="mt-1 flex flex-col gap-1.5 text-xs text-ink-soft">
             <li>· Free UK shipping over £75 · worldwide delivery</li>
             <li>· Arrives gift-wrapped, with a card telling its story</li>
+            <li>
+              · Prefer it delivered by hand?{" "}
+              <Link href="/shipping" className="underline hover:text-marigold-ink">
+                London £99, anywhere on Earth £5,000
+              </Link>
+            </li>
           </ul>
         </div>
       </Container>

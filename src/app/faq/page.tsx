@@ -79,6 +79,19 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
     ),
   },
   {
+    q: "Can my piece really be delivered by hand?",
+    a: (
+      <>
+        Yes, really. Choose hand delivery at checkout and a member of the
+        maker&apos;s family brings your piece to you in person: £99 within
+        London, £5,000 anywhere else on Earth. We arrange the time and place
+        together on WhatsApp. It is priced so it stays rare, but if you take us
+        up on it, your piece arrives with company and a story. Details on the{" "}
+        <Link href="/shipping" className="underline hover:text-marigold-ink">shipping page</Link>.
+      </>
+    ),
+  },
+  {
     q: "Do you take bespoke commissions?",
     a: (
       <>
