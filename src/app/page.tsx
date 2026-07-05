@@ -142,11 +142,11 @@ export default async function Home() {
               </Link>
             </div>
             <div className="float-b absolute -left-10 bottom-24 hidden w-24 -rotate-6 lg:block xl:-left-20 xl:w-28" style={{ animationDelay: "1.6s" }}>
-              <Link href="/shop/marmalade-cat-magnet" aria-label="Marmalade Cat">
+              <Link href="/shop/bamboo-grove" aria-label="Bamboo Grove">
                 <PieceImage
-                  swatch={["#E88AA0", "#E08A1E"]}
-                  src="/products/marmalade-cat-magnet.jpg"
-                  label="Marmalade Cat"
+                  swatch={["#2E7D4F", "#E3CF93"]}
+                  src="/products/bamboo-grove.jpg"
+                  label="Bamboo Grove"
                   ratio="square"
                   className="ring-1 ring-cream/20 shadow-[0_24px_60px_-24px_rgba(14,90,91,0.6)]"
                 />

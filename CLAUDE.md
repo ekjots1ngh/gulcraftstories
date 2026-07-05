@@ -118,12 +118,15 @@ Implemented in `src/lib/products.ts` as the `Product` type: `name`, `subtitle`,
 `price` + `currency`, `description` (the piece's story), `materialNote` (specific
 materials), `images[]` (real photos at `/public/products/<slug>.jpg`), `status`
 (`available` | `sold`), `addedAt`. Optional: `dimensions`, `makingStory`,
-`makersNote`, `hoursToMake` (UI hides them when absent). **The catalogue is the maker's 37 real pieces with real photography** (Collection
-2 added necklaces, earrings, crochet bookmarks and air-dry-clay charms/magnets;
-the clay magnets and bag charms were cropped from the doc's numbered group
-photos); product data lives in this file (a CMS can return this shape later).
+`makersNote`, `hoursToMake` (UI hides them when absent). **The catalogue is the maker's 26 real listings with real photography** (Collection
+2 added necklaces, earrings, crochet bookmarks and air-dry-clay pieces; per the
+founder, the ten numbered fridge magnets are ONE posting, `mela-magnets`, using
+the numbered group photo so buyers pick a design by number, and the three bag
+charms are ONE posting, `bag-charm-trio`); product data lives in this file (a
+CMS can return this shape later).
 Most pieces are one of one; `smallBatch: true` marks the explicit exceptions
-(crochet Posy Page Clips, Mela Clay Charms): they show "Small batch" instead of
+(crochet Posy Page Clips, Mela Clay Charms, Mela Magnets, the Bag Charm Trio):
+they show "Small batch" instead of
 "One of one", are never auto-marked sold by the Stripe sold-sync, and stay
 buyable after a purchase (`isOneOfOne()` helper).
 
