@@ -118,12 +118,17 @@ Implemented in `src/lib/products.ts` as the `Product` type: `name`, `subtitle`,
 `price` + `currency`, `description` (the piece's story), `materialNote` (specific
 materials), `images[]` (real photos at `/public/products/<slug>.jpg`), `status`
 (`available` | `sold`), `addedAt`. Optional: `dimensions`, `makingStory`,
-`makersNote`, `hoursToMake` (UI hides them when absent). **The catalogue is the
-maker's 17 real pieces with real photography**; product data lives in this file
-(a CMS can return this shape later).
+`makersNote`, `hoursToMake` (UI hides them when absent). **The catalogue is the maker's 37 real pieces with real photography** (Collection
+2 added necklaces, earrings, crochet bookmarks and air-dry-clay charms/magnets;
+the clay magnets and bag charms were cropped from the doc's numbered group
+photos); product data lives in this file (a CMS can return this shape later).
+Most pieces are one of one; `smallBatch: true` marks the explicit exceptions
+(crochet Posy Page Clips, Mela Clay Charms): they show "Small batch" instead of
+"One of one", are never auto-marked sold by the Stripe sold-sync, and stay
+buyable after a purchase (`isOneOfOne()` helper).
 
 ### Three ways to browse (taxonomies)
-Exported from `products.ts`: `TYPES` (necklaces, earrings), `EDITS` (the five),
+Exported from `products.ts`: `TYPES` (necklaces, earrings, crochet, clay), `EDITS` (the five),
 and `MATERIALS` (semi-precious stones, ceramic & porcelain, glass beads, brass &
 metal, textile & thread). `/shop` filters on any combination via `?type=`,
 `?edit=`, `?material=` (AND); the header mega-menu links into each axis

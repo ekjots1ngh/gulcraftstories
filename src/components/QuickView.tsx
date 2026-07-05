@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import type { Product } from "@/lib/products";
-import { materialName, ONE_OF_ONE } from "@/lib/products";
+import { materialName, ONE_OF_ONE, isOneOfOne } from "@/lib/products";
 import { PieceImage } from "./PieceImage";
 import { Price } from "./Price";
 import { AddToCart } from "./AddToCart";
@@ -65,7 +65,7 @@ export function QuickView({ product, onClose }: { product: Product; onClose: () 
                     <Price gbp={product.price} />
                   </span>
                   <span className="rounded-full bg-peacock/10 px-2.5 py-0.5 text-xs font-semibold text-peacock">
-                    1 of 1
+                    {isOneOfOne(product) ? "1 of 1" : "Small batch"}
                   </span>
                 </>
               )}
@@ -84,7 +84,7 @@ export function QuickView({ product, onClose }: { product: Product; onClose: () 
 
           <div className="flex items-center gap-2 text-xs text-ink-soft">
             <MotifMark size={16} color="var(--color-gold)" />
-            {ONE_OF_ONE}
+            {isOneOfOne(product) ? ONE_OF_ONE : "Made in small batches, each one by hand"}
           </div>
 
           <div className="mt-auto flex flex-col gap-3 pt-2">

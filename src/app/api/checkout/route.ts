@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
-import { products } from "@/lib/products";
+import { products, isOneOfOne } from "@/lib/products";
 import { getUnavailableSlugs } from "@/lib/sold";
 
 /**
@@ -90,8 +90,10 @@ export async function POST(req: NextRequest) {
     const slug = String((raw as { slug?: unknown })?.slug ?? "");
     const product = products.find((p) => p.slug === slug);
     if (!product || seen.has(slug)) continue;
-    // Skip anything sold (static), or sold/reserved according to Stripe.
-    if (product.status === "sold" || unavailable.has(slug)) {
+    // Skip anything sold (static), or, for one-of-one pieces, anything sold or
+    // reserved according to Stripe. Small-batch pieces stay buyable, she can
+    // always make more.
+    if (product.status === "sold" || (isOneOfOne(product) && unavailable.has(slug))) {
       blocked = true;
       continue;
     }

@@ -21,6 +21,7 @@ import {
   editName,
   materialName,
   ONE_OF_ONE,
+  isOneOfOne,
 } from "@/lib/products";
 import { getSoldSlugs } from "@/lib/sold";
 
@@ -65,8 +66,11 @@ export default async function ProductPage({
   const related = getRelated(product.slug);
   const stories = getPostsForProduct(product.slug);
   const oneOfAKind = getFeaturedPost();
+  const oneOfOne = isOneOfOne(product);
   const soldSlugs = await getSoldSlugs();
-  const sold = product.status === "sold" || soldSlugs.includes(product.slug);
+  // Small-batch pieces are never auto-marked sold, she can make more.
+  const sold =
+    product.status === "sold" || (oneOfOne && soldSlugs.includes(product.slug));
 
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com";
   const productLd = {
@@ -143,8 +147,10 @@ export default async function ProductPage({
           <div className="flex items-start gap-3 rounded-md border border-gold/50 bg-cream-deep/40 px-4 py-3">
             <MotifMark size={22} color="var(--color-gold)" />
             <div className="flex flex-col gap-0.5">
-              <p className="text-sm font-medium text-ink">{ONE_OF_ONE}</p>
-              {oneOfAKind && (
+              <p className="text-sm font-medium text-ink">
+                {oneOfOne ? ONE_OF_ONE : "Made in small batches, each one by hand"}
+              </p>
+              {oneOfOne && oneOfAKind && (
                 <Link
                   href={`/journal/${oneOfAKind.slug}`}
                   className="text-xs font-semibold text-peacock underline underline-offset-2 hover:text-marigold-ink"
@@ -170,8 +176,12 @@ export default async function ProductPage({
               </dd>
             </div>
             <div>
-              <dt className="eyebrow text-marigold-ink">One of a kind</dt>
-              <dd className="mt-1">Made once, never remade</dd>
+              <dt className="eyebrow text-marigold-ink">
+                {oneOfOne ? "One of a kind" : "Small batch"}
+              </dt>
+              <dd className="mt-1">
+                {oneOfOne ? "Made once, never remade" : "Each one made and painted by hand"}
+              </dd>
             </div>
             {product.hoursToMake && (
               <div>

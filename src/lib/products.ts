@@ -16,7 +16,7 @@ export type Status = "available" | "sold";
 
 /* ---------- Browse taxonomies (the three ways to shop) ---------- */
 
-export type TypeSlug = "necklaces" | "earrings";
+export type TypeSlug = "necklaces" | "earrings" | "crochet" | "clay";
 export type EditSlug = "gulzar" | "mitti" | "dhaaga" | "roshni" | "saanjh";
 export type MaterialSlug =
   | "semi-precious-stones"
@@ -30,6 +30,8 @@ type Taxon<S extends string> = { slug: S; name: string; blurb: string; accent: s
 export const TYPES: Taxon<TypeSlug>[] = [
   { slug: "necklaces", name: "Necklaces", blurb: "Pendants, statements and beaded strands.", accent: "#0E5A5B" },
   { slug: "earrings", name: "Earrings", blurb: "Drops and dainty everyday pairs.", accent: "#E08A1E" },
+  { slug: "crochet", name: "Crochet", blurb: "Little things made one stitch at a time.", accent: "#B5267A" },
+  { slug: "clay", name: "Clay charms & magnets", blurb: "Hand-painted air-dry clay, full of character.", accent: "#9A5B33" },
 ];
 
 export const EDITS: Taxon<EditSlug>[] = [
@@ -78,10 +80,19 @@ export type Product = {
   status: Status; // always 1 of 1; "sold" is permanent
   addedAt: string; // ISO date; powers "newest"
   featured?: boolean;
+  /**
+   * Made in small batches rather than one of one (e.g. crochet bookmarks,
+   * clay charm sets). Small-batch pieces are never auto-marked sold by the
+   * Stripe sold-sync and show a "Small batch" note instead of "One of one".
+   */
+  smallBatch?: boolean;
 };
 
 /** The brand promise, surfaced on cards and product pages. */
 export const ONE_OF_ONE = "One of one, when it's gone, it's gone";
+
+/** Most pieces are one of one; small-batch pieces are the explicit exception. */
+export const isOneOfOne = (p: Pick<Product, "smallBatch">) => !p.smallBatch;
 
 export const products: Product[] = [
   {
@@ -126,7 +137,7 @@ export const products: Product[] = [
     type: "necklaces",
     edit: "gulzar",
     materials: ["semi-precious-stones", "ceramics", "brass"],
-    price: 54,
+    price: 35,
     currency: "GBP",
     description: `Hot pink meets cool turquoise the way a wildflower meets a mountain sky. The centrepiece is a single turquoise nugget, veined and unrepeatable, finished with a hand-inlaid Tibetan bead. A joyful, unexpected colour story for anyone who refuses to dress quietly.`,
     materialNote: `Dyed chalcedony cube beads, natural turquoise pendant, barrel ceramic beads, a Tibetan turquoise-inlay capped bead, and brass spacers.`,
@@ -196,7 +207,7 @@ export const products: Product[] = [
     type: "necklaces",
     edit: "gulzar",
     materials: ["glass"],
-    price: 30,
+    price: 27,
     currency: "GBP",
     description: `A fine scatter of colour that sits close to the throat, finished with one little millefiori flower bead at the side. Confetti Trail is the everyday piece you reach for without thinking, light, happy, and easy to layer. The kind of small thing that makes a plain day feel like a celebration.`,
     materialNote: `Multicoloured glass seed beads and African trade beads, a red millefiori glass focal bead.`,
@@ -213,7 +224,7 @@ export const products: Product[] = [
     type: "necklaces",
     edit: "saanjh",
     materials: ["glass", "brass"],
-    price: 40,
+    price: 35,
     currency: "GBP",
     description: `Deep blue and warm red, the exact colours of the last light on a mountain. Each frosted glass bead is recycled and softened by hand, leading down to a carved red focal bead like a small sun setting. Bold but wearable, a quiet kind of drama.`,
     materialNote: `Frosted recycled glass beads in blues, red glass beads, a carved cinnabar-red focal bead, and silver Bali-style spacers.`,
@@ -248,7 +259,7 @@ export const products: Product[] = [
     type: "necklaces",
     edit: "gulzar",
     materials: ["semi-precious-stones", "textile", "brass"],
-    price: 55,
+    price: 45,
     currency: "GBP",
     description: `A whole wildflower meadow gathered at the collarbone: dozens of real gemstone chips cascading from a hand-embroidered band, weighted with brass drops and a single coin. This is the showpiece, the necklace worn to be remembered. One exists, and then it is gone.`,
     materialNote: `Mixed gemstone chips, amethyst, rose quartz, green aventurine, carnelian, citrine, lapis and turquoise, on a hand-embroidered band, with brass coin and teardrop dangles.`,
@@ -266,7 +277,7 @@ export const products: Product[] = [
     type: "necklaces",
     edit: "saanjh",
     materials: ["glass", "ceramics", "brass"],
-    price: 45,
+    price: 35,
     currency: "GBP",
     description: `Cool teal glass, the colour of shallow water, falling to a brass crescent moon. Tidewater Moon is calm, made wearable, the piece you put on and immediately feel a little more settled. Beautiful with white linen, a tan, and salt in your hair.`,
     materialNote: `Recycled sea-glass-style beads, glazed ceramic focal beads, brass crescent pendant and tube spacers.`,
@@ -379,6 +390,357 @@ export const products: Product[] = [
     status: "available",
     addedAt: "2026-05-20",
     featured: true,
+  },
+
+  /* ---------- Collection 2: new necklaces ---------- */
+  {
+    slug: "spice-route",
+    name: "Spice Route",
+    subtitle: "Beaded necklace",
+    type: "necklaces",
+    edit: "roshni",
+    materials: ["glass", "semi-precious-stones"],
+    price: 20,
+    currency: "GBP",
+    description: `Spice Route is a journey strung on a thread, each block of colour a different stop, from sun-yellow and turquoise to chilli-red and ink-black. At its heart hangs a single painted bead, the kind of focal piece you keep turning to the light. Designed from a sketchbook and beaded entirely by hand, it's a one-of-a-kind that layers beautifully or stands alone. For the wearer who treats getting dressed as a small act of storytelling.`,
+    materialNote: `Multicoloured seed beads in hand-blocked colour sections, turquoise nugget accents, two etched fossil-pattern focal beads, a cream bone-tone bead and a turquoise centre bead drop. Silver-plated lobster clasp.`,
+    images: [
+      { alt: "Spice Route, handmade by GulCraft Stories", swatch: ["#E08A1E", "#241F1C"], src: "/products/spice-route.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-05",
+    featured: true,
+  },
+  {
+    slug: "kathmandu-line",
+    name: "Kathmandu Line",
+    subtitle: "Beaded necklace",
+    type: "necklaces",
+    edit: "saanjh",
+    materials: ["glass", "semi-precious-stones", "brass"],
+    price: 28,
+    currency: "GBP",
+    description: `Kathmandu Line reads like a quiet trek across high country, long runs of black and white beads broken by little finds along the way: a chip of turquoise here, rose quartz and carnelian there. It all leads down to a single Tibetan medallion, lapis-blue around a turquoise heart, with a filigree brass bead resting beneath.`,
+    materialNote: `Black and white glass seed beads in hand-graded sections, with gemstone chip accents (green aventurine, turquoise, frosted rose quartz and carnelian), brass tube spacers, a frosted clear-glass tube and a magenta glass cushion bead.`,
+    images: [
+      { alt: "Kathmandu Line, handmade by GulCraft Stories", swatch: ["#3B2A4A", "#F1E7D3"], src: "/products/kathmandu-line.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-05",
+  },
+  {
+    slug: "marigold-mela",
+    name: "Marigold Mela",
+    subtitle: "Beaded necklace",
+    type: "necklaces",
+    edit: "gulzar",
+    materials: ["glass", "brass"],
+    price: 22,
+    currency: "GBP",
+    description: `A bright marigold strand, the colour you see strung across doorways at every celebration, that slowly fills with millefiori glass, each tiny bead a little garden of colour pressed into it.`,
+    materialNote: `Yellow glass seed beads, multicolour millefiori glass beads, a hand-wrapped blue thread bail, a brass openwork lotus charm, and a cobalt-blue glass drop bead. Gold-tone clasp.`,
+    images: [
+      { alt: "Marigold Mela, handmade by GulCraft Stories", swatch: ["#E08A1E", "#2E4FA8"], src: "/products/marigold-mela.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-05",
+  },
+  {
+    slug: "amber-twilight",
+    name: "Amber Twilight",
+    subtitle: "Beaded necklace",
+    type: "necklaces",
+    edit: "saanjh",
+    materials: ["semi-precious-stones", "brass"],
+    price: 29,
+    currency: "GBP",
+    description: `The heart of the piece is a hand-inlaid Tibetan bead the colour of warm amber, set with turquoise and tiny coral flowers, flanked by coral, rhodonite and a flash of green like the last of the daylight. Saanjh is the hour between day and night, and this is what it looks like worn around the throat.`,
+    materialNote: `Purple dragon-vein agate cube beads, brass spacers, a Tibetan amber-resin focal bead with turquoise and coral inlay and brass caps, pink rhodonite rounds, red bamboo-coral tubes, yellow jade beads, white mother-of-pearl and white agate, green aventurine chips. Gold-tone clasp.`,
+    images: [
+      { alt: "Amber Twilight, handmade by GulCraft Stories", swatch: ["#7E5AA2", "#C97B2E"], src: "/products/amber-twilight.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-05",
+  },
+
+  /* ---------- Collection 2: new earrings ---------- */
+  {
+    slug: "bamboo-grove",
+    name: "Bamboo Grove",
+    subtitle: "Carved jade drop earrings",
+    type: "earrings",
+    edit: "gulzar",
+    materials: ["semi-precious-stones"],
+    price: 26,
+    currency: "GBP",
+    description: `Two little carved pillars of green, each one cut by hand with a soft leaf pattern so the light moves across them as you do, set between beads of honey-yellow jade.`,
+    materialNote: `Hand-carved green jade tubes with leaf pattern, honey-yellow jade beads, gold-tone ear wires.`,
+    images: [
+      { alt: "Bamboo Grove, handmade by GulCraft Stories", swatch: ["#2E7D4F", "#E3CF93"], src: "/products/bamboo-grove.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-05",
+  },
+
+  /* ---------- Collection 2: crochet ---------- */
+  {
+    slug: "posy-page-clips",
+    name: "Posy Page Clips",
+    subtitle: "Crochet flower bookmarks",
+    type: "crochet",
+    edit: "dhaaga",
+    materials: ["textile"],
+    price: 6,
+    currency: "GBP",
+    description: `Mark your place with a tiny garden. Each Posy Page Clip is a little crocheted bloom on a coloured clip, made to brighten a journal, a planner, or whatever you're halfway through reading. They slip onto a page without damaging it and bring a pop of colour every time you open the cover. Handmade one stitch at a time, they make a small, thoughtful gift.`,
+    materialNote: `Wool crochet blooms on coloured paper clips. Price is per clip; colours vary, tell us your favourites when you order.`,
+    images: [
+      { alt: "Posy Page Clips, handmade by GulCraft Stories", swatch: ["#B5267A", "#4E9B6E"], src: "/products/posy-page-clips.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-04",
+    smallBatch: true,
+  },
+
+  /* ---------- Collection 2: air-dry clay ---------- */
+  {
+    slug: "mela-clay-charms",
+    name: "Mela Clay Charms",
+    subtitle: "Hand-painted key & bag charms",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics"],
+    price: 12,
+    currency: "GBP",
+    description: `Each Mela Charm is a stack of clay charms and beads painted entirely by hand, polka dots, blooms and tiny stars, no two the same. Clip one to a bag, a keyring or a journal zip and carry a splash of colour wherever you go.`,
+    materialNote: `Hand-painted air-dry clay charms and beads, cotton thread, metal clip. Price is per charm; each one is painted differently.`,
+    images: [
+      { alt: "Mela Clay Charms, handmade by GulCraft Stories", swatch: ["#D94A2B", "#2E9BB0"], src: "/products/mela-clay-charms.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-04",
+    smallBatch: true,
+  },
+  {
+    slug: "peacock-stream-magnet",
+    name: "Peacock Stream",
+    subtitle: "Fridge magnet",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics"],
+    price: 7,
+    currency: "GBP",
+    description: `A little river of teal, jade and red runs down a leaf-shaped magnet, finished with a silver ribbon of water.`,
+    materialNote: `Air-dry clay, sealed with resin, magnet back.`,
+    images: [
+      { alt: "Peacock Stream magnet, handmade by GulCraft Stories", swatch: ["#0E5A5B", "#4E9B6E"], src: "/products/peacock-stream-magnet.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-03",
+  },
+  {
+    slug: "lily-pebble-magnet",
+    name: "Lily Pebble",
+    subtitle: "Fridge magnet",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics"],
+    price: 6,
+    currency: "GBP",
+    description: `Deep blue rim, scattered green spots, like a lily pad seen from above.`,
+    materialNote: `Air-dry clay, sealed with resin, magnet back.`,
+    images: [
+      { alt: "Lily Pebble magnet, handmade by GulCraft Stories", swatch: ["#2E4FA8", "#4E9B6E"], src: "/products/lily-pebble-magnet.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-03",
+  },
+  {
+    slug: "little-palm-magnet",
+    name: "Little Palm",
+    subtitle: "Fridge magnet",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics"],
+    price: 5,
+    currency: "GBP",
+    description: `One tiny palm tree on a sunny cream-and-yellow pebble, a pocket-sized holiday.`,
+    materialNote: `Air-dry clay, sealed with resin, magnet back.`,
+    images: [
+      { alt: "Little Palm magnet, handmade by GulCraft Stories", swatch: ["#E3CF93", "#2E7D4F"], src: "/products/little-palm-magnet.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-03",
+  },
+  {
+    slug: "marmalade-cat-magnet",
+    name: "Marmalade Cat",
+    subtitle: "Fridge magnet",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics"],
+    price: 7,
+    currency: "GBP",
+    description: `Hand-painted and full of character, this is the one cat-lovers pick up without thinking twice.`,
+    materialNote: `Air-dry clay, sealed with resin, magnet back.`,
+    images: [
+      { alt: "Marmalade Cat magnet, handmade by GulCraft Stories", swatch: ["#E88AA0", "#E08A1E"], src: "/products/marmalade-cat-magnet.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-03",
+  },
+  {
+    slug: "blueberry-magnet-i",
+    name: "Blueberry I",
+    subtitle: "Fridge magnet",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics"],
+    price: 5,
+    currency: "GBP",
+    description: `A plump little berry, glazed deep indigo with its star-crown on top. One of a pair of berries, each shaped by hand, no two quite alike.`,
+    materialNote: `Air-dry clay, sealed with resin, magnet back.`,
+    images: [
+      { alt: "Blueberry magnet, handmade by GulCraft Stories", swatch: ["#2E3A8C", "#3B2A4A"], src: "/products/blueberry-magnet-i.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-03",
+  },
+  {
+    slug: "blueberry-magnet-ii",
+    name: "Blueberry II",
+    subtitle: "Fridge magnet",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics"],
+    price: 5,
+    currency: "GBP",
+    description: `A plump little berry, glazed deep indigo with its star-crown on top. The second of the pair, shaped by hand, with a character all its own.`,
+    materialNote: `Air-dry clay, sealed with resin, magnet back.`,
+    images: [
+      { alt: "Blueberry magnet, handmade by GulCraft Stories", swatch: ["#2E3A8C", "#3B2A4A"], src: "/products/blueberry-magnet-ii.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-03",
+  },
+  {
+    slug: "lemon-grove-magnet",
+    name: "Lemon Grove",
+    subtitle: "Fridge magnet",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics"],
+    price: 6,
+    currency: "GBP",
+    description: `The flower pot curled up in a grove of yellow lemons and green leaves.`,
+    materialNote: `Air-dry clay, sealed with resin, magnet back.`,
+    images: [
+      { alt: "Lemon Grove magnet, handmade by GulCraft Stories", swatch: ["#E8D51E", "#4E9B6E"], src: "/products/lemon-grove-magnet.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-03",
+  },
+  {
+    slug: "orange-ibex-magnet",
+    name: "Orange Ibex",
+    subtitle: "Fridge magnet",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics"],
+    price: 8,
+    currency: "GBP",
+    description: `A bold orange antelope head with long, spotted, curving horns, folk-art energy in miniature.`,
+    materialNote: `Air-dry clay, sealed with resin, magnet back.`,
+    images: [
+      { alt: "Orange Ibex magnet, handmade by GulCraft Stories", swatch: ["#E08A1E", "#9A5B33"], src: "/products/orange-ibex-magnet.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-03",
+  },
+  {
+    slug: "red-dog-magnet",
+    name: "Red Dog",
+    subtitle: "Fridge magnet",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics"],
+    price: 7,
+    currency: "GBP",
+    description: `A small dog for the dog lovers, painted bright red on a white crescent and ringed with blue dots.`,
+    materialNote: `Air-dry clay, sealed with resin, magnet back.`,
+    images: [
+      { alt: "Red Dog magnet, handmade by GulCraft Stories", swatch: ["#D93B2B", "#FAF4E8"], src: "/products/red-dog-magnet.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-03",
+  },
+  {
+    slug: "starry-pot-magnet",
+    name: "Starry Pot",
+    subtitle: "Fridge magnet",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics"],
+    price: 5,
+    currency: "GBP",
+    description: `A tiny, rounded pot in candy pink, scattered with blue stars.`,
+    materialNote: `Air-dry clay, sealed with resin, magnet back.`,
+    images: [
+      { alt: "Starry Pot magnet, handmade by GulCraft Stories", swatch: ["#E88AA0", "#2E9BB0"], src: "/products/starry-pot-magnet.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-03",
+  },
+  {
+    slug: "tota-bag-charm",
+    name: "Tota",
+    subtitle: "Parrot bag charm",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics", "glass"],
+    price: 12,
+    currency: "GBP",
+    description: `A little green-and-gold parrot hand-shaped and painted from clay, hanging beneath a stack of glass cube beads, a folk-painted barrel and a tiny watermelon slice.`,
+    materialNote: `Hand-painted air-dry clay, glass and acrylic beads, painted resin barrel beads, cotton thread tassel, stainless lobster clip with split ring.`,
+    images: [
+      { alt: "Tota parrot bag charm, handmade by GulCraft Stories", swatch: ["#4E9B2E", "#E8D51E"], src: "/products/tota-bag-charm.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-04",
+  },
+  {
+    slug: "strawberry-fields-bag-charm",
+    name: "Strawberry Fields",
+    subtitle: "Bag charm",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics"],
+    price: 12,
+    currency: "GBP",
+    description: `A hand-painted clay strawberry, freckled with little gold hearts, swinging on a green cotton cord beneath a pink blossom ring and a striped blue bead.`,
+    materialNote: `Hand-painted air-dry clay, painted clay beads, cotton cord and tassel, stainless lobster clip with split ring.`,
+    images: [
+      { alt: "Strawberry Fields bag charm, handmade by GulCraft Stories", swatch: ["#D93B2B", "#2E8C4F"], src: "/products/strawberry-fields-bag-charm.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-04",
+  },
+  {
+    slug: "matki-bag-charm",
+    name: "Matki",
+    subtitle: "Pot bag charm",
+    type: "clay",
+    edit: "mitti",
+    materials: ["ceramics", "glass"],
+    price: 12,
+    currency: "GBP",
+    description: `A little matki, the round clay pot of every Indian kitchen, shaped and painted by hand and hung beneath a string of folk-painted beads on a bright twisted cord.`,
+    materialNote: `Hand-painted air-dry clay, glass and acrylic beads, painted resin barrel beads, twisted cotton cord, stainless lobster clip with split ring.`,
+    images: [
+      { alt: "Matki pot bag charm, handmade by GulCraft Stories", swatch: ["#9A5B33", "#E88AA0"], src: "/products/matki-bag-charm.jpg" },
+    ],
+    status: "available",
+    addedAt: "2026-07-04",
   },
 ];
 

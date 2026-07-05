@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { Product } from "@/lib/products";
-import { ONE_OF_ONE } from "@/lib/products";
+import { ONE_OF_ONE, isOneOfOne } from "@/lib/products";
 import { PieceImage } from "./PieceImage";
 import { Price } from "./Price";
 import { QuickView } from "./QuickView";
@@ -25,6 +25,7 @@ export function ProductCard({
 }) {
   const [quickView, setQuickView] = useState(false);
   const sold = product.status === "sold";
+  const oneOfOne = isOneOfOne(product);
   const img = product.images[0];
 
   return (
@@ -53,7 +54,7 @@ export function ProductCard({
               sold ? "bg-ink/85 text-cream" : "bg-cream/90 text-ink",
             )}
           >
-            {sold ? "Sold" : "One of one"}
+            {sold ? "Sold" : oneOfOne ? "One of one" : "Small batch"}
           </span>
 
           {/* wishlist */}
@@ -79,7 +80,11 @@ export function ProductCard({
           <p className="line-clamp-2 text-sm leading-relaxed text-ink-soft">{product.description}</p>
           <span className="eyebrow mt-1 inline-flex items-center gap-1.5 text-marigold-ink">
             <span aria-hidden className="inline-block h-1 w-1 rounded-full bg-gold" />
-            {sold ? "One of one, now sold" : ONE_OF_ONE}
+            {sold
+              ? "One of one, now sold"
+              : oneOfOne
+                ? ONE_OF_ONE
+                : "Made in small batches, each one by hand"}
           </span>
         </Link>
       </div>

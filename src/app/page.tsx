@@ -7,7 +7,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { PieceImage } from "@/components/PieceImage";
 import { JournalCard } from "@/components/JournalCard";
 import { Testimonials } from "@/components/Testimonials";
-import { products, TYPES, EDITS } from "@/lib/products";
+import { products, TYPES, EDITS, isOneOfOne } from "@/lib/products";
 import { editContent } from "@/lib/edits";
 import { getAllPosts, getFeaturedPost } from "@/lib/journal";
 import { getSoldSlugs } from "@/lib/sold";
@@ -27,7 +27,7 @@ export default async function Home() {
   const soldSlugs = await getSoldSlugs();
   const featured = products
     .slice(0, 6)
-    .map((p) => (soldSlugs.includes(p.slug) ? { ...p, status: "sold" as const } : p));
+    .map((p) => (isOneOfOne(p) && soldSlugs.includes(p.slug) ? { ...p, status: "sold" as const } : p));
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com";
   const orgLd = {
     "@context": "https://schema.org",

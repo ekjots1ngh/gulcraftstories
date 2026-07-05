@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { MotifDivider, MotifMark } from "@/components/MotifDivider";
 import { ProductBrowser } from "@/components/ProductBrowser";
-import { products } from "@/lib/products";
+import { products, isOneOfOne } from "@/lib/products";
 import { getSoldSlugs } from "@/lib/sold";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default async function ArchivePage() {
   const soldSlugs = await getSoldSlugs();
   // Sold = permanently sold in the catalogue, or paid for through Stripe.
   const archive = products
-    .filter((p) => p.status === "sold" || soldSlugs.includes(p.slug))
+    .filter((p) => p.status === "sold" || (isOneOfOne(p) && soldSlugs.includes(p.slug)))
     .map((p) => ({ ...p, status: "sold" as const }))
     .sort((a, b) => (a.addedAt < b.addedAt ? 1 : -1));
 
