@@ -6,7 +6,6 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Analytics } from "@vercel/analytics/next";
 import { CartProvider } from "@/lib/cart";
-import { WishlistProvider } from "@/lib/wishlist";
 import { CurrencyProvider } from "@/lib/currency";
 
 const fraunces = Fraunces({
@@ -73,12 +72,10 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">Skip to content</a>
         <CurrencyProvider>
           <CartProvider>
-            <WishlistProvider>
-              <Header />
-              <div id="main-content">{children}</div>
-              <Footer />
-              <WhatsAppButton />
-            </WishlistProvider>
+            <Header />
+            <div id="main-content">{children}</div>
+            <Footer />
+            <WhatsAppButton />
           </CartProvider>
         </CurrencyProvider>
         <Analytics />

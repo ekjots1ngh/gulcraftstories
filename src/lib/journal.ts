@@ -36,6 +36,8 @@ export type PostMeta = {
   excerpt: string;
   /** Placeholder cover gradient until real photography is added. */
   cover: [string, string];
+  /** Optional real cover photograph (path under /public). */
+  image?: string;
   /** Related product slugs. */
   products: string[];
   /** Related edit (collection) slugs. */
@@ -65,6 +67,7 @@ function parseFile(fileName: string): { meta: PostMeta; body: string } {
       kind: String(data.kind ?? "Journal"),
       excerpt: String(data.excerpt ?? ""),
       cover: (Array.isArray(data.cover) ? data.cover : ["#0E5A5B", "#C9A24B"]) as [string, string],
+      image: typeof data.image === "string" ? data.image : undefined,
       products: Array.isArray(data.products) ? data.products.map(String) : [],
       edits: Array.isArray(data.edits) ? data.edits.map(String) : [],
       featured: Boolean(data.featured),

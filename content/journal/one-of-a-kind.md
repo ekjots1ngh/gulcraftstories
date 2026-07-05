@@ -4,6 +4,7 @@ date: "2026-05-18"
 kind: "The promise"
 excerpt: "Every piece is made once. I never restock, and I never remake. When it's gone, it's gone, and here's why I do it that way."
 cover: ["#0E5A5B", "#C9A24B"]
+image: "/products/meadow-cascade.jpg"
 featured: true
 products: []
 edits: []

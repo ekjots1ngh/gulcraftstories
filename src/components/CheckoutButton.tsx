@@ -18,7 +18,11 @@ export function CheckoutButton() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items: items.map((i) => ({ slug: i.product.slug, quantity: i.quantity })),
+          items: items.map((i) => ({
+            slug: i.product.slug,
+            quantity: i.quantity,
+            ...(i.design !== undefined ? { design: i.design } : {}),
+          })),
         }),
       });
       const data = (await res.json()) as { url?: string; error?: string };

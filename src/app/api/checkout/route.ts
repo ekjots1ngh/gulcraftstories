@@ -120,7 +120,16 @@ export async function POST(req: NextRequest) {
   for (const raw of items) {
     const slug = String((raw as { slug?: unknown })?.slug ?? "");
     const product = products.find((p) => p.slug === slug);
-    if (!product || seen.has(slug)) continue;
+    if (!product) continue;
+    // Group postings: the buyer picked a design; price and name come from it,
+    // validated server-side so the client can never set its own price.
+    const rawDesign = (raw as { design?: unknown })?.design;
+    const design =
+      product.designs && typeof rawDesign === "number" && product.designs[rawDesign]
+        ? product.designs[rawDesign]
+        : undefined;
+    const key = design ? `${slug}#${rawDesign}` : slug;
+    if (seen.has(key)) continue;
     // Skip anything sold (static), or, for one-of-one pieces, anything sold or
     // reserved according to Stripe. Small-batch pieces stay buyable, she can
     // always make more.
@@ -128,17 +137,20 @@ export async function POST(req: NextRequest) {
       blocked = true;
       continue;
     }
-    seen.add(slug);
-    subtotalPence += Math.round(product.price * 100);
+    seen.add(key);
+    const unitPence = Math.round((design ? design.price : product.price) * 100);
+    subtotalPence += unitPence;
 
     line_items.push({
       quantity: 1, // one of one
       price_data: {
         currency: product.currency.toLowerCase(),
-        unit_amount: Math.round(product.price * 100), // GBP → pence
+        unit_amount: unitPence,
         product_data: {
-          name: product.name,
-          description: product.description.slice(0, 300),
+          name: design
+            ? `${product.name} · ${(rawDesign as number) + 1}. ${design.label}`
+            : product.name,
+          description: (design?.note ?? product.description).slice(0, 300),
           metadata: { slug: product.slug },
         },
       },
@@ -174,10 +186,20 @@ export async function POST(req: NextRequest) {
       // Attach each sale to a Stripe Customer so the buyer gets a receipt and
       // their purchase is on record (the basis for "order history" later).
       customer_creation: "always",
+      // Let the buyer leave a note (e.g. Posy Clip colours, gift message)
+      // right on Stripe's payment page; it lands on the order in the dashboard.
+      custom_fields: [
+        {
+          key: "order_note",
+          label: { type: "custom", custom: "Colour choice / gift note (optional)" },
+          type: "text",
+          optional: true,
+        },
+      ],
       // Stamp the pieces onto the session so we can read sold/reserved state
       // back from Stripe (see src/lib/sold.ts). The 30-minute expiry means an
       // abandoned checkout releases its reservation rather than locking a piece.
-      metadata: { slugs: Array.from(seen).join(",") },
+      metadata: { slugs: Array.from(new Set(Array.from(seen).map((k) => k.split("#")[0]))).join(",") },
       expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
     });
 

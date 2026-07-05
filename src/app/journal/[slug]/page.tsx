@@ -68,6 +68,7 @@ export default async function PostPage({
         <Container className="py-10">
           <PieceImage
             swatch={post.cover}
+            src={post.image}
             label={post.title}
             ratio="landscape"
             className="shadow-[var(--shadow-soft)]"

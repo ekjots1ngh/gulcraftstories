@@ -375,7 +375,7 @@ export default async function Home() {
             <Reveal>
               <div className="night-card grid items-center gap-8 p-6 sm:p-10 md:grid-cols-[0.9fr_1.1fr] md:gap-12">
                 <div className="overflow-hidden rounded-md">
-                  <PieceImage swatch={featuredStory.cover} label={featuredStory.title} ratio="landscape" />
+                  <PieceImage swatch={featuredStory.cover} src={featuredStory.image} label={featuredStory.title} ratio="landscape" />
                 </div>
                 <div className="flex flex-col items-start gap-4">
                   <span className="eyebrow text-gold-soft">The promise · read this first</span>

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { MotifDivider, MotifMark } from "@/components/MotifDivider";
-import { ReviewNote } from "@/components/ReviewNote";
-import { whatsappLink } from "@/lib/site";
+import { BespokeForm } from "@/components/BespokeForm";
 
 export const metadata: Metadata = {
   title: "Bespoke Enquiries",
@@ -47,25 +46,7 @@ export default function BespokePage() {
       </section>
 
       <Container size="narrow" className="py-14">
-        <div className="flex flex-col gap-4 rounded-lg border border-gold/40 bg-cream p-6 sm:p-7">
-          <h2 className="font-display text-xl">Start an enquiry</h2>
-          <form className="flex flex-col gap-3">
-            <input type="text" aria-label="Your name" placeholder="Your name" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
-            <input type="email" aria-label="Your email" placeholder="Your email" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
-            <textarea rows={5} aria-label="About your piece" placeholder="Tell me about the piece you have in mind, materials, colours, occasion, timeline…" className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none" />
-            <button type="button" className="rounded-sm bg-peacock px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-peacock-deep">
-              Send enquiry
-            </button>
-          </form>
-          <p className="text-center text-xs text-ink-soft">
-            Prefer to chat? <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="underline hover:text-marigold-ink">Message on WhatsApp</a>.
-          </p>
-          <ReviewNote title="Form is not connected yet">
-            This enquiry form is visual only. Wire it to a form/email service
-            before publishing, or point people to WhatsApp/email. Also confirm how
-            many commissions you actually want to take, and any deposit terms.
-          </ReviewNote>
-        </div>
+        <BespokeForm />
       </Container>
     </main>
   );

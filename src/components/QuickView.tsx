@@ -62,6 +62,7 @@ export function QuickView({ product, onClose }: { product: Product; onClose: () 
               ) : (
                 <>
                   <span className="font-display text-2xl">
+                    {product.designs && <span className="text-base text-ink-soft">from </span>}
                     <Price gbp={product.price} />
                   </span>
                   <span className="rounded-full bg-peacock/10 px-2.5 py-0.5 text-xs font-semibold text-peacock">

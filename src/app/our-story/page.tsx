@@ -3,7 +3,6 @@ import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
 import { MotifDivider } from "@/components/MotifDivider";
 import { PieceImage } from "@/components/PieceImage";
-import { ReviewNote } from "@/components/ReviewNote";
 
 export const metadata: Metadata = {
   title: "Our Story",
@@ -40,11 +39,6 @@ export default function OurStoryPage() {
       {/* story */}
       <section className="bg-cream-deep/40 py-16 sm:py-24">
         <Container size="narrow" className="story-prose">
-          <ReviewNote title="Personalise this">
-            The words below are a heartfelt placeholder in the brand voice. Replace
-            them with the maker&apos;s real story, where she learned, who taught
-            her, why she started. (The photographs are now real.)
-          </ReviewNote>
 
           <p>
             I learned to work with my hands before I learned much else. Thread

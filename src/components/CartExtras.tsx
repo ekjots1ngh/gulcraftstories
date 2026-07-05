@@ -80,13 +80,22 @@ export function LittleExtras() {
                 {p.designs ? <>from <Price gbp={p.price} /></> : <Price gbp={p.price} />}
               </span>
             </div>
-            <button
-              type="button"
-              onClick={() => add(p.slug)}
-              className="mt-auto rounded-sm border border-ink/25 py-1.5 text-xs font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
-            >
-              Add to parcel
-            </button>
+            {p.designs ? (
+              <Link
+                href={`/shop/${p.slug}`}
+                className="mt-auto rounded-sm border border-ink/25 py-1.5 text-center text-xs font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+              >
+                Choose a design →
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={() => add(p.slug)}
+                className="mt-auto rounded-sm border border-ink/25 py-1.5 text-xs font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+              >
+                Add to parcel
+              </button>
+            )}
           </li>
         ))}
       </ul>

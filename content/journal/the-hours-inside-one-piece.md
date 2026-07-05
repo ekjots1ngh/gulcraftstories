@@ -4,6 +4,7 @@ date: "2026-05-08"
 kind: "The craft"
 excerpt: "The work you don't see is the work that makes it. Here's where the hours go."
 cover: ["#C9A24B", "#0E5A5B"]
+image: "/products/caravan-tales.jpg"
 products: ["meadow-cascade", "caravan-tales"]
 edits: ["dhaaga"]
 ---

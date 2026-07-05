@@ -45,8 +45,8 @@ export default function CartPage() {
             {/* line items */}
             <div className="flex flex-col">
               <ul className="flex flex-col divide-y divide-gold/40 border-y border-gold/40">
-                {items.map(({ product, lineTotal }) => (
-                  <li key={product.slug} className="flex gap-4 py-5">
+                {items.map(({ product, lineTotal, design, designLabel }) => (
+                  <li key={`${product.slug}-${design ?? "x"}`} className="flex gap-4 py-5">
                     <Link
                       href={`/shop/${product.slug}`}
                       className="w-20 shrink-0 sm:w-24"
@@ -68,7 +68,9 @@ export default function CartPage() {
                           >
                             {product.name}
                           </Link>
-                          <p className="text-xs text-ink-soft">{typeName(product.type)}</p>
+                          <p className="text-xs text-ink-soft">
+                            {designLabel ? `Design: ${designLabel}` : typeName(product.type)}
+                          </p>
                         </div>
                         <span className="shrink-0 font-semibold">
                           <Price gbp={lineTotal} />
@@ -79,7 +81,7 @@ export default function CartPage() {
                         <span className="eyebrow text-marigold-ink">{isOneOfOne(product) ? "One of one" : "Small batch"}</span>
                         <button
                           type="button"
-                          onClick={() => remove(product.slug)}
+                          onClick={() => remove(product.slug, design)}
                           className="text-xs text-ink-soft underline transition-colors hover:text-rani"
                         >
                           Remove

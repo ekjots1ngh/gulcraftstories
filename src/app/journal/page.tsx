@@ -39,6 +39,7 @@ export default function JournalPage() {
             <div className="overflow-hidden rounded-md">
               <PieceImage
                 swatch={featured.cover}
+                src={featured.image}
                 label={featured.title}
                 ratio="landscape"
                 className="transition-transform duration-500 group-hover:scale-105"

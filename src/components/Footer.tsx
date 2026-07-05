@@ -22,7 +22,6 @@ const COLUMNS = [
     links: [
       { label: "Our story", href: "/our-story" },
       { label: "The craft / journal", href: "/journal" },
-      { label: "Wishlist", href: "/wishlist" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -44,27 +43,6 @@ export function Footer() {
     <footer className="mt-auto bg-peacock-deep text-cream">
       <Container className="py-14">
         <MotifDivider color="var(--color-gold-soft)" className="mb-12" />
-
-        {/* newsletter signup */}
-        <div className="mb-12 flex flex-col items-center gap-4 border-b border-cream/15 pb-12 text-center">
-          <h3 className="font-display text-2xl">Letters from the bench</h3>
-          <p className="max-w-md text-sm leading-relaxed text-cream/70">
-            New pieces and the stories behind them, a few quiet letters a month.
-          </p>
-          <form className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
-            <label htmlFor="footer-email" className="sr-only">Email address</label>
-            <input
-              id="footer-email"
-              type="email"
-              required
-              placeholder="you@email.com"
-              className="flex-1 rounded-sm border border-cream/25 bg-transparent px-4 py-3 text-sm text-cream placeholder:text-cream/40 focus:border-gold-soft focus:outline-none"
-            />
-            <button type="submit" className="rounded-sm bg-cream px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-gold-soft">
-              Join
-            </button>
-          </form>
-        </div>
 
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
           <div className="flex flex-col gap-4">

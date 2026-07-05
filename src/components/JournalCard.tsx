@@ -8,6 +8,7 @@ export function JournalCard({ post }: { post: PostMeta }) {
       <div className="overflow-hidden rounded-md">
         <PieceImage
           swatch={post.cover}
+          src={post.image}
           label={post.title}
           ratio="landscape"
           className="transition-transform duration-500 group-hover:scale-105"
