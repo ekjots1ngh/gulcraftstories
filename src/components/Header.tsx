@@ -70,7 +70,7 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
       {/* announcement bar */}
       <div className="bg-peacock-deep text-center text-cream">
         <p className="px-4 py-1.5 text-[0.7rem] tracking-wide">
-          One of one · handmade to order · worldwide delivery
+          One of one · when it's gone, it's gone · worldwide delivery
         </p>
       </div>
 

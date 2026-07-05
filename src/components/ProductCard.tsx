@@ -21,11 +21,12 @@ export function ProductCard({
   tone = "atelier",
 }: {
   product: Product;
-  tone?: "atelier" | "marigold";
+  tone?: "atelier" | "marigold" | "night";
 }) {
   const [quickView, setQuickView] = useState(false);
   const sold = product.status === "sold";
   const oneOfOne = isOneOfOne(product);
+  const night = tone === "night";
   const img = product.images[0];
 
   return (
@@ -35,6 +36,7 @@ export function ProductCard({
           "group flex flex-col gap-3",
           tone === "marigold" &&
             "rounded-lg bg-cream p-3 shadow-[var(--shadow-card)] transition-transform duration-300 hover:-translate-y-1",
+          night && "night-card p-3",
         )}
       >
         <div className="relative overflow-hidden rounded-md">
@@ -72,13 +74,17 @@ export function ProductCard({
 
         <Link href={`/shop/${product.slug}`} className="flex flex-col gap-2">
           <div className="flex items-baseline justify-between gap-3">
-            <h3 className="font-display text-lg leading-snug">{product.name}</h3>
-            <span className="shrink-0 text-sm font-semibold text-ink-soft">
+            <h3 className={cn("font-display text-lg leading-snug", night && "text-cream")}>
+              {product.name}
+            </h3>
+            <span className={cn("shrink-0 text-sm font-semibold", night ? "text-cream/80" : "text-ink-soft")}>
               {sold ? "Sold" : <Price gbp={product.price} />}
             </span>
           </div>
-          <p className="line-clamp-2 text-sm leading-relaxed text-ink-soft">{product.description}</p>
-          <span className="eyebrow mt-1 inline-flex items-center gap-1.5 text-marigold-ink">
+          <p className={cn("line-clamp-2 text-sm leading-relaxed", night ? "text-cream/65" : "text-ink-soft")}>
+            {product.description}
+          </p>
+          <span className={cn("eyebrow mt-1 inline-flex items-center gap-1.5", night ? "text-gold-soft" : "text-marigold-ink")}>
             <span aria-hidden className="inline-block h-1 w-1 rounded-full bg-gold" />
             {sold
               ? "One of one, now sold"

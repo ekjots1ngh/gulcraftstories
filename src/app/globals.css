@@ -211,3 +211,199 @@ h1, h2, h3, h4 {
   background-size: 28px 28px;
   background-position: 0 0, 14px 14px;
 }
+
+/* ============================================================
+   THE NIGHT BAZAAR, the homepage's cinematic dark stage.
+   The atelier after dark: jewel tones become drifting auroras,
+   gold becomes light. Scoped under .night so the rest of the
+   site keeps its calm cream reading surfaces.
+   All effects are transform/opacity/filter only (GPU-cheap) and
+   collapse gracefully under prefers-reduced-motion.
+   ============================================================ */
+
+.night {
+  --stage: #16111d; /* aubergine pulled to near-black */
+  background:
+    radial-gradient(120% 90% at 50% 0%, #241b30 0%, var(--stage) 55%),
+    var(--stage);
+  color: var(--color-cream);
+}
+.night ::selection {
+  background: var(--color-rani);
+  color: var(--color-cream);
+}
+
+/* --- drifting aurora blobs (silk in the dark) --- */
+@keyframes aurora-a {
+  0%   { transform: translate3d(-8%, -4%, 0) scale(1); }
+  50%  { transform: translate3d(10%, 8%, 0) scale(1.25); }
+  100% { transform: translate3d(-8%, -4%, 0) scale(1); }
+}
+@keyframes aurora-b {
+  0%   { transform: translate3d(6%, 10%, 0) scale(1.15); }
+  50%  { transform: translate3d(-10%, -6%, 0) scale(0.9); }
+  100% { transform: translate3d(6%, 10%, 0) scale(1.15); }
+}
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  mix-blend-mode: screen;
+  opacity: 0.5;
+  pointer-events: none;
+  will-change: transform;
+}
+.aurora-marigold { background: radial-gradient(circle, #e08a1e 0%, transparent 65%); animation: aurora-a 16s ease-in-out infinite; }
+.aurora-rani     { background: radial-gradient(circle, #b5267a 0%, transparent 65%); animation: aurora-b 21s ease-in-out infinite; }
+.aurora-peacock  { background: radial-gradient(circle, #0e8a8c 0%, transparent 65%); animation: aurora-a 26s ease-in-out infinite reverse; }
+
+/* --- film grain, so the dark reads as fabric not flat pixels --- */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E");
+}
+
+/* --- the gold ticker: the promise, always moving --- */
+@keyframes ticker {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.ticker {
+  display: flex;
+  width: max-content;
+  animation: ticker 38s linear infinite;
+}
+.ticker:hover { animation-play-state: paused; }
+
+/* --- floating pieces (weightless in the dark) --- */
+@keyframes float-a {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-14px) rotate(-1deg); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translateY(0) rotate(2.5deg); }
+  50%      { transform: translateY(-22px) rotate(1.5deg); }
+}
+.float-a { animation: float-a 7s ease-in-out infinite; }
+.float-b { animation: float-b 9s ease-in-out infinite; }
+
+/* --- gold-dust halo behind the hero piece --- */
+@keyframes halo-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 0.9;  transform: scale(1.06); }
+}
+.halo {
+  position: absolute;
+  inset: -12%;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(227, 207, 147, 0.35) 0%, rgba(224, 138, 30, 0.12) 45%, transparent 70%);
+  filter: blur(24px);
+  animation: halo-pulse 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* --- shimmering aurora text for the big statements --- */
+@keyframes text-aurora {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.text-aurora {
+  background: linear-gradient(
+    100deg,
+    var(--color-cream) 0%,
+    var(--color-gold-soft) 18%,
+    var(--color-marigold) 36%,
+    var(--color-rani-soft) 55%,
+    #6fd5d6 72%,
+    var(--color-cream) 90%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: text-aurora 9s linear infinite;
+}
+
+/* --- night cards: sheen sweep + jewel glow on hover --- */
+.night-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: rgba(250, 244, 232, 0.05);
+  border: 1px solid rgba(227, 207, 147, 0.18);
+  backdrop-filter: blur(6px);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s, border-color 0.45s;
+}
+.night-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(227, 207, 147, 0.55);
+  box-shadow:
+    0 24px 60px -24px rgba(224, 138, 30, 0.35),
+    0 12px 44px -20px rgba(181, 38, 122, 0.3);
+}
+.night-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(105deg, transparent 40%, rgba(250, 244, 232, 0.16) 50%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+}
+.night-card:hover::before { transform: translateX(120%); }
+
+/* --- rotating conic ring for the edit doorways --- */
+@keyframes ring-spin { to { transform: rotate(360deg); } }
+.conic-ring {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  isolation: isolate;
+}
+.conic-ring::before {
+  content: "";
+  position: absolute;
+  inset: -60%;
+  z-index: -1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(227, 207, 147, 0.0) 120deg,
+    rgba(227, 207, 147, 0.9) 165deg,
+    rgba(224, 138, 30, 0.9) 185deg,
+    rgba(227, 207, 147, 0.0) 240deg,
+    transparent 360deg
+  );
+  animation: ring-spin 6s linear infinite;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.conic-ring:hover::before { opacity: 1; }
+.conic-ring > * { border-radius: calc(var(--radius-lg) - 2px); }
+
+/* --- scroll reveal (added by the Reveal client component) --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* --- glowing CTA --- */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 24px -6px rgba(224, 138, 30, 0.55), 0 0 60px -18px rgba(181, 38, 122, 0.4); }
+  50%      { box-shadow: 0 0 38px -4px rgba(224, 138, 30, 0.8),  0 0 90px -12px rgba(181, 38, 122, 0.55); }
+}
+.btn-glow { animation: glow-pulse 3.5s ease-in-out infinite; }
