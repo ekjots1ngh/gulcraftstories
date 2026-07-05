@@ -77,7 +77,7 @@ export function LittleExtras() {
               </Link>
               <span className="text-xs text-ink-soft">
                 {isOneOfOne(p) ? "One of one" : "Small batch"} ·{" "}
-                {p.designs ? <>from <Price gbp={p.price} /></> : <Price gbp={p.price} />}
+                {p.designs?.some((d) => d.price !== p.price) ? <>from <Price gbp={p.price} /></> : <Price gbp={p.price} />}
               </span>
             </div>
             {p.designs ? (

@@ -136,7 +136,9 @@ export default async function ProductPage({
                 <span className="text-2xl font-semibold text-ink-soft">Sold</span>
               ) : (
                 <>
-                  {product.designs && <span className="text-sm text-ink-soft">from</span>}
+                  {product.designs?.some((d) => d.price !== product.price) && (
+                    <span className="text-sm text-ink-soft">from</span>
+                  )}
                   <Price gbp={product.price} className="text-2xl font-semibold" />
                   <StatusBadge sold={false} />
                 </>
@@ -170,7 +172,7 @@ export default async function ProductPage({
           {product.designs && (
             <div className="rounded-md border border-gold/40 bg-cream-deep/30">
               <p className="eyebrow border-b border-gold/30 px-4 py-3 text-marigold-ink">
-                The designs · match the numbers in the photo
+                The designs · as they appear in the photo
               </p>
               <ol className="divide-y divide-gold/20">
                 {product.designs.map((d, i) => (

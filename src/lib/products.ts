@@ -498,8 +498,15 @@ export const products: Product[] = [
     materials: ["textile"],
     price: 6,
     currency: "GBP",
-    description: `Mark your place with a tiny garden. Each Posy Page Clip is a little crocheted bloom on a coloured clip, made to brighten a journal, a planner, or whatever you're halfway through reading. They slip onto a page without damaging it and bring a pop of colour every time you open the cover. Handmade one stitch at a time, they make a small, thoughtful gift.`,
-    materialNote: `Wool crochet blooms on coloured paper clips. Price is per clip; colours vary, tell us your favourites when you order.`,
+    description: `Mark your place with a tiny garden. Each Posy Page Clip is a little crocheted bloom on a coloured clip, made to brighten a journal, a planner, or whatever you're halfway through reading. They slip onto a page without damaging it and bring a pop of colour every time you open the cover. The colourways below are counted from the top of the photo; pick yours when you order.`,
+    materialNote: `Wool crochet blooms on coloured paper clips, £6 per clip. Each one is made stitch by stitch, so blooms vary a little; that is the point.`,
+    designs: [
+      { label: "Rose & Leaf", price: 6, note: "Red rose and green leaf on a yellow clip" },
+      { label: "Blush & Dove", price: 6, note: "Pink bloom and soft grey leaf on a green clip" },
+      { label: "Berry & Emerald", price: 6, note: "Deep berry bloom and emerald leaf on a green clip" },
+      { label: "Marigold & Navy", price: 6, note: "Marigold bloom and navy leaf on a white clip" },
+      { label: "Lilac & Lagoon", price: 6, note: "Lilac bloom and turquoise leaf on a pink clip" },
+    ],
     images: [
       { alt: "Posy Page Clips, handmade by GulCraft Stories", swatch: ["#B5267A", "#4E9B6E"], src: "/products/posy-page-clips.jpg" },
     ],
@@ -518,8 +525,12 @@ export const products: Product[] = [
     materials: ["ceramics"],
     price: 12,
     currency: "GBP",
-    description: `Each Mela Charm is a stack of clay charms and beads painted entirely by hand, polka dots, blooms and tiny stars, no two the same. Clip one to a bag, a keyring or a journal zip and carry a splash of colour wherever you go.`,
-    materialNote: `Hand-painted air-dry clay charms and beads, cotton thread, metal clip. Price is per charm; each one is painted differently.`,
+    description: `Each Mela Charm is a stack of clay charms and beads painted entirely by hand, polka dots, blooms and tiny stars, no two the same. Clip one to a bag, a keyring or a journal zip and carry a splash of colour wherever you go. The two currently on the table are photographed left and right; pick yours when you order.`,
+    materialNote: `Hand-painted air-dry clay charms and beads, cotton thread, metal clip. £12 per charm; each one is painted differently, so yours will be close to the photo, never identical.`,
+    designs: [
+      { label: "The Star & Gourd", price: 12, note: "Left in the photo: a pink painted star, polka-dot bloom and a folk-patterned drop on a green tassel" },
+      { label: "The Toadstool & Blossom", price: 12, note: "Right in the photo: a red toadstool, painted blossom beads and a star-flower on a string of red beads" },
+    ],
     images: [
       { alt: "Mela Clay Charms, handmade by GulCraft Stories", swatch: ["#D94A2B", "#2E9BB0"], src: "/products/mela-clay-charms.jpg" },
     ],

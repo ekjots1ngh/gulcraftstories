@@ -74,7 +74,7 @@ export function ProductCard({
               {product.name}
             </h3>
             <span className={cn("shrink-0 text-sm font-semibold", night ? "text-cream/80" : "text-ink-soft")}>
-              {sold ? "Sold" : <>{product.designs && "from "}<Price gbp={product.price} /></>}
+              {sold ? "Sold" : <>{product.designs?.some((d) => d.price !== product.price) && "from "}<Price gbp={product.price} /></>}
             </span>
           </div>
           <p className={cn("line-clamp-2 text-sm leading-relaxed", night ? "text-cream/65" : "text-ink-soft")}>
