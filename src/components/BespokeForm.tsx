@@ -3,23 +3,57 @@
 import { useState } from "react";
 import { SITE, whatsappLink } from "@/lib/site";
 
-/**
- * Bespoke enquiry form that works with no backend: on submit it opens the
- * visitor's own email app with the enquiry pre-addressed to the studio inbox.
- * (Can post to a form service instead once one is connected.)
- */
+// When a Formspree endpoint is configured (Vercel env var), the form sends
+// directly to the studio inbox. Without it, it falls back to opening the
+// visitor's own email app, pre-addressed.
+const ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_BESPOKE;
+
 export function BespokeForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [idea, setIdea] = useState("");
+  const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const send = () => {
+  const mailtoFallback = () => {
     const subject = encodeURIComponent(`Bespoke enquiry from ${name || "the website"}`);
-    const body = encodeURIComponent(
-      `${idea}\n\nFrom: ${name}\nReply to: ${email}`,
-    );
+    const body = encodeURIComponent(`${idea}\n\nFrom: ${name}\nReply to: ${email}`);
     window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
   };
+
+  const submit = async () => {
+    if (!ENDPOINT) {
+      mailtoFallback();
+      return;
+    }
+    setState("sending");
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          message: idea,
+          _subject: `Bespoke enquiry from ${name}`,
+        }),
+      });
+      setState(res.ok ? "sent" : "error");
+    } catch {
+      setState("error");
+    }
+  };
+
+  if (state === "sent") {
+    return (
+      <div className="flex flex-col items-center gap-3 rounded-lg border border-gold/40 bg-cream p-8 text-center">
+        <h2 className="font-display text-xl text-peacock">Your enquiry is on its way</h2>
+        <p className="max-w-sm text-sm leading-relaxed text-ink-soft">
+          Thank you, {name.split(" ")[0] || "friend"}. A real person reads every
+          message, we&apos;ll reply to {email} within a couple of days.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4 rounded-lg border border-gold/40 bg-cream p-6 sm:p-7">
@@ -28,7 +62,7 @@ export function BespokeForm() {
         className="flex flex-col gap-3"
         onSubmit={(e) => {
           e.preventDefault();
-          send();
+          submit();
         }}
       >
         <input
@@ -60,14 +94,24 @@ export function BespokeForm() {
         />
         <button
           type="submit"
-          className="rounded-sm bg-peacock px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-peacock-deep"
+          disabled={state === "sending"}
+          className="rounded-sm bg-peacock px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-peacock-deep disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Send enquiry
+          {state === "sending" ? "Sending…" : "Send enquiry"}
         </button>
+        {state === "error" && (
+          <p role="alert" className="text-sm text-rani">
+            Sorry, that didn&apos;t send. Please email{" "}
+            <a href={`mailto:${SITE.email}`} className="underline">{SITE.email}</a>{" "}
+            or try WhatsApp below.
+          </p>
+        )}
       </form>
       <p className="text-center text-xs text-ink-soft">
-        This opens your email app with the enquiry ready to send. Prefer to
-        chat?{" "}
+        {ENDPOINT
+          ? "Your enquiry goes straight to the studio inbox."
+          : "This opens your email app with the enquiry ready to send."}{" "}
+        Prefer to chat?{" "}
         <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="underline hover:text-marigold-ink">
           Message on WhatsApp
         </a>

@@ -19,7 +19,7 @@ const ContentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
-  "connect-src 'self'",
+  "connect-src 'self' https://formspree.io",
   "form-action 'self'",
   "frame-ancestors 'none'",
   "base-uri 'self'",
