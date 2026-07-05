@@ -46,6 +46,25 @@ export default function ShippingPage() {
           <Link href="/international">international orders</Link> page.
         </p>
 
+        <h2>Delivered by hand, if you insist</h2>
+        <p>
+          Some pieces deserve an escort. For those who want it, a member of the
+          maker&apos;s family will place your piece directly into your hands:
+        </p>
+        <ul>
+          <li>Within London: £99.</li>
+          <li>Anywhere else on Earth: £1,999.</li>
+        </ul>
+        <p>
+          We are quite serious. Choose it at checkout and we&apos;ll message you
+          on WhatsApp to arrange a time and place; the London option is for
+          London addresses only (if you select it from elsewhere we&apos;ll be
+          in touch, and refund the difference if you&apos;d rather switch to
+          tracked post). It is priced so that it stays rare. If you take us up
+          on the worldwide one, your piece flies with company, and you&apos;ll
+          have quite a story to tell alongside it.
+        </p>
+
         <h2>Tracking &amp; packaging</h2>
         <p>
           You&apos;ll get a tracking link by email once your piece is on its

@@ -31,6 +31,15 @@ const FREE_UK_THRESHOLD_PENCE = 7500; // £75.00
 const UK_SHIPPING_PENCE = 400; // £4.00, Royal Mail Tracked
 const INTL_SHIPPING_PENCE = 1400; // £14.00, International Tracked & Signed (worldwide)
 
+/**
+ * The concierge tier: the piece is delivered BY HAND by the founder's family.
+ * Deliberately priced very high, it exists as a true luxury option (the price
+ * genuinely covers travel anywhere with margin) and as an anchor that makes
+ * standard shipping look effortless. Arranged over WhatsApp after the order.
+ */
+const HAND_LONDON_PENCE = 9900; // £99.00, hand-delivered within London
+const HAND_WORLD_PENCE = 199900; // £1,999.00, hand-delivered anywhere on Earth
+
 function shippingOptions(
   subtotalPence: number,
 ): Stripe.Checkout.SessionCreateParams.ShippingOption[] {
@@ -57,6 +66,28 @@ function shippingOptions(
         delivery_estimate: {
           minimum: { unit: "business_day", value: 3 },
           maximum: { unit: "business_day", value: 10 },
+        },
+      },
+    },
+    {
+      shipping_rate_data: {
+        type: "fixed_amount",
+        display_name: "Hand-delivered by the maker's family, London only (arranged on WhatsApp)",
+        fixed_amount: { amount: HAND_LONDON_PENCE, currency: "gbp" },
+        delivery_estimate: {
+          minimum: { unit: "business_day", value: 1 },
+          maximum: { unit: "business_day", value: 5 },
+        },
+      },
+    },
+    {
+      shipping_rate_data: {
+        type: "fixed_amount",
+        display_name: "The Concierge: hand-delivered anywhere on Earth by the maker's family",
+        fixed_amount: { amount: HAND_WORLD_PENCE, currency: "gbp" },
+        delivery_estimate: {
+          minimum: { unit: "business_day", value: 3 },
+          maximum: { unit: "business_day", value: 14 },
         },
       },
     },
