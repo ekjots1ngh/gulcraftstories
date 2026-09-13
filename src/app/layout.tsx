@@ -35,6 +35,9 @@ export const metadata: Metadata = {
   description: SITE_DESC,
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com"),
   applicationName: "GulCraft Stories",
+  // Relative canonical resolves to each page's own URL, so the .vercel.app
+  // and custom-domain copies never compete in search.
+  alternates: { canonical: "./" },
   keywords: [
     "handmade jewellery",
     "one of a kind",
