@@ -42,6 +42,7 @@ export function ProductCard({
               swatch={img.swatch}
               src={img.src}
               label={product.name}
+              sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 48vw"
               className={cn("transition-transform duration-500 group-hover:scale-105", sold && "saturate-[0.7]")}
             />
           </Link>
@@ -60,7 +61,7 @@ export function ProductCard({
           <button
             type="button"
             onClick={() => setQuickView(true)}
-            className="absolute inset-x-3 bottom-3 min-h-11 rounded-sm bg-cream/95 py-2 text-xs font-semibold text-ink opacity-100 shadow-sm transition-all hover:bg-marigold md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
+            className="absolute inset-x-3 bottom-3 hidden min-h-11 rounded-sm bg-cream/95 py-2 text-xs font-semibold text-ink shadow-sm transition-all hover:bg-marigold md:block md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
           >
             Quick view
           </button>
@@ -80,11 +81,19 @@ export function ProductCard({
           </p>
           <span className="eyebrow mt-1 inline-flex items-center gap-1.5 text-marigold-ink">
             <span aria-hidden className="inline-block h-1 w-1 rounded-full bg-gold" />
-            {sold
-              ? "One of one, now sold"
-              : oneOfOne
-                ? ONE_OF_ONE
-                : "Made in small batches, each one by hand"}
+            {sold ? (
+              "One of one, now sold"
+            ) : oneOfOne ? (
+              <>
+                <span className="sm:hidden">One of one</span>
+                <span className="hidden sm:inline">{ONE_OF_ONE}</span>
+              </>
+            ) : (
+              <>
+                <span className="sm:hidden">Small batch</span>
+                <span className="hidden sm:inline">Made in small batches, each one by hand</span>
+              </>
+            )}
           </span>
         </Link>
       </div>

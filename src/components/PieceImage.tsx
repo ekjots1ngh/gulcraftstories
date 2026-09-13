@@ -1,10 +1,15 @@
+import Image from "next/image";
 import { cn } from "@/lib/cn";
 import { MotifMark } from "./MotifDivider";
 
 /**
  * Renders a real product photograph when `src` is provided (over a matching
- * jewel-tone gradient that shows while it loads / if it's missing). Without a
- * `src` it falls back to the gradient placeholder + motif.
+ * jewel-tone swatch that shows while it loads / if it's missing). Without a
+ * `src` it falls back to the swatch + motif.
+ *
+ * Uses next/image with `fill`: the box keeps a fixed aspect ratio so grids stay
+ * tidy whatever shape the photo is, and the platform serves a resized WebP per
+ * device from the `sizes` hint instead of one file for everyone.
  */
 export function PieceImage({
   swatch,
@@ -13,7 +18,7 @@ export function PieceImage({
   className,
   ratio = "portrait",
   priority = false,
-  sizes,
+  sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
 }: {
   swatch: [string, string];
   src?: string;
@@ -40,15 +45,13 @@ export function PieceImage({
       {...(src ? {} : { role: "img", "aria-label": label ?? "photograph" })}
     >
       {src ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        <Image
           src={src}
           alt={label ?? ""}
-          loading={priority ? "eager" : "lazy"}
-          fetchPriority={priority ? "high" : "auto"}
+          fill
           sizes={sizes}
-          decoding="async"
-          className="absolute inset-0 h-full w-full object-cover"
+          priority={priority}
+          className="object-cover"
         />
       ) : (
         <div className="absolute inset-0 grid place-items-center opacity-25">

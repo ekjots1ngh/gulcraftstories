@@ -18,6 +18,7 @@ export function Gallery({ images, name }: { images: ProductImage[]; name: string
         label={current.alt || name}
         ratio="square"
         priority
+        sizes="(min-width: 768px) 45vw, 100vw"
         className="shadow-[var(--shadow-soft)]"
       />
       {images.length > 1 && (
@@ -34,7 +35,7 @@ export function Gallery({ images, name }: { images: ProductImage[]; name: string
                 i === active ? "ring-peacock" : "ring-transparent hover:ring-gold/60",
               )}
             >
-              <PieceImage swatch={img.swatch} src={img.src} ratio="square" label={img.alt} />
+              <PieceImage swatch={img.swatch} src={img.src} ratio="square" label={img.alt} sizes="(min-width: 768px) 10vw, 22vw" />
             </button>
           ))}
         </div>
