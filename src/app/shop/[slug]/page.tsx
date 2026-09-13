@@ -140,7 +140,7 @@ export default async function ProductPage({
                     <span className="text-sm text-ink-soft">from</span>
                   )}
                   <Price gbp={product.price} className="text-2xl font-semibold" />
-                  <StatusBadge sold={false} />
+                  <StatusBadge sold={false} oneOfOne={oneOfOne} />
                 </>
               )}
             </div>
@@ -278,7 +278,11 @@ export default async function ProductPage({
           {/* stat band (only the stats we actually have) */}
           <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-gold/40 bg-gold/40 text-center sm:grid-cols-3">
             <Stat value={`${product.materials.length}`} label="Real materials, named" />
-            <Stat value="1 of 1" label="One of a kind, never remade" />
+            {oneOfOne ? (
+              <Stat value="1 of 1" label="One of a kind, never remade" />
+            ) : (
+              <Stat value="Small batch" label="Each one painted by hand" />
+            )}
             {product.hoursToMake ? (
               <Stat value={`${product.hoursToMake} hrs`} label="On the bench, by hand" />
             ) : (
@@ -370,14 +374,14 @@ export default async function ProductPage({
   );
 }
 
-function StatusBadge({ sold }: { sold: boolean }) {
+function StatusBadge({ sold, oneOfOne = true }: { sold: boolean; oneOfOne?: boolean }) {
   return (
     <span
       className={`rounded-full px-3 py-1 text-xs font-semibold ${
         sold ? "bg-ink/10 text-ink-soft" : "bg-peacock/10 text-peacock"
       }`}
     >
-      {sold ? "Sold" : "Available · 1 of 1"}
+      {sold ? "Sold" : oneOfOne ? "Available · 1 of 1" : "Available · small batch"}
     </span>
   );
 }
