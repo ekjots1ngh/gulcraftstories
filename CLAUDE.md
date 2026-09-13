@@ -236,10 +236,12 @@ Checkout. `POST /api/gift-card` validates the amount server-side against
 issued at fulfilment (webhook) and emailed. Same graceful "not configured" path
 as the main checkout when keys are unset.
 
-### Support pages (DRAFTS — review before publishing)
-`/shipping`, `/returns`, `/international`, `/faq`, `/contact` are **drafts**: each
-shows a `DraftBanner`, is set `robots: { index: false }`, and uses `ReviewNote`
-callouts to flag decisions (✎) and legally-sensitive points (⚠). Key flags:
+### Support pages
+`/shipping`, `/returns`, `/international`, `/faq`, `/contact` are **published**
+with the founder's real details (dispatch within a week, 14-day returns, buyer
+pays customs, phone 07466 397162, hand-delivery tiers London £99 / worldwide
+£5,000). `DraftBanner` / `ReviewNote` remain as components for future drafts.
+Background on the decisions that were flagged while drafting:
 - **Returns/exchange** is the sensitive one. "One of a kind" is a brand promise,
   **not** a legal basis to refuse returns: ready-made online sales keep the UK
   14-day cooling-off right (Consumer Contracts Regs 2013); genuinely
@@ -248,18 +250,22 @@ callouts to flag decisions (✎) and legally-sensitive points (⚠). Key flags:
   Draft reflects this — **must be checked against current law before publishing.**
 - **International** flags customs/duties/VAT (DDU vs DDP) and keeping the shipped-
   country list in sync with `/api/checkout`.
-- **Contact** has placeholder phone/address (founder to fill in) and a form that
-  is **not wired** to any backend yet.
-None of this is legal advice; flagged for the founder to adapt + verify.
+- **Contact + Bespoke forms** (`ContactForm`, `BespokeForm`) post to Formspree
+  when `NEXT_PUBLIC_FORMSPREE_CONTACT` / `NEXT_PUBLIC_FORMSPREE_BESPOKE` are set,
+  otherwise open the visitor's email app pre-addressed to the studio inbox.
+None of this is legal advice; the founder adapted and approved the copy.
 
 ### Conversion & trust features
 - **Floating WhatsApp button** (`WhatsAppButton`, in `layout.tsx`) — number from
   `NEXT_PUBLIC_WHATSAPP_NUMBER` (placeholder fallback), via `whatsappLink()`.
-- **Wishlist** — client context in `src/lib/wishlist.tsx` (`WishlistProvider` +
-  `useWishlist`), localStorage, heart toggle on cards + product pages, header
-  badge, and a `/wishlist` page. (Saving doesn't reserve — pieces are one of one.)
-- **Testimonials** (`Testimonials`) on the homepage — placeholder quotes to replace.
-- **Newsletter** — a single signup lives in the global footer (site-wide).
+- **Wishlist** — removed at the founder's request; `/wishlist` redirects to `/shop`.
+- **Testimonials** (`Testimonials`) on the homepage — real reviews only
+  (`src/lib/reviews.ts`), hidden while empty.
+- **Newsletter** — hidden until a list provider is connected.
+- **Instagram** — linked in the header (desktop nav + mobile drawer), on every
+  product page ("Questions about <piece>?" with a DM link and a WhatsApp link
+  pre-filled with the piece name), in the homepage hero and closing band, and
+  the footer. `instagramDmLink()` / `whatsappLink(message)` in `src/lib/site.ts`.
 - **Trust signals** (`TrustSignals`) — payment-method badges + "secure checkout
   by Stripe, we never see your card details", shown near the cart checkout and
   in the footer.
@@ -289,8 +295,15 @@ Conventions:
 
 ### Chosen direction
 **Direction A — "Atelier"** (calm, editorial, story-first) is the chosen base,
-warmed with Direction B's jewel-tone accents so it stays vibrantly Indian. The
-two original mockups live in git history and as images in `design/previews/`.
+warmed with Direction B's jewel-tone accents. The homepage is cream and
+photo-led: three real, buyable pieces with prices in the first screen, one
+"Shop the pieces" action with Instagram beside it, category tiles with live
+counts, the featured grid, the little-treasures shelf, edit tiles made from real
+piece photos with solid-colour captions, the market sourcing photos in the
+making band, the One of a Kind panel, the journal teaser and a closing Instagram
+call. **No gradients as visible styling, no animation effects** (a dark
+"Night Bazaar" homepage existed briefly and was removed). The two original
+mockups live in git history and as images in `design/previews/`.
 
 Global shell: `Header` + `Footer` are rendered once in `src/app/layout.tsx`, so
 every route inherits the sticky header (announcement bar, nav, cart) and footer.
@@ -309,10 +322,16 @@ every route inherits the sticky header (announcement bar, nav, cart) and footer.
   `twitter-image.tsx` / `icon.tsx` (next/og) from the brand motif — no static
   assets. Draft pages set `robots: { index: false }`.
 - **Images:** real product photos live in `/public/products/<slug>.jpg` and are
-  rendered by `PieceImage` (lazy-loaded `<img>` over a matching gradient that
-  shows while loading / if missing); the logo is `/public/logo.png`. Decorative
-  spots without a photo (journal covers, edit heroes) fall back to CSS gradients.
-  Fonts use `next/font` (self-hosted, `display: swap`).
+  rendered by `PieceImage`, which uses **`next/image` with `fill`** inside a
+  fixed aspect-ratio box (portrait 3:4 / square / landscape 4:3), so grids stay
+  tidy and each device gets a resized WebP from the `sizes` hint; `priority`
+  makes the hero/product image eager. A matching swatch shows while loading or
+  if a photo is missing. Journal posts can set `image:` frontmatter for a real
+  cover. The logo is `/public/logo.png`; the **favicon is `src/app/icon.png`
+  (the logo roundel)** and the OG/Twitter card (`opengraph-image.tsx`) embeds
+  the same roundel on cream. Fonts use `next/font` (self-hosted, `display: swap`).
+- **Canonical:** root metadata sets `alternates.canonical: "./"`, resolving to
+  each page's own URL.
 
 ### Project structure
 ```
@@ -324,7 +343,7 @@ src/
     shop/         /shop grid (browse by type/edit/material) + /shop/[slug] detail
     edit/         /edit/[slug] immersive curated-edit pages (Gulzar … Saanjh)
     archive/      /archive portfolio of sold pieces
-    wishlist/     /wishlist saved pieces
+    wishlist/     /wishlist (redirects to /shop)
     gift-cards/   /gift-cards voucher purchase
     size-guide/   /size-guide · care/ care guide (per material)
     cart/         /cart page
@@ -333,7 +352,7 @@ src/
     shipping/ returns/ international/ faq/ contact/   support pages (DRAFTS)
     api/          /api/checkout · /api/gift-card (Stripe) · /api/stripe/webhook
   components/      reusable UI primitives + sections
-  lib/            products, cart, wishlist, journal, edits, stripe, site (config)
+  lib/            products, cart, journal, edits, stripe, sold, currency, site (config)
 content/journal/  *.md story posts (frontmatter + body) — add files to publish
 .env.example      env var template (copy to .env.local — never commit real keys)
 design/previews/  screenshots (homepage, shop, product, cart, journal, directions)
