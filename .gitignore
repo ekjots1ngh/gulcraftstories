@@ -40,3 +40,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Photo pipeline: originals are kept locally, only the optimised WebP output is committed
+photos-inbox/*
+!photos-inbox/.gitkeep
+photos-archive/*
+!photos-archive/.gitkeep
