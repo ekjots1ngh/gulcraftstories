@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/Container";
 import { MotifDivider } from "@/components/MotifDivider";
-import { DraftBanner } from "@/components/DraftBanner";
-import { ReviewNote } from "@/components/ReviewNote";
 
 export const metadata: Metadata = {
-  title: "FAQ (draft)",
-  robots: { index: false },
+  title: "FAQ",
+  description:
+    "Answers to the questions we get asked most: one-of-a-kind pieces, sizing, care, returns, shipping worldwide, hand delivery and bespoke commissions.",
 };
 
 const FAQS: { q: string; a: React.ReactNode }[] = [
@@ -119,7 +118,6 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
 export default function FaqPage() {
   return (
     <main className="flex-1">
-      <DraftBanner note="Answers reference the other (draft) policy pages, review them together so nothing contradicts." />
       <Container size="narrow" className="py-12 text-center sm:py-16">
         <span className="eyebrow text-peacock">Good questions</span>
         <h1 className="mt-3 text-4xl leading-tight sm:text-5xl">FAQ</h1>
@@ -139,10 +137,6 @@ export default function FaqPage() {
           ))}
         </div>
 
-        <ReviewNote title="Coverage">
-          Add or cut questions to match what customers actually ask. Once the
-          policy pages are finalised, re-read these answers so they stay in sync.
-        </ReviewNote>
       </Container>
     </main>
   );
