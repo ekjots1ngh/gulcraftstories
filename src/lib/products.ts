@@ -624,7 +624,7 @@ export const SORTS: { key: SortKey; label: string }[] = [
 
 export const PRICE_BUCKETS: { slug: string; label: string; min: number; max: number }[] = [
   { slug: "under-25", label: "Under £25", min: 0, max: 24.99 },
-  { slug: "25-45", label: "£25£45", min: 25, max: 45 },
+  { slug: "25-45", label: "£25 to £45", min: 25, max: 45 },
   { slug: "over-45", label: "Over £45", min: 45.01, max: Number.POSITIVE_INFINITY },
 ];
 
