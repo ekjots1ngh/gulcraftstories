@@ -24,6 +24,7 @@ import {
   formatMoney,
 } from "@/lib/products";
 import { getSoldSlugs } from "@/lib/sold";
+import { SITE, whatsappLink, instagramDmLink } from "@/lib/site";
 
 // Re-check sold status (from Stripe) at least once a minute.
 export const revalidate = 60;
@@ -226,6 +227,29 @@ export default async function ProductPage({
           </dl>
 
           <AddToCart product={product} />
+
+          {/* ask before you buy: the two places our customers already are */}
+          <div className="flex flex-col gap-2 rounded-md border border-ink/10 px-4 py-3">
+            <p className="text-xs font-semibold text-ink">Questions about {product.name}?</p>
+            <div className="flex flex-wrap gap-2">
+              <a
+                href={instagramDmLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-ink/25 px-4 text-sm font-semibold text-ink transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+              >
+                Message on Instagram
+              </a>
+              <a
+                href={whatsappLink(`Hi GulCraft Stories, I am asking about ${product.name} (${SITE.instagram.replace("https://", "")}).`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-ink/25 px-4 text-sm font-semibold text-ink transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+              >
+                Ask on WhatsApp
+              </a>
+            </div>
+          </div>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-soft">
             <Link href="/size-guide" className="underline hover:text-marigold-ink">Size guide</Link>

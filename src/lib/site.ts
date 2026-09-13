@@ -12,8 +12,11 @@ export const SITE = {
   whatsappMessage: "Hi GulCraft Stories, I have a question about a piece.",
 };
 
-export const whatsappLink = () =>
-  `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.whatsappMessage)}`;
+export const whatsappLink = (message: string = SITE.whatsappMessage) =>
+  `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(message)}`;
+
+/** Opens an Instagram direct message to the studio (app or web). */
+export const instagramDmLink = () => "https://ig.me/m/gulcraftstories";
 
 /** Gift voucher amounts offered (GBP). Server validates against this list. */
 export const GIFT_DENOMINATIONS = [25, 50, 75, 100] as const;

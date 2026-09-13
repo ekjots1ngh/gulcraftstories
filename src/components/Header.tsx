@@ -7,6 +7,7 @@ import { cn } from "@/lib/cn";
 import { useCart } from "@/lib/cart";
 import { CurrencySwitcher } from "./CurrencySwitcher";
 import { TYPES, EDITS, MATERIALS } from "@/lib/products";
+import { SITE } from "@/lib/site";
 
 const LINKS = [
   { label: "Our Story", href: "/our-story" },
@@ -24,6 +25,16 @@ const BROWSE = [
 /** Edits get their own immersive pages; type/material are shop filters. */
 const facetHref = (facet: string, slug: string) =>
   facet === "edit" ? `/edit/${slug}` : `/shop?${facet}=${slug}`;
+
+function InstagramIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
 
 function CartIcon({ count = 0 }: { count?: number }) {
   return (
@@ -115,6 +126,18 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
                 {item.label}
               </Link>
             ))}
+            <a
+              href={SITE.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GulCraft Stories on Instagram"
+              className={cn(
+                "flex h-10 w-10 items-center justify-center rounded-full transition-colors",
+                onDark ? "text-cream hover:bg-cream/10" : "text-ink/80 hover:bg-ink/5 hover:text-marigold-ink",
+              )}
+            >
+              <InstagramIcon />
+            </a>
           </nav>
 
           <div className="flex items-center gap-1">
@@ -220,6 +243,14 @@ export function Header({ tone = "light" }: { tone?: "light" | "dark" }) {
                 {item.label}
               </Link>
             ))}
+            <a
+              href={SITE.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 py-4 font-display text-xl text-ink"
+            >
+              <InstagramIcon /> @gulcraftstories
+            </a>
           </nav>
         )}
       </header>
