@@ -14,7 +14,7 @@ export function CurrencySwitcher({ className, onDark = false }: { className?: st
         onChange={(e) => setCode(e.target.value as CurrencyCode)}
         aria-label="Display currency"
         className={cn(
-          "cursor-pointer rounded-sm border bg-transparent px-2 py-1 text-xs font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-gold",
+          "min-h-11 cursor-pointer rounded-sm border bg-transparent px-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:min-h-9 sm:text-xs",
           onDark ? "border-cream/25 text-cream" : "border-ink/20 text-ink",
         )}
       >

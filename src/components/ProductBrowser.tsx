@@ -79,7 +79,7 @@ export function ProductBrowser({
           type="button"
           onClick={() => setFiltersOpen((v) => !v)}
           aria-expanded={filtersOpen}
-          className="inline-flex items-center gap-2 rounded-sm border border-ink/20 px-4 py-2 text-sm font-medium md:hidden"
+          className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-ink/20 px-4 text-sm font-medium md:hidden"
         >
           Filters{activeCount > 0 ? ` (${activeCount})` : ""}
           <span aria-hidden className={cn("transition-transform", filtersOpen && "rotate-180")}>▾</span>

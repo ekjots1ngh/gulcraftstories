@@ -106,10 +106,10 @@ export default async function ProductPage({
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       {/* breadcrumb */}
       <Container className="pt-6">
-        <nav className="flex flex-wrap items-center gap-2 text-xs text-ink-soft">
-          <Link href="/shop" className="hover:text-marigold-ink">Shop</Link>
+        <nav className="flex flex-wrap items-center gap-1 text-xs text-ink-soft">
+          <Link href="/shop" className="inline-flex min-h-11 items-center px-1 hover:text-marigold-ink">Shop</Link>
           <span aria-hidden>/</span>
-          <Link href={`/shop?type=${product.type}`} className="hover:text-marigold-ink">
+          <Link href={`/shop?type=${product.type}`} className="inline-flex min-h-11 items-center px-1 hover:text-marigold-ink">
             {typeName(product.type)}
           </Link>
           <span aria-hidden>/</span>

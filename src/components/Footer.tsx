@@ -54,7 +54,7 @@ export function Footer() {
             <div className="flex flex-col gap-1 text-sm">
               <a
                 href={SITE.instagram}
-                className="inline-flex items-center gap-2 text-cream/85 transition-colors hover:text-gold-soft"
+                className="inline-flex min-h-11 items-center gap-2 text-cream/85 transition-colors hover:text-gold-soft"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
                   <rect x="3" y="3" width="18" height="18" rx="5" />
@@ -63,7 +63,7 @@ export function Footer() {
                 </svg>
                 @gulcraftstories
               </a>
-              <a href={`mailto:${SITE.email}`} className="text-cream/85 transition-colors hover:text-gold-soft">
+              <a href={`mailto:${SITE.email}`} className="inline-flex min-h-11 items-center text-cream/85 transition-colors hover:text-gold-soft">
                 {SITE.email}
               </a>
             </div>
@@ -75,7 +75,7 @@ export function Footer() {
               <ul className="flex flex-col gap-2">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <Link href={l.href} className="text-sm text-cream/80 transition-colors hover:text-gold-soft">
+                    <Link href={l.href} className="inline-block py-1.5 text-sm text-cream/80 transition-colors hover:text-gold-soft">
                       {l.label}
                     </Link>
                   </li>
