@@ -16,9 +16,15 @@ import {
   splitList, today, appendEntries, validateCandidate, formatEntry,
 } from "./lib/pieces.mjs";
 
-const rl = readline.createInterface({ input, output });
+// At a keyboard, ask one question at a time. When answers are piped in
+// (a script, or a text file), take them line by line in the same order.
+const piped = !input.isTTY;
+const queued = piped ? (await new Promise((res) => { let d = ""; input.setEncoding("utf8"); input.on("data", (c) => (d += c)); input.on("end", () => res(d)); })).split(/\r?\n/) : null;
+const rl = piped ? null : readline.createInterface({ input, output });
 const ask = async (q, fallback = "") => {
-  const a = (await rl.question(q)).trim();
+  let a;
+  if (piped) { a = (queued.shift() ?? "").trim(); output.write(q + a + "\n"); }
+  else a = (await rl.question(q)).trim();
   return a === "" ? fallback : a;
 };
 
@@ -45,7 +51,7 @@ async function main() {
   const images = splitList(await ask(`Photo file name(s) [${id}.jpg]: `, `${id}.jpg`), /[;,\s]+/);
   const madeOn = await ask(`Date made, YYYY-MM-DD [${today()}]: `, today());
   const collection = await ask("Collection, if part of a set (Enter for none): ");
-  rl.close();
+  rl?.close();
 
   const piece = { id, name: name.trim(), category, price, materials, story, images, sold: false, madeOn, collection: collection || undefined };
   const problems = validateCandidate(piece, existing);
@@ -62,7 +68,6 @@ async function main() {
   console.log(`  1. Put the photo in photos-inbox/ as ${images.join(", ")}`);
   console.log("  2. npm run images");
   console.log("  3. npm run check-pieces");
-  console.log(`  ${name.length > NAME_MAX ? "" : ""}`.trim());
 }
 
 main().catch((err) => {
