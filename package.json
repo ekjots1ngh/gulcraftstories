@@ -4,10 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run check-pieces && next build",
     "start": "next start",
     "lint": "eslint",
-    "images": "node scripts/images.mjs"
+    "images": "node scripts/images.mjs",
+    "prepare": "git config core.hooksPath .githooks || true",
+    "add-piece": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/add-piece.mjs",
+    "add-pieces": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/add-pieces.mjs",
+    "check-pieces": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-pieces.mjs",
+    "sold": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sold.mjs",
+    "unsold": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sold.mjs --unsold"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
