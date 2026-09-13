@@ -13,14 +13,17 @@ export function PieceImage({
   className,
   ratio = "portrait",
   priority = false,
+  sizes,
 }: {
   swatch: [string, string];
   src?: string;
   label?: string;
   className?: string;
   ratio?: "portrait" | "square" | "landscape";
-  /** Eager-load with high fetch priority — use for above-the-fold hero/LCP images only. */
+  /** Eager-load with high fetch priority, for above-the-fold hero/LCP images only. */
   priority?: boolean;
+  /** Responsive sizes hint (CSS widths per breakpoint). */
+  sizes?: string;
 }) {
   const aspect =
     ratio === "square"
@@ -43,6 +46,7 @@ export function PieceImage({
           alt={label ?? ""}
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : "auto"}
+          sizes={sizes}
           decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
         />
