@@ -32,11 +32,22 @@ export function AddToCart({ product }: { product: Product }) {
         </button>
         <p className="text-xs text-ink-soft">
           This one has found its home. Every piece is one of a kind and never
-          remade {" "}
-          <Link href="/shop" className="underline hover:text-marigold-ink">
-            see what&apos;s still here →
-          </Link>
+          remade, but there are two good next steps.
         </p>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href="/shop?availability=available"
+            className="inline-flex min-h-11 items-center rounded-sm bg-peacock px-4 text-sm font-semibold text-cream transition-colors hover:bg-peacock-deep"
+          >
+            See what&apos;s still here
+          </Link>
+          <Link
+            href="/bespoke"
+            className="inline-flex min-h-11 items-center rounded-sm border border-ink/25 px-4 text-sm font-semibold text-ink transition-colors hover:border-ink"
+          >
+            Commission something like it
+          </Link>
+        </div>
       </div>
     );
   }
