@@ -48,7 +48,7 @@ export function Logo({
           style={{ width: px, height: px }}
         />
       )}
-      <span className={cn("font-display tracking-tight", compact ? "text-base" : "text-lg")}>
+      <span className={cn("whitespace-nowrap font-display tracking-tight", compact ? "text-base" : "text-lg")}>
         GulCraft Stories
       </span>
     </Link>
