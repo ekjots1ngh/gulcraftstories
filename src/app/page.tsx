@@ -7,7 +7,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { PieceImage } from "@/components/PieceImage";
 import { JournalCard } from "@/components/JournalCard";
 import { Testimonials } from "@/components/Testimonials";
-import { products, TYPES, EDITS, isOneOfOne, formatMoney, type Product } from "@/lib/products";
+import { products, TYPES, EDITS, isOneOfOne, formatMoney, type Product } from "@/lib/catalogue";
 import { editContent } from "@/lib/edits";
 import { getAllPosts, getFeaturedPost } from "@/lib/journal";
 import { getSoldSlugs } from "@/lib/sold";
@@ -198,7 +198,7 @@ export default async function Home() {
                   <div className="flex flex-col gap-0.5 px-1 pb-1">
                     <span className="truncate text-sm font-medium text-ink">{p.name}</span>
                     <span className="text-xs text-ink-soft">
-                      {p.designs?.some((d) => d.price !== p.price) ? `from ${formatMoney(p.price)}` : formatMoney(p.price)}
+                      {formatMoney(p.price)}
                     </span>
                   </div>
                 </Link>
@@ -343,7 +343,6 @@ export default async function Home() {
 
 /** A hero tile: photo, name, price, one tap to the piece. */
 function HeroPiece({ product, priority = false, large = false }: { product: Product; priority?: boolean; large?: boolean }) {
-  const varied = product.designs?.some((d) => d.price !== product.price);
   return (
     <Link href={`/shop/${product.slug}`} className="group relative block overflow-hidden rounded-md border border-gold/40">
       <PieceImage
@@ -358,7 +357,7 @@ function HeroPiece({ product, priority = false, large = false }: { product: Prod
       <span className="absolute inset-x-0 bottom-0 flex items-baseline justify-between gap-2 bg-cream/95 px-3 py-2 text-ink">
         <span className={large ? "font-display text-base leading-tight" : "truncate text-xs font-medium"}>{product.name}</span>
         <span className="shrink-0 text-xs font-semibold">
-          {varied ? "from " : ""}{formatMoney(product.price)}
+          {formatMoney(product.price)}
         </span>
       </span>
     </Link>

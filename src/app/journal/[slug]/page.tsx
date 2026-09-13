@@ -7,7 +7,7 @@ import { PieceImage } from "@/components/PieceImage";
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/Button";
 import { getAllPosts, getPost } from "@/lib/journal";
-import { getProduct } from "@/lib/products";
+import { getProduct } from "@/lib/catalogue";
 
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));

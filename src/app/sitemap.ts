@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { products, EDITS } from "@/lib/products";
+import { products, EDITS } from "@/lib/catalogue";
 import { getAllPosts } from "@/lib/journal";
 
 const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com";

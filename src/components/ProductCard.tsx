@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import type { Product } from "@/lib/products";
-import { ONE_OF_ONE, isOneOfOne } from "@/lib/products";
+import type { Product } from "@/lib/catalogue";
+import { ONE_OF_ONE, isOneOfOne } from "@/lib/catalogue";
 import { PieceImage } from "./PieceImage";
 import { Price } from "./Price";
 import { QuickView } from "./QuickView";
@@ -73,7 +73,7 @@ export function ProductCard({
               {product.name}
             </h3>
             <span className="shrink-0 text-sm font-semibold text-ink-soft">
-              {sold ? "Sold" : <>{product.designs?.some((d) => d.price !== product.price) && "from "}<Price gbp={product.price} /></>}
+              {sold ? "Sold" : <Price gbp={product.price} />}
             </span>
           </div>
           <p className="line-clamp-2 text-sm leading-relaxed text-ink-soft">

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCart } from "@/lib/cart";
-import { products, isOneOfOne } from "@/lib/products";
+import { products, isOneOfOne } from "@/lib/catalogue";
 import { FREE_UK_SHIPPING_OVER } from "@/lib/site";
 import { PieceImage } from "./PieceImage";
 import { Price } from "./Price";
@@ -77,25 +77,16 @@ export function LittleExtras() {
               </Link>
               <span className="text-xs text-ink-soft">
                 {isOneOfOne(p) ? "One of one" : "Small batch"} ·{" "}
-                {p.designs?.some((d) => d.price !== p.price) ? <>from <Price gbp={p.price} /></> : <Price gbp={p.price} />}
+                <Price gbp={p.price} />
               </span>
             </div>
-            {p.designs ? (
-              <Link
-                href={`/shop/${p.slug}`}
-                className="mt-auto rounded-sm border border-ink/25 py-1.5 text-center text-xs font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
-              >
-                Choose a design →
-              </Link>
-            ) : (
-              <button
-                type="button"
-                onClick={() => add(p.slug)}
-                className="mt-auto rounded-sm border border-ink/25 py-1.5 text-xs font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
-              >
-                Add to parcel
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => add(p.slug)}
+              className="mt-auto rounded-sm border border-ink/25 py-1.5 text-xs font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+            >
+              Add to parcel
+            </button>
           </li>
         ))}
       </ul>

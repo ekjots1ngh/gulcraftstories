@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
-import { products, isOneOfOne } from "@/lib/products";
+import { products, isOneOfOne } from "@/lib/catalogue";
 import { getUnavailableSlugs } from "@/lib/sold";
 
 /**
@@ -120,16 +120,7 @@ export async function POST(req: NextRequest) {
   for (const raw of items) {
     const slug = String((raw as { slug?: unknown })?.slug ?? "");
     const product = products.find((p) => p.slug === slug);
-    if (!product) continue;
-    // Group postings: the buyer picked a design; price and name come from it,
-    // validated server-side so the client can never set its own price.
-    const rawDesign = (raw as { design?: unknown })?.design;
-    const design =
-      product.designs && typeof rawDesign === "number" && product.designs[rawDesign]
-        ? product.designs[rawDesign]
-        : undefined;
-    const key = design ? `${slug}#${rawDesign}` : slug;
-    if (seen.has(key)) continue;
+    if (!product || seen.has(slug)) continue;
     // Skip anything sold (static), or, for one-of-one pieces, anything sold or
     // reserved according to Stripe. Small-batch pieces stay buyable, she can
     // always make more.
@@ -137,8 +128,8 @@ export async function POST(req: NextRequest) {
       blocked = true;
       continue;
     }
-    seen.add(key);
-    const unitPence = Math.round((design ? design.price : product.price) * 100);
+    seen.add(slug);
+    const unitPence = Math.round(product.price * 100);
     subtotalPence += unitPence;
 
     line_items.push({
@@ -147,10 +138,8 @@ export async function POST(req: NextRequest) {
         currency: product.currency.toLowerCase(),
         unit_amount: unitPence,
         product_data: {
-          name: design
-            ? `${product.name} · ${(rawDesign as number) + 1}. ${design.label}`
-            : product.name,
-          description: (design?.note ?? product.description).slice(0, 300),
+          name: product.name,
+          description: product.description.slice(0, 300),
           metadata: { slug: product.slug },
         },
       },
@@ -199,7 +188,7 @@ export async function POST(req: NextRequest) {
       // Stamp the pieces onto the session so we can read sold/reserved state
       // back from Stripe (see src/lib/sold.ts). The 30-minute expiry means an
       // abandoned checkout releases its reservation rather than locking a piece.
-      metadata: { slugs: Array.from(new Set(Array.from(seen).map((k) => k.split("#")[0]))).join(",") },
+      metadata: { slugs: Array.from(seen).join(",") },
       expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
     });
 

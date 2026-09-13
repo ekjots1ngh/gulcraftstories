@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { Product, SortKey } from "@/lib/products";
+import type { Product, SortKey } from "@/lib/catalogue";
 import {
   TYPES,
   EDITS,
@@ -9,7 +9,7 @@ import {
   PRICE_BUCKETS,
   SORTS,
   sortProducts,
-} from "@/lib/products";
+} from "@/lib/catalogue";
 import { ProductCard } from "./ProductCard";
 import { cn } from "@/lib/cn";
 

@@ -6,7 +6,7 @@ import { Logo } from "./Logo";
 import { cn } from "@/lib/cn";
 import { useCart } from "@/lib/cart";
 import { CurrencySwitcher } from "./CurrencySwitcher";
-import { TYPES, EDITS, MATERIALS } from "@/lib/products";
+import { TYPES, EDITS, MATERIALS } from "@/lib/catalogue";
 import { SITE } from "@/lib/site";
 
 const LINKS = [

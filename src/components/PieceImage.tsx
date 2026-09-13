@@ -1,15 +1,33 @@
+"use client";
+
 import Image from "next/image";
 import { cn } from "@/lib/cn";
 import { MotifMark } from "./MotifDivider";
 
+/** The widths produced by `npm run images` for every piece photo. */
+const PIPELINE_WIDTHS = [480, 960, 1600] as const;
+
 /**
- * Renders a real product photograph when `src` is provided (over a matching
- * jewel-tone swatch that shows while it loads / if it's missing). Without a
- * `src` it falls back to the swatch + motif.
+ * Pipeline photos live at /images/<name>-{480,960,1600}.webp. Given the base
+ * path (no size, no extension) and a requested width, pick the smallest
+ * pre-generated file that is at least that wide.
+ */
+const pipelineLoader = ({ src, width }: { src: string; width: number }) => {
+  const w = PIPELINE_WIDTHS.find((pw) => pw >= width) ?? 1600;
+  return `${src}-${w}.webp`;
+};
+
+/** True for a `/images/<name>` base path produced by the pipeline. */
+const isPipeline = (src: string) => src.startsWith("/images/") && !/\.[a-z]+$/i.test(src);
+
+/**
+ * Renders a photograph over a matching swatch that shows while it loads or if
+ * it is missing. Without a `src` it falls back to the swatch and motif.
  *
- * Uses next/image with `fill`: the box keeps a fixed aspect ratio so grids stay
- * tidy whatever shape the photo is, and the platform serves a resized WebP per
- * device from the `sizes` hint instead of one file for everyone.
+ * Piece photos come from the image pipeline (three WebP widths, 4:5, see
+ * scripts/images.mjs) and are served straight from /public with no runtime
+ * resizing. Other photos (about, journal covers) go through next/image's
+ * optimiser. Either way the box keeps a fixed aspect ratio so grids stay tidy.
  */
 export function PieceImage({
   swatch,
@@ -51,6 +69,7 @@ export function PieceImage({
           fill
           sizes={sizes}
           priority={priority}
+          {...(isPipeline(src) ? { loader: pipelineLoader } : {})}
           className="object-cover"
         />
       ) : (

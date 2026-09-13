@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { MotifDivider } from "@/components/MotifDivider";
 import { ProductBrowser } from "@/components/ProductBrowser";
-import { products, TYPES, EDITS, MATERIALS, ONE_OF_ONE, isOneOfOne } from "@/lib/products";
+import { products, TYPES, EDITS, MATERIALS, ONE_OF_ONE, isOneOfOne } from "@/lib/catalogue";
 import { getSoldSlugs } from "@/lib/sold";
 
 export const metadata: Metadata = {

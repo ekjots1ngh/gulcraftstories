@@ -7,7 +7,7 @@ import { MotifDivider, MotifMark } from "@/components/MotifDivider";
 import { ProductBrowser } from "@/components/ProductBrowser";
 import { PieceImage } from "@/components/PieceImage";
 import { JournalCard } from "@/components/JournalCard";
-import { EDITS, getProducts, ONE_OF_ONE } from "@/lib/products";
+import { EDITS, getProducts, ONE_OF_ONE } from "@/lib/catalogue";
 import { editContent } from "@/lib/edits";
 import { getPostsForEdit } from "@/lib/journal";
 

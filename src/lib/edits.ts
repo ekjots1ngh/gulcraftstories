@@ -11,7 +11,7 @@
  * As one-of-a-kind pieces sell, an edit's contents change; the story stays.
  */
 
-import type { EditSlug } from "./products";
+import type { EditSlug } from "./catalogue";
 
 export type EditContent = {
   /** The word, translated, shown under the title. */

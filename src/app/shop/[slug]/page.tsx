@@ -21,8 +21,9 @@ import {
   materialName,
   ONE_OF_ONE,
   isOneOfOne,
-  formatMoney,
-} from "@/lib/products";
+  getCollectionSiblings,
+  mainImageUrl,
+} from "@/lib/catalogue";
 import { getSoldSlugs } from "@/lib/sold";
 import { SITE, whatsappLink, instagramDmLink } from "@/lib/site";
 
@@ -41,7 +42,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getProduct(slug);
   if (!product) return { title: "Not found" };
-  const img = `/products/${product.slug}.jpg`;
+  const img = mainImageUrl(product);
   return {
     title: `${product.name}`,
     description: product.description,
@@ -65,6 +66,7 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const related = getRelated(product.slug);
+  const siblings = getCollectionSiblings(product.slug);
   const stories = getPostsForProduct(product.slug);
   const oneOfAKind = getFeaturedPost();
   const oneOfOne = isOneOfOne(product);
@@ -78,7 +80,7 @@ export default async function ProductPage({
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    image: [`${base}/products/${product.slug}.jpg`],
+    image: [mainImageUrl(product, base)],
     description: product.description,
     brand: { "@type": "Brand", name: "GulCraft Stories" },
     category: typeName(product.type),
@@ -137,9 +139,6 @@ export default async function ProductPage({
                 <span className="text-2xl font-semibold text-ink-soft">Sold</span>
               ) : (
                 <>
-                  {product.designs?.some((d) => d.price !== product.price) && (
-                    <span className="text-sm text-ink-soft">from</span>
-                  )}
                   <Price gbp={product.price} className="text-2xl font-semibold" />
                   <StatusBadge sold={false} oneOfOne={oneOfOne} />
                 </>
@@ -169,30 +168,22 @@ export default async function ProductPage({
             {product.description}
           </p>
 
-          {/* group postings: the designs on offer, numbered to match the photo */}
-          {product.designs && (
-            <div className="rounded-md border border-gold/40 bg-cream-deep/30">
-              <p className="eyebrow border-b border-gold/30 px-4 py-3 text-marigold-ink">
-                The designs · as they appear in the photo
-              </p>
-              <ol className="divide-y divide-gold/20">
-                {product.designs.map((d, i) => (
-                  <li key={i} className="flex items-baseline gap-3 px-4 py-2.5 text-sm">
-                    <span className="w-5 shrink-0 font-semibold text-marigold-ink">{i + 1}.</span>
-                    <span className="flex-1">
-                      <span className="font-medium text-ink">{d.label}</span>
-                      {d.note && <span className="text-ink-soft"> · {d.note}</span>}
-                    </span>
-                    <span className="shrink-0 font-semibold text-ink">{formatMoney(d.price)}</span>
+          {product.collection && siblings.length > 0 && (
+            <div className="rounded-md border border-gold/40 bg-cream-deep/30 px-4 py-3">
+              <p className="text-xs font-semibold text-ink">Also in {product.collection}</p>
+              <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                {siblings.map((s) => (
+                  <li key={s.slug}>
+                    <Link href={`/shop/${s.slug}`} className="underline hover:text-marigold-ink">
+                      {s.name}
+                    </Link>
+                    <span className="text-ink-soft"> {s.status === "sold" ? "sold" : `£${s.price}`}</span>
                   </li>
                 ))}
-              </ol>
-              <p className="border-t border-gold/30 px-4 py-3 text-xs text-ink-soft">
-                Add your design&apos;s number or name to the order note at checkout,
-                or message us on WhatsApp and we&apos;ll confirm it is still available.
-              </p>
+              </ul>
             </div>
           )}
+
 
           {/* at-a-glance facts */}
           <dl className="grid grid-cols-2 gap-3 border-y border-gold/40 py-4 text-sm">
