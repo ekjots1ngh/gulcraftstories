@@ -17,6 +17,7 @@ import {
 } from "@/lib/catalogue";
 import { getSoldSlugs } from "@/lib/sold";
 import { whatsappLink, instagramDmLink } from "@/lib/site";
+import { offersFor } from "@/lib/offers";
 
 // Re-check sold status (from Stripe) at least once a minute.
 export const revalidate = 60;
@@ -66,6 +67,7 @@ export default async function ProductPage({
   const siblings = getCollectionSiblings(product.slug);
   const paragraphs = product.description.split(/\n+/).map((s) => s.trim()).filter(Boolean);
   const price = formatMoney(product.price);
+  const offers = offersFor(product.slug);
 
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com";
   const productLd = {
@@ -139,6 +141,23 @@ export default async function ProductPage({
             <div className="mt-6 flex flex-col gap-3">
               <CancelledNote />
               <BuyLink slug={product.slug} label={oneOfOne ? `Buy this piece, ${price}` : `Buy, ${price} each`} />
+              {offers.map((o) =>
+                o.paymentLink ? (
+                  <a key={o.id} href={o.paymentLink} className="action-link t-body self-start">
+                    {o.label}
+                  </a>
+                ) : (
+                  <a
+                    key={o.id}
+                    href={instagramDmLink()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="action-link t-body self-start"
+                  >
+                    {o.label}, message us
+                  </a>
+                ),
+              )}
               <a
                 href={instagramDmLink()}
                 target="_blank"
