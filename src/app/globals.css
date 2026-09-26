@@ -87,6 +87,10 @@ h1, h2, h3, h4 {
   outline-offset: 2px;
 }
 
+/* Component classes live in the components layer so Tailwind utilities
+   (lg:hidden, mt-4 and so on) can still override them. */
+@layer components {
+
 /* ============================================================
    Type roles (design.md, section 1)
    ============================================================ */
@@ -348,3 +352,5 @@ h1, h2, h3, h4 {
 .jaali-bg {
   background-image: none;
 }
+
+} /* end @layer components */

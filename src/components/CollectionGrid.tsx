@@ -1,32 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { Product, TypeSlug } from "@/lib/catalogue";
+import type { Product } from "@/lib/catalogue";
 import { sortProducts } from "@/lib/catalogue";
+import { TABS, filterByTab, type TabSlug } from "@/lib/tabs";
 import { ProductCard } from "./ProductCard";
 import { FadeIn } from "./FadeIn";
-
-/** The tabs: every category, plus small things that make easy gifts. */
-export type TabSlug = "all" | TypeSlug | "gifts";
-export const GIFT_CEILING = 15; // pounds
-
-export const TABS: { slug: TabSlug; label: string; title: string }[] = [
-  { slug: "all", label: "All", title: "All pieces" },
-  { slug: "necklaces", label: "Necklaces", title: "Necklaces" },
-  { slug: "earrings", label: "Earrings", title: "Earrings" },
-  { slug: "bracelets", label: "Bracelets and rings", title: "Bracelets and rings" },
-  { slug: "crochet", label: "Crochet", title: "Crochet" },
-  { slug: "clay", label: "Clay", title: "Clay charms, magnets and ornaments" },
-  { slug: "gifts", label: "Little gifts", title: `Little gifts, £${GIFT_CEILING} and under` },
-];
-
-export const isTab = (s: string | undefined): s is TabSlug => TABS.some((t) => t.slug === s);
-
-export function filterByTab(list: Product[], tab: TabSlug): Product[] {
-  if (tab === "all") return list;
-  if (tab === "gifts") return list.filter((p) => p.price <= GIFT_CEILING);
-  return list.filter((p) => p.type === tab);
-}
 
 /**
  * The collection grid with category tabs. Filtering happens in memory (the

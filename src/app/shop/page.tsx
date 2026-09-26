@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { CollectionGrid, TABS, isTab } from "@/components/CollectionGrid";
+import { CollectionGrid } from "@/components/CollectionGrid";
+import { TABS, isTab } from "@/lib/tabs";
 import { products, isOneOfOne } from "@/lib/catalogue";
 import { getSoldSlugs } from "@/lib/sold";
 

@@ -40,7 +40,9 @@ export function Lightbox({
     const opener = document.activeElement as HTMLElement | null;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    closeRef.current?.focus();
+    // Focus the dialog itself (not the close button) so a tap does not paint
+    // a focus ring; Tab from here goes to the close button.
+    dialogRef.current?.focus();
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -52,8 +54,10 @@ export function Lightbox({
         if (!focusable || focusable.length === 0) return;
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        const active = document.activeElement;
+        if (active === dialogRef.current) { e.preventDefault(); (e.shiftKey ? last : first).focus(); }
+        else if (e.shiftKey && active === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
       }
     };
     window.addEventListener("keydown", onKey);
@@ -72,7 +76,8 @@ export function Lightbox({
       role="dialog"
       aria-modal="true"
       aria-label={`${img.alt}, close-up${many ? `, ${i + 1} of ${images.length}` : ""}`}
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-ink/95"
+      tabIndex={-1}
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-ink/95 outline-none"
       onClick={onClose}
       onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
       onTouchEnd={(e) => {
