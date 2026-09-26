@@ -432,8 +432,9 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
       Stripe buy link, About, Markets, green footer; basket and extras retired)
 - [x] Her name: Guljeet Kaur (`MAKER_NAME` in `src/lib/site.ts`)
 - [x] About bio, her words as supplied; her name is Guljeet Kaur
-- [ ] Founder to supply: the portrait (photos-inbox/Guljeet.jpg through `npm run images`), real market
-      dates in `src/lib/markets.ts`, the materials and set prices in
+- [x] Market dates: her confirmed bookings for November 2026 in `src/lib/markets.ts`
+- [ ] Founder to supply: a full-resolution portrait (the current one is 499 px wide), the TAP Piccadilly hours,
+      the materials and set prices in
       `NEW_PRODUCTS_CHECKLIST.md`, re-shot photos at 4:5
 - [ ] Set/bundle prices: Stripe Payment Links per offer, once decided
 
