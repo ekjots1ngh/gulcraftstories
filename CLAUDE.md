@@ -430,9 +430,10 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
 - [x] September 2026: 26 new pieces + Bracelets category; gallery rebuild per
       `design.md` (home, shop tabs, product page with lightbox and direct
       Stripe buy link, About, Markets, green footer; basket and extras retired)
-- [ ] Founder to supply: her name (`MAKER_NAME`), her words and a portrait for
-      `/about`, real market dates in `src/lib/markets.ts`, the materials and
-      set prices in `NEW_PRODUCTS_CHECKLIST.md`, re-shot photos at 4:5
+- [x] Her name: Guljeet (`MAKER_NAME` in `src/lib/site.ts`)
+- [ ] Founder to supply: her words and a portrait for `/about`, real market
+      dates in `src/lib/markets.ts`, the materials and set prices in
+      `NEW_PRODUCTS_CHECKLIST.md`, re-shot photos at 4:5
 - [ ] Set/bundle prices: Stripe Payment Links per offer, once decided
 
 > Development branch: `claude/funny-wozniak-M7VpJ`.

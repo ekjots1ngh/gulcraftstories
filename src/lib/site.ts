@@ -3,11 +3,8 @@
  * where possible so real values are never hard-coded; the fallbacks below are
  * obvious placeholders to replace.
  */
-/**
- * How the maker is named on the home page and About. A placeholder until she
- * decides how she wants to appear (first name, full name, or "the maker").
- */
-export const MAKER_NAME = "[Her name]";
+/** How the maker is named on the home page and About. */
+export const MAKER_NAME = "Guljeet";
 
 export const SITE = {
   email: "gulcraftstories@gmail.com",
