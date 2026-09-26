@@ -281,7 +281,7 @@ export const products: Product[] = [
     price: 2200,
     materials: ["Yellow glass seed beads", "multicolour millefiori glass beads", "a hand-wrapped blue thread bail", "a brass openwork lotus charm", "and a cobalt-blue glass drop bead", "Gold-tone clasp"],
     story:
-      "A bright marigold strand, the colour you see strung across doorways at every celebration, that slowly fills with millefiori glass, each tiny bead a little garden of colour pressed into it.",
+      "A bright marigold strand, the colour you see strung across doorways at every celebration, that slowly fills with millefiori glass, each tiny bead a little garden of colour pressed into it. A brass lotus and a single cobalt drop hang from a bail wrapped by hand in blue thread. Light to wear and happiest over something plain.",
     images: ["marigold-mela.jpg", "marigold-mela-2.jpg"],
     sold: false,
     madeOn: "2026-07-05",
@@ -305,7 +305,7 @@ export const products: Product[] = [
     price: 2600,
     materials: ["Hand-carved green jade tubes with leaf pattern", "honey-yellow jade beads", "gold-tone ear wires"],
     story:
-      "Two little carved pillars of green, each one cut by hand with a soft leaf pattern so the light moves across them as you do, set between beads of honey-yellow jade.",
+      "Two little carved pillars of green, each one cut by hand with a soft leaf pattern so the light moves across them as you do, set between beads of honey-yellow jade. Quiet, cool earrings that sit close to the face. Strung on gold-tone wires and made once.",
     images: ["bamboo-grove.jpg"],
     sold: false,
     madeOn: "2026-07-05",
@@ -317,7 +317,7 @@ export const products: Product[] = [
     price: 600,
     materials: ["Wool crochet blooms on coloured paper clips"],
     story:
-      "Red rose and green leaf on a yellow clip",
+      "A red rose and a green leaf, crocheted in wool no bigger than a fingernail and fixed to a yellow paper clip. It marks a page, holds a recipe to the fridge, or sits in the fold of a letter. One of five posy clips, each a different pairing; this is the one for the rose lovers.",
     images: ["posy-page-clips.jpg"],
     sold: false,
     madeOn: "2026-07-04",
@@ -330,7 +330,7 @@ export const products: Product[] = [
     price: 600,
     materials: ["Wool crochet blooms on coloured paper clips"],
     story:
-      "Pink bloom and soft grey leaf on a green clip",
+      "A pink bloom beside a soft grey leaf on a green clip, crocheted in wool by hand. The quietest of the five posy clips, and the one people choose for a book they mean to keep. Small enough to lose in a pocket and nice enough not to.",
     images: ["posy-page-clips.jpg"],
     sold: false,
     madeOn: "2026-07-04",
@@ -343,7 +343,7 @@ export const products: Product[] = [
     price: 600,
     materials: ["Wool crochet blooms on coloured paper clips"],
     story:
-      "Deep berry bloom and emerald leaf on a green clip",
+      "A deep berry bloom and an emerald leaf on a green clip, each petal crocheted in wool by hand. Rich autumn colours in something the size of a stamp. One of five posy clips; they are often bought as a pair with Rose and Leaf.",
     images: ["posy-page-clips.jpg"],
     sold: false,
     madeOn: "2026-07-04",
@@ -356,7 +356,7 @@ export const products: Product[] = [
     price: 600,
     materials: ["Wool crochet blooms on coloured paper clips"],
     story:
-      "Marigold bloom and navy leaf on a white clip",
+      "A marigold bloom and a navy leaf on a white clip, crocheted by hand in wool. The colours of a festival garland, shrunk to the corner of a page. One of five posy clips, and the brightest of them.",
     images: ["posy-page-clips.jpg"],
     sold: false,
     madeOn: "2026-07-04",
@@ -369,7 +369,7 @@ export const products: Product[] = [
     price: 600,
     materials: ["Wool crochet blooms on coloured paper clips"],
     story:
-      "Lilac bloom and turquoise leaf on a pink clip",
+      "A lilac bloom and a turquoise leaf on a pink clip, crocheted in wool by hand. Cool sherbet colours for a diary or a stack of postcards. One of five posy clips, each a different pairing, all made at the same table.",
     images: ["posy-page-clips.jpg"],
     sold: false,
     madeOn: "2026-07-04",
@@ -382,7 +382,7 @@ export const products: Product[] = [
     price: 1200,
     materials: ["Hand-painted air-dry clay charms and beads", "cotton thread", "metal clip"],
     story:
-      "Left in the photo: a pink painted star, polka-dot bloom and a folk-patterned drop on a green tassel",
+      "A pink painted star, a polka-dot bloom and a folk-patterned drop, all shaped and painted by hand in air-dry clay, strung on cotton thread with a green tassel and finished with a clip for a bag or a bunch of keys. It is the charm on the left in the photograph. Each bead is painted freehand, so the pattern is its own.",
     images: ["mela-clay-charms.jpg"],
     sold: false,
     madeOn: "2026-07-04",
@@ -395,7 +395,7 @@ export const products: Product[] = [
     price: 1200,
     materials: ["Hand-painted air-dry clay charms and beads", "cotton thread", "metal clip"],
     story:
-      "Right in the photo: a red toadstool, painted blossom beads and a star-flower on a string of red beads",
+      "A red toadstool with white spots, painted blossom beads and a star-flower on a string of red beads, all air-dry clay shaped and painted by hand, with a clip for a bag or keys. It is the charm on the right in the photograph. Bright, a little storybook, and made once.",
     images: ["mela-clay-charms.jpg"],
     sold: false,
     madeOn: "2026-07-04",
@@ -408,7 +408,7 @@ export const products: Product[] = [
     price: 700,
     materials: ["Air-dry clay", "sealed with resin", "magnet back"],
     story:
-      "A little river of teal, jade and red runs down a leaf-shaped magnet, finished with a silver ribbon of water.",
+      "A little river of teal, jade and red runs down a leaf-shaped magnet, finished with a silver ribbon of water. Shaped from air-dry clay, painted by hand and sealed with resin so the colours stay bright on the fridge door. The name comes from the peacock colours she reaches for most.",
     images: ["peacock-stream-magnet.jpg"],
     sold: false,
     madeOn: "2026-07-03",
@@ -421,7 +421,7 @@ export const products: Product[] = [
     price: 600,
     materials: ["Air-dry clay", "sealed with resin", "magnet back"],
     story:
-      "Deep blue rim, scattered green spots, like a lily pad seen from above.",
+      "A deep blue rim and scattered green spots, like a lily pad seen from above on still water. A small pebble of air-dry clay, painted by hand and sealed with resin, with a magnet on the back. One of the Mela magnets, made in small numbers and never quite the same twice.",
     images: ["lily-pebble-magnet.jpg"],
     sold: false,
     madeOn: "2026-07-03",
@@ -434,7 +434,7 @@ export const products: Product[] = [
     price: 500,
     materials: ["Air-dry clay", "sealed with resin", "magnet back"],
     story:
-      "One tiny palm tree on a sunny cream-and-yellow pebble, a pocket-sized holiday.",
+      "One tiny palm tree on a sunny cream-and-yellow pebble, a pocket-sized holiday for a fridge door or a filing cabinet. Air-dry clay shaped and painted by hand, sealed with resin, magnet on the back. The smallest and cheapest thing on the table, and often the first to go.",
     images: ["little-palm-magnet.jpg"],
     sold: false,
     madeOn: "2026-07-03",
@@ -447,7 +447,7 @@ export const products: Product[] = [
     price: 700,
     materials: ["Air-dry clay", "sealed with resin", "magnet back"],
     story:
-      "Hand-painted and full of character, this is the one cat-lovers pick up without thinking twice.",
+      "An orange cat with a face full of character, painted by hand on a small pebble of air-dry clay and sealed with resin. This is the one cat lovers pick up without thinking twice. Magnet on the back; each one painted a little differently.",
     images: ["marmalade-cat-magnet.jpg"],
     sold: false,
     madeOn: "2026-07-03",
@@ -460,7 +460,7 @@ export const products: Product[] = [
     price: 500,
     materials: ["Air-dry clay", "sealed with resin", "magnet back"],
     story:
-      "A plump little berry, glazed deep indigo with its star-crown on top. One of a pair of berries, each shaped by hand, no two quite alike.",
+      "A plump little berry, glazed deep indigo with its star-crown on top. One of a pair of berries, each shaped by hand from air-dry clay and sealed with resin, no two quite alike. Magnet on the back, so it lives on the fridge next to the shopping list.",
     images: ["blueberry-magnet-i.jpg"],
     sold: false,
     madeOn: "2026-07-03",
@@ -486,7 +486,7 @@ export const products: Product[] = [
     price: 600,
     materials: ["Air-dry clay", "sealed with resin", "magnet back"],
     story:
-      "The flower pot curled up in a grove of yellow lemons and green leaves.",
+      "A flower pot curled up in a grove of yellow lemons and green leaves, painted by hand on air-dry clay and sealed with resin. Sunny colours for a kitchen that could use a bit of the Mediterranean. Magnet on the back; one of the Mela magnets.",
     images: ["lemon-grove-magnet.jpg"],
     sold: false,
     madeOn: "2026-07-03",
@@ -499,7 +499,7 @@ export const products: Product[] = [
     price: 800,
     materials: ["Air-dry clay", "sealed with resin", "magnet back"],
     story:
-      "A bold orange antelope head with long, spotted, curving horns, folk-art energy in miniature.",
+      "A bold orange antelope head with long, spotted, curving horns, folk-art energy in miniature. Shaped from air-dry clay, painted freehand and sealed with resin, with a magnet on the back. The design borrows from the painted animals of Indian folk art, where nothing is ever left plain.",
     images: ["orange-ibex-magnet.jpg"],
     sold: false,
     madeOn: "2026-07-03",
@@ -512,7 +512,7 @@ export const products: Product[] = [
     price: 700,
     materials: ["Air-dry clay", "sealed with resin", "magnet back"],
     story:
-      "A small dog for the dog lovers, painted bright red on a white crescent and ringed with blue dots.",
+      "A small dog for the dog lovers, painted bright red on a white crescent and ringed with blue dots. Air-dry clay shaped and painted by hand, sealed with resin, magnet on the back. Cheerful on a fridge, and a good small present for someone with a good small dog.",
     images: ["red-dog-magnet.jpg"],
     sold: false,
     madeOn: "2026-07-03",
@@ -525,7 +525,7 @@ export const products: Product[] = [
     price: 500,
     materials: ["Air-dry clay", "sealed with resin", "magnet back"],
     story:
-      "A tiny, rounded pot in candy pink, scattered with blue stars.",
+      "A tiny, rounded pot in candy pink, scattered with blue stars. Shaped from air-dry clay, painted by hand and sealed with resin, with a magnet on the back. One of the Mela magnets, the little things made between bigger pieces.",
     images: ["starry-pot-magnet.jpg"],
     sold: false,
     madeOn: "2026-07-03",
@@ -538,7 +538,7 @@ export const products: Product[] = [
     price: 1200,
     materials: ["Hand-painted air-dry clay", "glass and acrylic beads", "painted resin barrel beads", "cotton thread tassel", "stainless lobster clip with split ring"],
     story:
-      "A little green-and-gold parrot hand-shaped and painted from clay, hanging beneath a stack of glass cube beads, a folk-painted barrel and a tiny watermelon slice.",
+      "A little green-and-gold parrot, the tota of a hundred Indian folk paintings, hand-shaped and painted from clay and hanging beneath a stack of glass cube beads, a folk-painted barrel and a tiny watermelon slice. It clips to a bag strap or a set of keys and swings as you walk. Made by hand in small numbers, each parrot painted a little differently.",
     images: ["tota-bag-charm.jpg"],
     sold: false,
     madeOn: "2026-07-04",
@@ -551,7 +551,7 @@ export const products: Product[] = [
     price: 1200,
     materials: ["Hand-painted air-dry clay", "painted clay beads", "cotton cord and tassel", "stainless lobster clip with split ring"],
     story:
-      "A hand-painted clay strawberry, freckled with little gold hearts, swinging on a green cotton cord beneath a pink blossom ring and a striped blue bead.",
+      "A hand-painted clay strawberry, freckled with little gold hearts, swinging on a green cotton cord beneath a pink blossom ring and a striped blue bead. It clips to a bag, a pencil case or a set of keys. Summery, a little sweet, and made by hand in small numbers.",
     images: ["strawberry-fields-bag-charm.jpg"],
     sold: false,
     madeOn: "2026-07-04",
@@ -564,7 +564,7 @@ export const products: Product[] = [
     price: 1200,
     materials: ["Hand-painted air-dry clay", "glass and acrylic beads", "painted resin barrel beads", "twisted cotton cord", "stainless lobster clip with split ring"],
     story:
-      "A little matki, the round clay pot of every Indian kitchen, shaped and painted by hand and hung beneath a string of folk-painted beads on a bright twisted cord.",
+      "A little matki, the round clay pot of every Indian kitchen, shaped and painted by hand and hung beneath a string of folk-painted beads on a bright twisted cord. It clips to a bag strap or keys and carries a small piece of home around with you. Made by hand in small numbers, each pot painted a little differently.",
     images: ["matki-bag-charm.jpg"],
     sold: false,
     madeOn: "2026-07-04",

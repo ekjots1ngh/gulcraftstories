@@ -113,3 +113,22 @@ Moss, Lavender Pond, Honey Gourd, Confetti Loop, Sunset Shell, Glacier Drop,
 Seed Bead Rings, Sky Stones, Tide Pool, Lemon Path, Meadow Path, Chevron
 Knot, Speckled Pebble, Rose Milk, Two Roads, Parrot in the Garden, Chevron
 Sea Set. A rename is one edit to the `name` line; the slug and photo can stay.
+
+## Stories rewritten on 26 September, please read
+
+Twenty-one older pieces had a caption or a single sentence where the story
+should be. Each now has a two to four sentence story written only from the
+materials line and the name, in the same voice as the rest. Nothing new is
+claimed about materials. If any of these is wrong about what the piece is,
+tell me and it is a one-line edit.
+
+Marigold Mela, Bamboo Grove, the five Posy Page Clips (Rose & Leaf, Blush &
+Dove, Berry & Emerald, Marigold & Navy, Lilac & Lagoon), the two Mela Clay
+Charms (The Star & Gourd, The Toadstool & Blossom), nine Mela Magnets (Peacock
+Stream, Lily Pebble, Little Palm, Marmalade Cat, Blueberry I, Lemon Grove,
+Orange Ibex, Red Dog, Starry Pot), and the three bag charms (Tota, Strawberry
+Fields, Matki).
+
+Two of them still say "on the left" and "on the right in the photograph"
+because both Mela Clay Charms share one photo. A photo of each on its own
+would let those lines go.
