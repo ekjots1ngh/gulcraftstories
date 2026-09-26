@@ -33,7 +33,6 @@ export default async function OgImage() {
           border: "18px solid #0E5A5B",
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={logoSrc} width={176} height={176} alt="" style={{ borderRadius: 999 }} />
         <div style={{ fontSize: 76, fontWeight: 600, marginTop: 26, letterSpacing: -1 }}>
           GulCraft Stories
