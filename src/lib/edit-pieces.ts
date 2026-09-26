@@ -20,7 +20,17 @@ export const editPieces: Record<EditSlug, string[]> = {
     "starry-pot-magnet",
     "tota-bag-charm",
     "strawberry-fields-bag-charm",
-    "matki-bag-charm"
+    "matki-bag-charm",
+    "berry-fir",
+    "snowman-in-a-scarf",
+    "christmas-jumper",
+    "snow-cottage",
+    "holly-bell",
+    "snowflake-mitten",
+    "reindeer-rounds-pair",
+    "carol-bell",
+    "painted-bird",
+    "speckled-pebble"
   ],
   "gulzar": [
     "himalayan-bloom",
@@ -29,7 +39,12 @@ export const editPieces: Record<EditSlug, string[]> = {
     "marigold-morning",
     "orchard-green",
     "marigold-mela",
-    "bamboo-grove"
+    "bamboo-grove",
+    "rhubarb-and-moss",
+    "lavender-pond",
+    "lemon-path",
+    "meadow-path",
+    "rose-milk"
   ],
   "saanjh": [
     "coral-shore",
@@ -37,7 +52,10 @@ export const editPieces: Record<EditSlug, string[]> = {
     "peacock-hour",
     "tidewater-moon",
     "kathmandu-line",
-    "amber-twilight"
+    "amber-twilight",
+    "sunset-shell",
+    "tide-pool",
+    "chevron-sea-set"
   ],
   "dhaaga": [
     "caravan-tales",
@@ -46,12 +64,20 @@ export const editPieces: Record<EditSlug, string[]> = {
     "blush-and-dove-clip",
     "berry-and-emerald-clip",
     "marigold-and-navy-clip",
-    "lilac-and-lagoon-clip"
+    "lilac-and-lagoon-clip",
+    "seed-bead-rings",
+    "chevron-knot",
+    "two-roads",
+    "parrot-in-the-garden"
   ],
   "roshni": [
     "cornflower-drops",
     "festival-red",
     "storm-and-ember",
-    "spice-route"
+    "spice-route",
+    "honey-gourd",
+    "confetti-loop",
+    "glacier-drop",
+    "sky-stones"
   ]
 };

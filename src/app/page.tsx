@@ -112,7 +112,7 @@ export default async function Home() {
       {/* ───────── BROWSE BY TYPE ───────── */}
       <section className="border-y border-gold/40 bg-cream-deep/40 py-8 sm:py-10">
         <Container>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
             {TYPES.map((t) => {
               const count = live.filter((p) => p.type === t.slug).length;
               return (

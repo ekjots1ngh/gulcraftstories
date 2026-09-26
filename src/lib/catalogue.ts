@@ -16,7 +16,7 @@ export type Status = "available" | "sold";
 
 /* ---------- Browse taxonomies (the three ways to shop) ---------- */
 
-export type TypeSlug = "necklaces" | "earrings" | "crochet" | "clay";
+export type TypeSlug = "necklaces" | "earrings" | "bracelets" | "crochet" | "clay";
 export type EditSlug = "gulzar" | "mitti" | "dhaaga" | "roshni" | "saanjh";
 export type MaterialSlug =
   | "semi-precious-stones"
@@ -30,6 +30,7 @@ type Taxon<S extends string> = { slug: S; name: string; blurb: string; accent: s
 export const TYPES: Taxon<TypeSlug>[] = [
   { slug: "necklaces", name: "Necklaces", blurb: "Pendants, statements and beaded strands.", accent: "#0E5A5B" },
   { slug: "earrings", name: "Earrings", blurb: "Drops and dainty everyday pairs.", accent: "#E08A1E" },
+  { slug: "bracelets", name: "Bracelets & rings", blurb: "Stretch strands, knotted cords and little seed-bead rings.", accent: "#7E5AA2" },
   { slug: "crochet", name: "Crochet", blurb: "Little things made one stitch at a time.", accent: "#B5267A" },
   { slug: "clay", name: "Clay charms & magnets", blurb: "Hand-painted air-dry clay, full of character.", accent: "#9A5B33" },
 ];
@@ -96,6 +97,7 @@ export const isOneOfOne = (p: Pick<Product, "smallBatch">) => !p.smallBatch;
 const TYPE_OF: Record<Category, TypeSlug> = {
   Necklaces: "necklaces",
   Earrings: "earrings",
+  Bracelets: "bracelets",
   Crochet: "crochet",
   Clay: "clay",
 };
@@ -103,6 +105,7 @@ const TYPE_OF: Record<Category, TypeSlug> = {
 const SWATCH_OF: Record<Category, [string, string]> = {
   Necklaces: ["#0E5A5B", "#3B2A4A"],
   Earrings: ["#E08A1E", "#0E5A5B"],
+  Bracelets: ["#7E5AA2", "#C9A24B"],
   Crochet: ["#B5267A", "#4E9B6E"],
   Clay: ["#9A5B33", "#C9A24B"],
 };
@@ -140,7 +143,7 @@ function derive(p: Piece): Product {
     description: p.story,
     materialNote: p.materials.length ? `${p.materials.join(", ")}.` : "",
     images: p.images.map((file, i) => ({
-      alt: i === 0 ? `${p.name}, handmade by GulCraft Stories` : `${p.name}, another view`,
+      alt: `${p.name}, ${p.materials.slice(0, 3).join(", ").toLowerCase()}${i === 0 ? "" : ", another view"}`,
       swatch: SWATCH_OF[p.category],
       src: `/images/${baseName(file)}`,
     })),

@@ -11,7 +11,7 @@ export const ROOT = process.cwd();
 export const DATA_FILE = path.join(ROOT, "src", "lib", "products.ts");
 export const IMAGES_DIR = path.join(ROOT, "public", "images");
 export const MARKER = "  // add-piece appends new pieces above this line";
-export const CATEGORIES = ["Necklaces", "Earrings", "Crochet", "Clay"];
+export const CATEGORIES = ["Necklaces", "Earrings", "Bracelets", "Crochet", "Clay"];
 export const NAME_MAX = 40;
 
 /** Load the catalogue exactly as the site sees it. */
