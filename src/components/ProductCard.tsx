@@ -39,13 +39,9 @@ export function ProductCard({
           sizes={sizes}
         />
         {second?.src && !sold && (
-          <PieceImage
-            src={second.src}
-            label=""
-            fit="contain"
-            sizes={sizes}
-            className="img-fade pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100"
-          />
+          <div className="img-fade pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100" aria-hidden>
+            <PieceImage src={second.src} label="" fit="contain" sizes={sizes} />
+          </div>
         )}
       </div>
       <div className="mt-3 flex flex-col gap-1">
