@@ -236,6 +236,22 @@ linked from the eligible pieces, once the founder decides the prices (see
 `NEW_PRODUCTS_CHECKLIST.md`). Leaving Stripe returns the buyer to the piece
 with `?checkout=cancelled` (`CancelledNote` shows "Nothing was charged").
 
+### Offers, print kit and the founder's guides
+- **Offers** (`src/lib/offers.ts`): mix-and-match bundles. Each product page
+  in an offer shows "<label>, message us" (Instagram) until the offer's
+  `paymentLink` is filled in with a Stripe Payment Link, after which the line
+  links straight to it. `PAYMENT-LINKS.md` tells the founder exactly which
+  links to create.
+- **Print kit**: `print/qr-gulcraftstories.{svg,png}` (from
+  `node scripts/qr.mjs`), plus two hidden, noindex pages that read live data:
+  `/print/stall-sign` (A5) and `/print/price-cards` (A4, twelve cards per
+  sheet, unsold pieces only, a QR per piece via `src/lib/qr.ts`). Robots
+  disallows `/print/`. PDF snapshots of both sit in `print/`.
+- **MARKET-DAY.md**: plain-English guide for marking a piece sold from a
+  phone, adding a piece, and what to check when a buy link fails.
+- **/privacy**: plain notice (Stripe, Formspree, Vercel analytics), linked
+  from the footer.
+
 ### Checkout — Stripe hosted Checkout (GBP)
 We use **Stripe Checkout (hosted)** — customers pay on Stripe's page, so we
 never see or store card data. (Stripe over Razorpay because the market is
@@ -268,7 +284,9 @@ UK/international in GBP.)
 **Env vars** (see `.env.example`; copy to `.env.local`, never commit real keys):
 `STRIPE_SECRET_KEY` (required), `STRIPE_WEBHOOK_SECRET` (optional, webhook only),
 `NEXT_PUBLIC_SITE_URL` (optional, for custom-domain absolute URLs),
-`NEXT_PUBLIC_WHATSAPP_NUMBER` (optional, the floating WhatsApp button).
+`NEXT_PUBLIC_WHATSAPP_NUMBER` (optional, the WhatsApp links),
+`NEXT_PUBLIC_FORMSPREE_CONTACT` and `NEXT_PUBLIC_FORMSPREE_BESPOKE` (the forms; without
+them the forms open the visitor's email app instead).
 
 ### Gift vouchers
 `/gift-cards` sells digital vouchers (£25/£50/£75/£100) via Stripe hosted
@@ -436,6 +454,10 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
 - [ ] Founder to supply: a full-resolution portrait (the current one is 499 px wide), the TAP Piccadilly hours,
       the materials and set prices in
       `NEW_PRODUCTS_CHECKLIST.md`, re-shot photos at 4:5
-- [ ] Set/bundle prices: Stripe Payment Links per offer, once decided
+- [x] Offer lines on product pages (message us on Instagram) + PAYMENT-LINKS.md;
+      paste each Stripe Payment Link into `src/lib/offers.ts` when created
+- [x] Market kit (QR files, A5 stall sign, A4 price cards), MARKET-DAY.md, /privacy
+- [ ] Founder: create the three Payment Links; confirm the Formspree env vars
+      in Vercel; send a full-resolution portrait
 
 > Development branch: `claude/funny-wozniak-M7VpJ`.
