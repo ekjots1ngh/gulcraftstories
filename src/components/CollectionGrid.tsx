@@ -57,13 +57,21 @@ export function CollectionGrid({ products, initialTab = "all" }: { products: Pro
       </div>
 
       <ul key={tab} className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 md:gap-y-14 lg:mt-12">
-        {shown.map((p, i) => (
-          <li key={p.slug}>
-            <FadeIn delay={(i % 3) * 80}>
+        {shown.map((p, i) =>
+          // The first rows are on screen at load: no fade, so the largest
+          // image paints as soon as it arrives rather than after hydration.
+          i < 6 ? (
+            <li key={p.slug}>
               <ProductCard product={p} priority={i < 2} />
-            </FadeIn>
-          </li>
-        ))}
+            </li>
+          ) : (
+            <li key={p.slug}>
+              <FadeIn delay={(i % 3) * 80}>
+                <ProductCard product={p} />
+              </FadeIn>
+            </li>
+          ),
+        )}
       </ul>
     </div>
   );

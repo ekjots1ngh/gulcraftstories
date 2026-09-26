@@ -74,6 +74,9 @@ export function PieceImage({
           fill
           sizes={sizes}
           priority={priority}
+          // Next 16 no longer raises fetch priority for `priority` images on
+          // its own; the first image on a page should win the bandwidth race.
+          fetchPriority={priority ? "high" : undefined}
           {...(isPipeline(src) ? { loader: pipelineLoader } : {})}
           className={cn(fit === "contain" ? "object-contain" : "object-cover", imgClassName)}
         />

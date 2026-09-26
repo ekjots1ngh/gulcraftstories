@@ -73,13 +73,19 @@ export default async function Home() {
           </h2>
         </FadeIn>
         <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 md:gap-y-14">
-          {pieces.map((p, i) => (
-            <li key={p.slug}>
-              <FadeIn delay={(i % 3) * 80}>
+          {pieces.map((p, i) =>
+            i < 3 ? (
+              <li key={p.slug}>
                 <ProductCard product={p} />
-              </FadeIn>
-            </li>
-          ))}
+              </li>
+            ) : (
+              <li key={p.slug}>
+                <FadeIn delay={(i % 3) * 80}>
+                  <ProductCard product={p} />
+                </FadeIn>
+              </li>
+            ),
+          )}
         </ul>
         <FadeIn className="mt-10">
           <Link href="/shop" className="action-link t-body">

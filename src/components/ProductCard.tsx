@@ -25,11 +25,7 @@ export function ProductCard({
   const [first, second] = product.images;
 
   return (
-    <Link
-      href={`/shop/${product.slug}`}
-      className={cn("card-lift group block", sold && "cursor-default")}
-      aria-label={`${product.name}${sold ? ", sold" : `, ${formatMoney(product.price)}`}`}
-    >
+    <Link href={`/shop/${product.slug}`} className={cn("card-lift group block", sold && "cursor-default")}>
       <div className={cn("relative", sold && "opacity-55")}>
         <PieceImage
           src={first?.src}
@@ -45,10 +41,10 @@ export function ProductCard({
         )}
       </div>
       <div className="mt-3 flex flex-col gap-1">
-        <h3 className="font-display text-xl leading-snug text-ink">
+        <p className="font-display text-xl leading-snug text-ink">
           {product.name}
           {sold && <span className="text-clay"> Sold</span>}
-        </h3>
+        </p>
         {!sold && <p className="t-small text-ink-soft">{formatMoney(product.price)}</p>}
       </div>
     </Link>
