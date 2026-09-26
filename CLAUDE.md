@@ -96,11 +96,41 @@ lifting; UI stays quiet. (Mockups use placeholders until real photos arrive.)
 ## 3. Sitemap
 
 ```
-Home · Shop (browse by Type / Edit / Material → Product) · Our Story
-· The Craft / Journal · Bespoke / Enquiries · Cart → Stripe hosted checkout
-Header: mega-menu (By type · By edit · By material) + Our Story · The Craft · Bespoke · Cart
-Footer: About · Shipping & Returns · Care · Contact · Instagram · Newsletter
+Home · /shop (tabs: All · Necklaces · Earrings · Bracelets and rings · Crochet · Clay · Little gifts)
+→ /shop/[slug] (Buy this piece → Stripe hosted Checkout, no basket) · /about · /markets
+Header: Necklaces · Earrings · Bracelets · Crochet · Clay · Gifts · About · Markets · Instagram
+Footer (green): contact (Instagram, WhatsApp, email) · Pieces · Her (About, Markets, Bespoke,
+Contact) · Help (delivery, returns, international, FAQ, care, size guide, vouchers)
+· Elsewhere (the edits, journal, archive: retired from the nav, still reachable)
 ```
+
+### The gallery rebuild (September 2026): read `design.md` first
+The site now follows **`design.md`** ("gallery, not shop"): ivory page, ink
+text, clay as the one warm accent, brass hairlines, the roundel's green for
+the footer and focus ring; Fraunces for display, Hanken Grotesk for body;
+square corners, no shadows, no gradients, no badges or overlays on photos, no
+buttons (actions are text links), no uppercase labels, no em dashes, no
+exclamation marks. Photos sit in a **4:5 frame, uncropped** (`PieceImage`
+with `fit="contain"` on `ivory-deep`). Motion is a gentle fade-in on scroll
+(`FadeIn`) and a slight card lift, both off under `prefers-reduced-motion`.
+Component classes (`.t-display`, `.action-link`, `.nav-link`, `.fade-in`
+and so on) live in `@layer components` in `globals.css` so Tailwind
+utilities can still override them. The older jewel-tone token names remain
+as aliases for pages not yet redesigned (edits, journal, archive, support
+pages); do not use them in new work.
+
+Screens: **Home** = one photograph, one line about her by name (`MAKER_NAME`
+in `src/lib/site.ts`, a placeholder until she chooses), six pieces, "Find her
+next" from `src/lib/markets.ts`. **/shop** = `CollectionGrid` (client) with
+category tabs from `src/lib/tabs.ts` that filter in memory and keep
+`?type=` in the address bar; "Little gifts" is everything at £15 or under.
+**Product** = `ProductGallery` (tap for the `Lightbox`: swipe, arrow keys,
+Escape, focus held inside), name, price, materials, story, then `BuyLink`
+("Buy this piece, £49", straight to Stripe) and "Ask about it on Instagram"
+plus a quiet WhatsApp line. Sold pieces fade and say "Sold" after the name
+with no actions. **/about** = her name, bracketed placeholders for her words
+and portrait, the market photos. **/markets** = upcoming then past dates from
+the data file. `/our-story`, `/cart` and `/wishlist` redirect.
 
 ### One-of-a-kind rule (brand-critical)
 **Every piece is one of one. She never restocks or remakes.** In the model this
@@ -194,11 +224,17 @@ this edit" (`getPostsForEdit`); posts link back to pieces/edits in their body.
 "Read: One of a Kind →" link on every product page beside the one-of-one note
 (via `getFeaturedPost`).
 
-### Cart
-Client-side cart in `src/lib/cart.tsx` (`CartProvider` + `useCart`), persisted to
-`localStorage`. Stores only `{slug, quantity}` so it survives data edits; line
-items + totals are derived from current product data. Wraps the app in
-`layout.tsx`; the header badge reads `count`.
+### Buying (there is no basket)
+Each piece is bought from its own page: `BuyLink` posts
+`{ items: [{ slug, quantity: 1 }] }` to `/api/checkout` and redirects to
+Stripe's hosted page. Collection pieces (magnets, clips, charms, ornaments)
+get `adjustable_quantity` on the Stripe line item, so the buyer chooses how
+many there. Fixed sets (Chevron Sea Set, Reindeer Rounds) are simply one
+piece with one price. Mix-and-match offers ("any three ornaments for £24")
+are not handled by the site; the plan is a Stripe Payment Link per offer,
+linked from the eligible pieces, once the founder decides the prices (see
+`NEW_PRODUCTS_CHECKLIST.md`). Leaving Stripe returns the buyer to the piece
+with `?checkout=cancelled` (`CancelledNote` shows "Nothing was charged").
 
 ### Checkout — Stripe hosted Checkout (GBP)
 We use **Stripe Checkout (hosted)** — customers pay on Stripe's page, so we
@@ -221,11 +257,11 @@ UK/international in GBP.)
   adds pieces held in another shopper's *open, unexpired* session as a short
   reservation. With no Stripe key everything reads "available", as before. A
   piece's static `status: "sold"` still works as a permanent manual override.
-- `src/components/CheckoutButton.tsx` — posts the cart, redirects to Stripe.
+- `src/components/BuyLink.tsx` — the "Buy this piece" text link; posts one
+  slug, redirects to Stripe.
 - `/checkout/success?session_id=…` — verifies the session server-side and shows
-  a confirmation (paid / pending / error / not-configured states); clears the
-  cart on success. Cancelled checkouts return to `/cart?checkout=cancelled`
-  (cart shows a "nothing was charged" notice).
+  a confirmation (paid / pending / error / not-configured states). Cancelled
+  checkouts return to the piece's page with `?checkout=cancelled`.
 - `POST /api/stripe/webhook` — OPTIONAL scaffold for order fulfilment; verifies
   the Stripe signature with `STRIPE_WEBHOOK_SECRET`.
 
@@ -260,23 +296,21 @@ Background on the decisions that were flagged while drafting:
   otherwise open the visitor's email app pre-addressed to the studio inbox.
 None of this is legal advice; the founder adapted and approved the copy.
 
-### Conversion & trust features
-- **Floating WhatsApp button** (`WhatsAppButton`, in `layout.tsx`) — number from
-  `NEXT_PUBLIC_WHATSAPP_NUMBER` (placeholder fallback), via `whatsappLink()`.
-- **Wishlist** — removed at the founder's request; `/wishlist` redirects to `/shop`.
-- **Testimonials** (`Testimonials`) on the homepage — real reviews only
-  (`src/lib/reviews.ts`), hidden while empty.
-- **Newsletter** — hidden until a list provider is connected.
-- **Instagram** — linked in the header (desktop nav + mobile drawer), on every
-  product page ("Questions about <piece>?" with a DM link and a WhatsApp link
-  pre-filled with the piece name), in the homepage hero and closing band, and
-  the footer. `instagramDmLink()` / `whatsappLink(message)` in `src/lib/site.ts`.
-- **Trust signals** (`TrustSignals`) — payment-method badges + "secure checkout
-  by Stripe, we never see your card details", shown near the cart checkout and
-  in the footer.
-- **Size guide** (`/size-guide`) and **Care** (`/care`, written per real
-  material: air-dry clay, brass, crochet, semi-precious stones), linked from
-  product pages and the footer.
+### Contact and the retired extras
+- **Instagram** — a text link in the header and drawer, "Ask about it on
+  Instagram" on every product page (`instagramDmLink()`), on the home page and
+  About, and in the footer.
+- **WhatsApp** — a plain text link on product pages (pre-filled with the piece
+  name) and in the footer, via `whatsappLink(message)`; number from
+  `NEXT_PUBLIC_WHATSAPP_NUMBER`. The floating button is gone.
+- **Retired at the founder's request:** the basket, quick view, wishlist
+  (`/wishlist` redirects), currency switcher (GBP only), announcement bar,
+  trust badges, testimonials/reviews, the free-delivery meter and upsell strip,
+  the stat band, and the hand-delivery line on product pages (one plain
+  paragraph remains on `/shipping`). The edits, journal and archive pages
+  still build and are linked only from the footer.
+- **Size guide** (`/size-guide`) and **Care** (`/care`) remain, linked from the
+  footer.
 
 ---
 
@@ -299,19 +333,15 @@ Conventions:
 - No secrets in the repo. Stripe keys come from env vars (`.env.local`); only `.env.example` is committed.
 
 ### Chosen direction
-**Direction A — "Atelier"** (calm, editorial, story-first) is the chosen base,
-warmed with Direction B's jewel-tone accents. The homepage is cream and
-photo-led: three real, buyable pieces with prices in the first screen, one
-"Shop the pieces" action with Instagram beside it, category tiles with live
-counts, the featured grid, the little-treasures shelf, edit tiles made from real
-piece photos with solid-colour captions, the market sourcing photos in the
-making band, the One of a Kind panel, the journal teaser and a closing Instagram
-call. **No gradients as visible styling, no animation effects** (a dark
-"Night Bazaar" homepage existed briefly and was removed). The two original
-mockups live in git history and as images in `design/previews/`.
+**"Gallery, not shop"** per `design.md` (September 2026), which superseded the
+earlier "Atelier" homepage. The reference points are exhibition catalogues and
+quiet makers' sites: the piece is the first thing on every screen, whitespace
+separates things, actions are text links. Earlier directions (the two mockups,
+the dark "Night Bazaar", the warm Atelier home) live in git history and in
+`design/previews/`.
 
-Global shell: `Header` + `Footer` are rendered once in `src/app/layout.tsx`, so
-every route inherits the sticky header (announcement bar, nav, cart) and footer.
+Global shell: `Header` + `Footer` are rendered once in `src/app/layout.tsx`.
+The header is not sticky and has no bar, cart or icons.
 
 ### Accessibility & SEO conventions
 - **Contrast:** use `text-marigold-ink` (deep amber, WCAG-AA on cream) for small
@@ -397,7 +427,12 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
       calm reading experience, linked both ways with product pages
 - [x] Checkout: Stripe hosted Checkout + success/cancel flow + confirmation page
       + webhook scaffold (needs real keys in env to go live)
-- [ ] Remaining pages (Our Story, Bespoke)
-- [ ] Polish: a11y, SEO, motion, responsive QA
+- [x] September 2026: 26 new pieces + Bracelets category; gallery rebuild per
+      `design.md` (home, shop tabs, product page with lightbox and direct
+      Stripe buy link, About, Markets, green footer; basket and extras retired)
+- [ ] Founder to supply: her name (`MAKER_NAME`), her words and a portrait for
+      `/about`, real market dates in `src/lib/markets.ts`, the materials and
+      set prices in `NEW_PRODUCTS_CHECKLIST.md`, re-shot photos at 4:5
+- [ ] Set/bundle prices: Stripe Payment Links per offer, once decided
 
 > Development branch: `claude/funny-wozniak-M7VpJ`.

@@ -85,17 +85,23 @@ There are no buttons. Actions are text links.
 
 ## 6. Screens
 
-- **Header**: roundel 36 px and wordmark left; Necklaces, Earrings, Crochet,
-  Clay, About, Markets right (a drawer on mobile, plain list). No announcement
-  bar, no cart, no currency, no icons.
+- **Header**: roundel 36 px and wordmark left; Necklaces, Earrings, Bracelets,
+  Crochet, Clay, Gifts, About, Markets, Instagram right (a drawer on mobile,
+  plain list). No announcement bar, no cart, no currency, no icons. Gifts is
+  the pieces at £15 and under.
 - **Home**: hero photo, one line about her by name (Display), four to six
   pieces (grid), "Find her next" with the next market name, area and date
   (Heading plus Body), footer.
-- **Collection** (one per category): title, count in Small, the grid. Sold
-  pieces stay in place, faded. No filters, no sort, no quick view.
-- **Product**: image, name (Display), price (Small, ink-soft), materials
-  (Small), story (Body, her words), the two action links. Sold pieces show
-  "Sold" after the name and no actions.
+- **Collection** (`/shop`, one tab per category plus Little gifts): tabs,
+  title, count in Small, the grid. Tabs filter in memory and keep the address
+  bar in step (`/shop?type=earrings`). Sold pieces stay in place, faded. No
+  filters, no sort, no quick view.
+- **Product**: image (tap for a full-screen close-up; swipe or arrow between
+  photos), name (Display), price (Small, ink-soft), materials (Small), story
+  (Body, her words), then "Buy this piece, £49" (straight to Stripe's page, no
+  basket), "Ask about it on Instagram" and a quiet WhatsApp line. Collection
+  pieces say "Buy, £5 each" and the quantity is chosen on Stripe's page. Sold
+  pieces show "Sold" after the name and no actions.
 - **About**: her name (Display), her own words (Body, placeholder until she
   writes them), one portrait, the market photos below at 4:5.
 - **Markets**: driven by `src/lib/markets.ts` (name, area, date, time, optional
@@ -114,5 +120,7 @@ is sold it is not made again."
 
 ## 8. Motion
 
-None, beyond a 150 ms colour transition on links. No reveal-on-scroll, no
-autoplay, no hover zoom.
+Two gentle things, both switched off under `prefers-reduced-motion`: a
+600 ms fade and 12 px rise as a block first scrolls into view (`FadeIn`), and
+a 4 px lift on a card under a mouse (`.card-lift`). Links change colour over
+150 ms. No autoplay, no hover zoom, no parallax.
