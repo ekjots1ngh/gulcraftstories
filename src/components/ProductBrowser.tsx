@@ -31,13 +31,11 @@ export function ProductBrowser({
   initial,
   showEdit = true,
   showAvailability = true,
-  tone = "atelier",
 }: {
   products: Product[];
   initial?: Initial;
   showEdit?: boolean;
   showAvailability?: boolean;
-  tone?: "atelier" | "marigold";
 }) {
   const [type, setType] = useState(initial?.type ?? "");
   const [edit, setEdit] = useState(initial?.edit ?? "");
@@ -161,7 +159,7 @@ export function ProductBrowser({
       {results.length > 0 ? (
         <div className="mt-6 grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3">
           {results.map((p) => (
-            <ProductCard key={p.slug} product={p} tone={tone} />
+            <ProductCard key={p.slug} product={p} />
           ))}
         </div>
       ) : (

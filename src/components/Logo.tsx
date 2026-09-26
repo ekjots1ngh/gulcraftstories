@@ -13,7 +13,7 @@ import { MotifMark } from "./MotifDivider";
 export function Logo({
   className,
   color = "text-ink",
-  markColor = "var(--color-gold)",
+  markColor = "var(--color-brass)",
   compact = false,
 }: {
   className?: string;
@@ -22,7 +22,7 @@ export function Logo({
   compact?: boolean;
 }) {
   const [useFallback, setUseFallback] = useState(false);
-  const px = compact ? 34 : 42;
+  const px = compact ? 30 : 36;
 
   return (
     <Link
@@ -34,7 +34,7 @@ export function Logo({
         <MotifMark
           size={px}
           color={markColor}
-          className="shrink-0 transition-transform duration-300 group-hover:rotate-45"
+          className="shrink-0"
         />
       ) : (
         // eslint-disable-next-line @next/next/no-img-element

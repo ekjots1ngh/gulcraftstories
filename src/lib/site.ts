@@ -3,8 +3,15 @@
  * where possible so real values are never hard-coded; the fallbacks below are
  * obvious placeholders to replace.
  */
+/**
+ * How the maker is named on the home page and About. A placeholder until she
+ * decides how she wants to appear (first name, full name, or "the maker").
+ */
+export const MAKER_NAME = "[Her name]";
+
 export const SITE = {
   email: "gulcraftstories@gmail.com",
+  city: "London",
   instagram: "https://instagram.com/gulcraftstories",
   // International format, digits only (no "+"). Replace with the real number,
   // or set NEXT_PUBLIC_WHATSAPP_NUMBER in the environment.

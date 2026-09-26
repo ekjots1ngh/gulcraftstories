@@ -1,10 +1,7 @@
-"use client";
-
-import { useCurrency } from "@/lib/currency";
+import { formatMoney } from "@/lib/catalogue";
 import { cn } from "@/lib/cn";
 
-/** Renders a GBP amount in the visitor's chosen display currency. */
+/** Renders a GBP amount, "£49". Prices are always in pounds sterling. */
 export function Price({ gbp, className }: { gbp: number; className?: string }) {
-  const { format } = useCurrency();
-  return <span className={cn(className)}>{format(gbp)}</span>;
+  return <span className={cn(className)}>{formatMoney(gbp)}</span>;
 }

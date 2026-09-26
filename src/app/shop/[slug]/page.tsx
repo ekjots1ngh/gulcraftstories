@@ -1,31 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Container } from "@/components/Container";
-import { Button } from "@/components/Button";
-import { MotifDivider, MotifMark } from "@/components/MotifDivider";
-import { Gallery } from "@/components/Gallery";
-import { AddToCart } from "@/components/AddToCart";
+import { ProductGallery } from "@/components/ProductGallery";
 import { ProductCard } from "@/components/ProductCard";
-import { JournalCard } from "@/components/JournalCard";
-import { PieceImage } from "@/components/PieceImage";
-import { Reviews } from "@/components/Reviews";
-import { Price } from "@/components/Price";
-import { getPostsForProduct, getFeaturedPost } from "@/lib/journal";
+import { BuyLink, CancelledNote } from "@/components/BuyLink";
+import { FadeIn } from "@/components/FadeIn";
 import {
   products,
   getProduct,
   getRelated,
   typeName,
-  editName,
-  materialName,
-  ONE_OF_ONE,
+  formatMoney,
   isOneOfOne,
   getCollectionSiblings,
   mainImageUrl,
 } from "@/lib/catalogue";
 import { getSoldSlugs } from "@/lib/sold";
-import { SITE, whatsappLink, instagramDmLink } from "@/lib/site";
+import { whatsappLink, instagramDmLink } from "@/lib/site";
 
 // Re-check sold status (from Stripe) at least once a minute.
 export const revalidate = 60;
@@ -44,7 +35,7 @@ export async function generateMetadata({
   if (!product) return { title: "Not found" };
   const img = mainImageUrl(product);
   return {
-    title: `${product.name}`,
+    title: product.name,
     description: product.description,
     openGraph: {
       title: `${product.name} · GulCraft Stories`,
@@ -65,15 +56,16 @@ export default async function ProductPage({
   const product = getProduct(slug);
   if (!product) notFound();
 
-  const related = getRelated(product.slug);
-  const siblings = getCollectionSiblings(product.slug);
-  const stories = getPostsForProduct(product.slug);
-  const oneOfAKind = getFeaturedPost();
   const oneOfOne = isOneOfOne(product);
   const soldSlugs = await getSoldSlugs();
-  // Small-batch pieces are never auto-marked sold, she can make more.
-  const sold =
-    product.status === "sold" || (oneOfOne && soldSlugs.includes(product.slug));
+  // Collection pieces are never auto-marked sold, she can make more.
+  const sold = product.status === "sold" || (oneOfOne && soldSlugs.includes(product.slug));
+  const related = getRelated(product.slug).map((p) =>
+    isOneOfOne(p) && soldSlugs.includes(p.slug) ? { ...p, status: "sold" as const } : p,
+  );
+  const siblings = getCollectionSiblings(product.slug);
+  const paragraphs = product.description.split(/\n+/).map((s) => s.trim()).filter(Boolean);
+  const price = formatMoney(product.price);
 
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com";
   const productLd = {
@@ -84,328 +76,119 @@ export default async function ProductPage({
     description: product.description,
     brand: { "@type": "Brand", name: "GulCraft Stories" },
     category: typeName(product.type),
+    material: product.materialsList.join(", "),
     offers: {
       "@type": "Offer",
       price: product.price,
-      priceCurrency: product.currency,
+      priceCurrency: "GBP",
       availability: sold ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
       url: `${base}/shop/${product.slug}`,
     },
-  };
-  const breadcrumbLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Shop", item: `${base}/shop` },
-      { "@type": "ListItem", position: 2, name: typeName(product.type), item: `${base}/shop?type=${product.type}` },
-      { "@type": "ListItem", position: 3, name: product.name, item: `${base}/shop/${product.slug}` },
-    ],
   };
 
   return (
     <main className="flex-1">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
-      {/* breadcrumb */}
-      <Container className="pt-6">
-        <nav className="flex flex-wrap items-center gap-1 text-xs text-ink-soft">
-          <Link href="/shop" className="inline-flex min-h-11 items-center px-1 hover:text-marigold-ink">Shop</Link>
-          <span aria-hidden>/</span>
-          <Link href={`/shop?type=${product.type}`} className="inline-flex min-h-11 items-center px-1 hover:text-marigold-ink">
-            {typeName(product.type)}
-          </Link>
-          <span aria-hidden>/</span>
-          <span className="text-ink">{product.name}</span>
-        </nav>
-      </Container>
 
-      {/* ───────── BUY AREA ───────── */}
-      <Container className="grid gap-10 py-8 md:grid-cols-2 md:gap-14 md:py-12">
-        <Gallery images={product.images} name={product.name} />
+      <div className="mx-auto w-full max-w-[1120px] px-5 pt-4 lg:px-10 lg:pt-8">
+        <Link href={`/shop?type=${product.type}`} className="nav-link t-small text-ink-soft">
+          Back to {typeName(product.type).toLowerCase()}
+        </Link>
+      </div>
 
-        <div className="flex flex-col gap-5 md:pt-2">
-          <div className="flex flex-col gap-2">
-            <span className="eyebrow text-peacock">
-              <Link href={`/shop?type=${product.type}`} className="hover:text-marigold-ink">
-                {typeName(product.type)}
-              </Link>
-            </span>
-            <h1 className="text-3xl leading-tight sm:text-4xl">{product.name}</h1>
-            {product.subtitle && (
-              <p className="text-sm text-ink-soft">{product.subtitle}</p>
-            )}
-            <div className="mt-1 flex items-center gap-3">
-              {sold ? (
-                <span className="text-2xl font-semibold text-ink-soft">Sold</span>
-              ) : (
-                <>
-                  <Price gbp={product.price} className="text-2xl font-semibold" />
-                  <StatusBadge sold={false} oneOfOne={oneOfOne} />
-                </>
-              )}
-            </div>
+      <article className="mx-auto grid w-full max-w-[1120px] gap-8 px-5 pt-4 lg:grid-cols-[55fr_45fr] lg:gap-16 lg:px-10 lg:pt-6">
+        <ProductGallery images={product.images} name={product.name} sold={sold} />
+
+        <div className="flex flex-col gap-4 lg:pt-2">
+          <h1 className="t-display">
+            {product.name}
+            {sold && <span className="text-clay"> Sold</span>}
+          </h1>
+          {!sold && <p className="t-small text-ink-soft">{price}</p>}
+          <p className="t-small text-ink-soft">{product.materialsList.join(", ")}</p>
+
+          <div className="t-body mt-2 flex max-w-[620px] flex-col gap-4">
+            {paragraphs.map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
           </div>
 
-          {/* one-of-one promise, the brand rule, made visible */}
-          <div className="flex items-start gap-3 rounded-md border border-gold/50 bg-cream-deep/40 px-4 py-3">
-            <MotifMark size={22} color="var(--color-gold)" />
-            <div className="flex flex-col gap-0.5">
-              <p className="text-sm font-medium text-ink">
-                {oneOfOne ? ONE_OF_ONE : "Made in small batches, each one by hand"}
-              </p>
-              {oneOfOne && oneOfAKind && (
-                <Link
-                  href={`/journal/${oneOfAKind.slug}`}
-                  className="text-xs font-semibold text-peacock underline underline-offset-2 hover:text-marigold-ink"
-                >
-                  Read: {oneOfAKind.title} →
-                </Link>
-              )}
-            </div>
-          </div>
-
-          <p className="text-base leading-relaxed text-ink-soft">
-            {product.description}
+          <p className="t-small text-ink-soft">
+            {sold
+              ? "This piece has found its home. It is not made again."
+              : oneOfOne
+                ? "Made once. When it is sold it is not made again."
+                : "Made in small numbers by hand, so each one differs a little."}
           </p>
 
           {product.collection && siblings.length > 0 && (
-            <div className="rounded-md border border-gold/40 bg-cream-deep/30 px-4 py-3">
-              <p className="text-xs font-semibold text-ink">Also in {product.collection}</p>
-              <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-                {siblings.map((s) => (
-                  <li key={s.slug}>
-                    <Link href={`/shop/${s.slug}`} className="underline hover:text-marigold-ink">
-                      {s.name}
-                    </Link>
-                    <span className="text-ink-soft"> {s.status === "sold" ? "sold" : `£${s.price}`}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <p className="t-small text-ink-soft">
+              Also in {product.collection}:{" "}
+              {siblings.map((s, i) => (
+                <span key={s.slug}>
+                  <Link href={`/shop/${s.slug}`} className="inline-link">
+                    {s.name}
+                  </Link>
+                  {i < siblings.length - 1 ? ", " : ""}
+                </span>
+              ))}
+            </p>
           )}
 
-
-          {/* at-a-glance facts */}
-          <dl className="grid grid-cols-2 gap-3 border-y border-gold/40 py-4 text-sm">
-            <div>
-              <dt className="eyebrow text-marigold-ink">From the edit</dt>
-              <dd className="mt-1">
-                <Link href={`/edit/${product.edit}`} className="underline hover:text-marigold-ink">
-                  {editName(product.edit)}
-                </Link>
-              </dd>
-            </div>
-            <div>
-              <dt className="eyebrow text-marigold-ink">
-                {oneOfOne ? "One of a kind" : "Small batch"}
-              </dt>
-              <dd className="mt-1">
-                {oneOfOne ? "Made once, never remade" : "Each one made and painted by hand"}
-              </dd>
-            </div>
-            {product.hoursToMake && (
-              <div>
-                <dt className="eyebrow text-marigold-ink">Time to make</dt>
-                <dd className="mt-1">{product.hoursToMake} hours by hand</dd>
-              </div>
-            )}
-            {product.dimensions && (
-              <div>
-                <dt className="eyebrow text-marigold-ink">Dimensions</dt>
-                <dd className="mt-1">{product.dimensions}</dd>
-              </div>
-            )}
-          </dl>
-
-          <AddToCart product={product} />
-
-          {/* ask before you buy: the two places our customers already are */}
-          <div className="flex flex-col gap-2 rounded-md border border-ink/10 px-4 py-3">
-            <p className="text-xs font-semibold text-ink">Questions about {product.name}?</p>
-            <div className="flex flex-wrap gap-2">
+          {!sold && (
+            <div className="mt-6 flex flex-col gap-3">
+              <CancelledNote />
+              <BuyLink slug={product.slug} label={oneOfOne ? `Buy this piece, ${price}` : `Buy, ${price} each`} />
               <a
                 href={instagramDmLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-ink/25 px-4 text-sm font-semibold text-ink transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+                className="action-link t-body self-start"
               >
-                Message on Instagram
+                Ask about it on Instagram
               </a>
               <a
-                href={whatsappLink(`Hi GulCraft Stories, I am asking about ${product.name} (${SITE.instagram.replace("https://", "")}).`)}
+                href={whatsappLink(`Hello, I am asking about ${product.name} on gulcraftstories.com.`)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-ink/25 px-4 text-sm font-semibold text-ink transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+                className="action-link t-small self-start text-ink-soft"
               >
-                Ask on WhatsApp
+                Or send a WhatsApp
               </a>
+              <p className="t-small mt-2 text-ink-soft">
+                {oneOfOne ? "" : "Choose how many on the payment page. "}
+                Posted tracked from London: UK £4, free over £75; worldwide £14.{" "}
+                <Link href="/shipping" className="inline-link">
+                  Delivery and returns
+                </Link>
+                .
+              </p>
             </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-soft">
-            <Link href="/size-guide" className="underline hover:text-marigold-ink">Size guide</Link>
-            <Link href="/care" className="underline hover:text-marigold-ink">Care</Link>
-            <Link href="/gift-cards" className="underline hover:text-marigold-ink">Gift vouchers</Link>
-          </div>
-
-          <ul className="mt-1 flex flex-col gap-1.5 text-xs text-ink-soft">
-            <li>· Free UK shipping over £75 · worldwide delivery</li>
-            <li>· Arrives gift-wrapped, with a card telling its story</li>
-            <li>
-              · Prefer it delivered by hand?{" "}
-              <Link href="/shipping" className="underline hover:text-marigold-ink">
-                London £99, anywhere on Earth £5,000
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </Container>
-
-      {/* ───────── MATERIALS & DETAILS ───────── */}
-      <section className="bg-cream-deep/40 py-16 sm:py-24">
-        <Container size="narrow">
-          <div className="flex flex-col items-center gap-4 text-center">
-            <span className="eyebrow text-rani">Made by hand, one of one</span>
-            <h2 className="text-3xl leading-tight sm:text-4xl">The details</h2>
-          </div>
-          <MotifDivider className="my-10" />
-
-          {/* optional long making story (with a lead image) */}
-          {product.makingStory && (
-            <>
-              <PieceImage
-                swatch={product.images[product.images.length - 1].swatch}
-                src={product.images[product.images.length - 1].src}
-                label={`${product.name}, at the bench`}
-                ratio="landscape"
-                className="shadow-[var(--shadow-soft)]"
-              />
-              <div className="mx-auto my-10 max-w-prose">
-                {product.makingStory.split("\n").map((para, i) => (
-                  <p key={i} className="mb-5 text-lg leading-[1.8] text-ink">
-                    {para}
-                  </p>
-                ))}
-              </div>
-            </>
           )}
+        </div>
+      </article>
 
-          {/* stat band (only the stats we actually have) */}
-          <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-gold/40 bg-gold/40 text-center sm:grid-cols-3">
-            <Stat value={`${product.materials.length}`} label="Real materials, named" />
-            {oneOfOne ? (
-              <Stat value="1 of 1" label="One of a kind, never remade" />
-            ) : (
-              <Stat value="Small batch" label="Each one painted by hand" />
-            )}
-            {product.hoursToMake ? (
-              <Stat value={`${product.hoursToMake} hrs`} label="On the bench, by hand" />
-            ) : (
-              <Stat value="GBP" label="Free UK shipping over £75" />
-            )}
-          </div>
-
-          {/* materials */}
-          <div className="mt-12">
-            <h3 className="font-display text-xl">Materials</h3>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {product.materials.map((m) => (
-                <li key={m}>
-                  <Link
-                    href={`/shop?material=${m}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-gold/50 px-3 py-1.5 text-sm text-ink transition-colors hover:border-ink"
-                  >
-                    <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-marigold" />
-                    {materialName(m)}
-                  </Link>
+      {related.length > 0 && (
+        <section className="mx-auto w-full max-w-[1120px] px-5 pt-16 lg:px-10 lg:pt-24" aria-labelledby="more-pieces">
+          <FadeIn>
+            <div className="flex items-baseline justify-between gap-4">
+              <h2 id="more-pieces" className="t-heading">
+                More pieces
+              </h2>
+              <Link href="/shop" className="action-link t-small">
+                All pieces
+              </Link>
+            </div>
+            <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6">
+              {related.map((p) => (
+                <li key={p.slug}>
+                  <ProductCard product={p} />
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-sm leading-relaxed text-ink-soft">{product.materialNote}</p>
-            {product.dimensions && (
-              <>
-                <h3 className="mt-8 font-display text-xl">Dimensions</h3>
-                <p className="mt-3 text-ink-soft">{product.dimensions}</p>
-              </>
-            )}
-          </div>
-
-          {/* optional maker's note */}
-          {product.makersNote && (
-            <figure className="mt-10 flex flex-col gap-4 rounded-lg bg-peacock p-7 text-cream">
-              <span className="eyebrow text-gold-soft">A note from the maker</span>
-              <blockquote className="font-display text-xl leading-relaxed">
-                &ldquo;{product.makersNote}&rdquo;
-              </blockquote>
-            </figure>
-          )}
-        </Container>
-      </section>
-
-      {/* ───────── REVIEWS ───────── */}
-      <Reviews productSlug={product.slug} productName={product.name} />
-
-      {/* ───────── RELATED STORIES (links pieces ↔ journal) ───────── */}
-      {stories.length > 0 && (
-        <section className="py-16 sm:py-20">
-          <Container>
-            <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-              <div className="flex flex-col gap-2">
-                <span className="eyebrow text-rani">Read more</span>
-                <h2 className="text-2xl sm:text-3xl">The story behind this piece</h2>
-              </div>
-              <Button href="/journal" variant="ghost" className="shrink-0">
-                All stories →
-              </Button>
-            </div>
-            <div className="mt-10 grid gap-x-7 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-              {stories.map((post) => (
-                <JournalCard key={post.slug} post={post} />
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {/* ───────── RELATED ───────── */}
-      {related.length > 0 && (
-        <section className="py-16 sm:py-20">
-          <Container>
-            <div className="flex items-end justify-between gap-4">
-              <h2 className="text-2xl sm:text-3xl">You may also love</h2>
-              <Button href="/shop" variant="ghost" className="shrink-0">
-                All pieces →
-              </Button>
-            </div>
-            <div className="mt-8 grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3">
-              {related.map((p) => (
-                <ProductCard key={p.slug} product={p} tone="atelier" />
-              ))}
-            </div>
-          </Container>
+          </FadeIn>
         </section>
       )}
     </main>
-  );
-}
-
-function StatusBadge({ sold, oneOfOne = true }: { sold: boolean; oneOfOne?: boolean }) {
-  return (
-    <span
-      className={`rounded-full px-3 py-1 text-xs font-semibold ${
-        sold ? "bg-ink/10 text-ink-soft" : "bg-peacock/10 text-peacock"
-      }`}
-    >
-      {sold ? "Sold" : oneOfOne ? "Available · 1 of 1" : "Available · small batch"}
-    </span>
-  );
-}
-
-function Stat({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="bg-cream px-4 py-8">
-      <div className="font-display text-3xl text-peacock">{value}</div>
-      <div className="mt-1 text-xs text-ink-soft">{label}</div>
-    </div>
   );
 }

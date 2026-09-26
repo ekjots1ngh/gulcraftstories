@@ -97,7 +97,7 @@ export default async function PostPage({
             </div>
             <div className="mx-auto mt-10 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3">
               {related.map((p) => (
-                <ProductCard key={p.slug} product={p} tone="atelier" />
+                <ProductCard key={p.slug} product={p} />
               ))}
             </div>
           </Container>

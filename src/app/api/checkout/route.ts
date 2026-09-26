@@ -106,7 +106,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null);
   const items: unknown = body?.items;
   if (!Array.isArray(items) || items.length === 0) {
-    return NextResponse.json({ error: "Your cart is empty." }, { status: 400 });
+    return NextResponse.json({ error: "Nothing to buy." }, { status: 400 });
   }
 
   // Pieces already sold, or held in someone else's open checkout right now.
@@ -134,6 +134,11 @@ export async function POST(req: NextRequest) {
 
     line_items.push({
       quantity: 1, // one of one
+      // Collection pieces (magnets, clips, charms) exist in small numbers, so
+      // the buyer picks how many on Stripe's page. One-of-one pieces cannot.
+      ...(isOneOfOne(product)
+        ? {}
+        : { adjustable_quantity: { enabled: true, minimum: 1, maximum: 12 } }),
       price_data: {
         currency: product.currency.toLowerCase(),
         unit_amount: unitPence,
@@ -150,8 +155,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         error: blocked
-          ? "Sorry, that piece has just been sold or is in someone else's basket. Each one is one of a kind."
-          : "Nothing in your cart is available to purchase.",
+          ? "Sorry, this piece has just been sold, or someone else is paying for it right now. Each one is made once."
+          : "This piece is not available to buy.",
       },
       { status: 409 },
     );
@@ -167,7 +172,8 @@ export async function POST(req: NextRequest) {
       mode: "payment",
       line_items,
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/cart?checkout=cancelled`,
+      // There is no basket: leaving Stripe returns the buyer to the piece.
+      cancel_url: `${origin}/shop/${Array.from(seen)[0]}?checkout=cancelled`,
       billing_address_collection: "auto",
       shipping_address_collection: { allowed_countries: SHIPPING_COUNTRIES },
       shipping_options: shippingOptions(subtotalPence),

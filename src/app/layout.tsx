@@ -3,10 +3,7 @@ import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Analytics } from "@vercel/analytics/next";
-import { CartProvider } from "@/lib/cart";
-import { CurrencyProvider } from "@/lib/currency";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -21,15 +18,15 @@ const hanken = Hanken_Grotesk({
 });
 
 const SITE_DESC =
-  "Handmade jewellery, with the story of every piece told as carefully as it was made. The craft, the materials, and the hours behind each piece, one of one.";
+  "Handmade jewellery and small clay and crochet pieces, each made once in London. Necklaces, earrings, bracelets, charms and ornaments, with the materials and the story of every piece.";
 
 export const viewport: Viewport = {
-  themeColor: "#FAF4E8",
+  themeColor: "#F8F3E9",
 };
 
 export const metadata: Metadata = {
   title: {
-    default: "GulCraft Stories, Handmade Jewellery",
+    default: "GulCraft Stories, handmade jewellery",
     template: "%s · GulCraft Stories",
   },
   description: SITE_DESC,
@@ -44,11 +41,11 @@ export const metadata: Metadata = {
     "air-dry clay",
     "ceramic jewellery",
     "crochet jewellery",
-    "brass",
-    "semi-precious stones",
+    "beaded bracelets",
+    "London markets",
   ],
   openGraph: {
-    title: "GulCraft Stories, Handmade Jewellery",
+    title: "GulCraft Stories, handmade jewellery",
     description: SITE_DESC,
     type: "website",
     siteName: "GulCraft Stories",
@@ -56,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GulCraft Stories, Handmade Jewellery",
+    title: "GulCraft Stories, handmade jewellery",
     description: SITE_DESC,
   },
 };
@@ -71,16 +68,11 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${hanken.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-cream text-ink">
+      <body className="flex min-h-full flex-col bg-ivory text-ink">
         <a href="#main-content" className="skip-link">Skip to content</a>
-        <CurrencyProvider>
-          <CartProvider>
-            <Header />
-            <div id="main-content">{children}</div>
-            <Footer />
-            <WhatsAppButton />
-          </CartProvider>
-        </CurrencyProvider>
+        <Header />
+        <div id="main-content" className="flex flex-1 flex-col">{children}</div>
+        <Footer />
         <Analytics />
       </body>
     </html>

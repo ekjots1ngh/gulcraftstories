@@ -1,104 +1,60 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import type { Product } from "@/lib/catalogue";
-import { ONE_OF_ONE, isOneOfOne } from "@/lib/catalogue";
+import { formatMoney } from "@/lib/catalogue";
 import { PieceImage } from "./PieceImage";
-import { Price } from "./Price";
-import { QuickView } from "./QuickView";
 import { cn } from "@/lib/cn";
 
 /**
- * Product card. Every piece is one of a kind, so the one-of-one promise is
- * always shown; sold pieces are surfaced (never hidden), clearly marked.
- * On hover the card crossfades to a second image, and a quick-view opens a
- * lightweight dialog without leaving the page.
+ * A piece in the grid: the photo in a 4:5 frame, the name, the price. No
+ * badges, no overlays, no quick view. Sold pieces stay in place with the
+ * photo faded and the word Sold after the name. If a second photo exists it
+ * fades in on hover.
  */
 export function ProductCard({
   product,
-  tone = "atelier",
+  priority = false,
+  sizes = "(min-width: 768px) 33vw, 50vw",
 }: {
   product: Product;
-  tone?: "atelier" | "marigold";
+  priority?: boolean;
+  sizes?: string;
 }) {
-  const [quickView, setQuickView] = useState(false);
   const sold = product.status === "sold";
-  const oneOfOne = isOneOfOne(product);
-  const img = product.images[0];
+  const [first, second] = product.images;
 
   return (
-    <>
-      <div
-        className={cn(
-          "group flex flex-col gap-3",
-          tone === "marigold" &&
-            "rounded-lg bg-cream p-3 shadow-[var(--shadow-card)] transition-transform duration-300 hover:-translate-y-1",
+    <Link
+      href={`/shop/${product.slug}`}
+      className={cn("card-lift group block", sold && "cursor-default")}
+      aria-label={`${product.name}${sold ? ", sold" : `, ${formatMoney(product.price)}`}`}
+    >
+      <div className={cn("relative", sold && "opacity-55")}>
+        <PieceImage
+          src={first?.src}
+          label={first?.alt ?? product.name}
+          fit="contain"
+          priority={priority}
+          sizes={sizes}
+        />
+        {second?.src && !sold && (
+          <PieceImage
+            src={second.src}
+            label=""
+            fit="contain"
+            sizes={sizes}
+            className="img-fade pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100"
+          />
         )}
-      >
-        <div className="relative overflow-hidden rounded-md">
-          <Link href={`/shop/${product.slug}`} aria-label={product.name} className="block">
-            <PieceImage
-              swatch={img.swatch}
-              src={img.src}
-              label={product.name}
-              sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 48vw"
-              className={cn("transition-transform duration-500 group-hover:scale-105", sold && "saturate-[0.7]")}
-            />
-          </Link>
-
-          {/* badge */}
-          <span
-            className={cn(
-              "pointer-events-none absolute left-3 top-3 rounded-sm px-2 py-1 text-[0.6rem] font-semibold uppercase tracking-widest",
-              sold ? "bg-ink/85 text-cream" : "bg-cream/90 text-ink",
-            )}
-          >
-            {sold ? "Sold" : oneOfOne ? "One of one" : "Small batch"}
-          </span>
-
-          {/* quick view */}
-          <button
-            type="button"
-            onClick={() => setQuickView(true)}
-            className="absolute inset-x-3 bottom-3 hidden min-h-11 rounded-sm bg-cream/95 py-2 text-xs font-semibold text-ink shadow-sm transition-all hover:bg-marigold md:block md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
-          >
-            Quick view
-          </button>
-        </div>
-
-        <Link href={`/shop/${product.slug}`} className="flex flex-col gap-2">
-          <div className="flex items-baseline justify-between gap-3">
-            <h3 className="font-display text-lg leading-snug">
-              {product.name}
-            </h3>
-            <span className="shrink-0 text-sm font-semibold text-ink-soft">
-              {sold ? "Sold" : <Price gbp={product.price} />}
-            </span>
-          </div>
-          <p className="line-clamp-2 text-sm leading-relaxed text-ink-soft">
-            {product.description}
-          </p>
-          <span className="eyebrow mt-1 inline-flex items-center gap-1.5 text-marigold-ink">
-            <span aria-hidden className="inline-block h-1 w-1 rounded-full bg-gold" />
-            {sold ? (
-              "One of one, now sold"
-            ) : oneOfOne ? (
-              <>
-                <span className="sm:hidden">One of one</span>
-                <span className="hidden sm:inline">{ONE_OF_ONE}</span>
-              </>
-            ) : (
-              <>
-                <span className="sm:hidden">Small batch</span>
-                <span className="hidden sm:inline">Made in small batches, each one by hand</span>
-              </>
-            )}
-          </span>
-        </Link>
       </div>
-
-      {quickView && <QuickView product={product} onClose={() => setQuickView(false)} />}
-    </>
+      <div className="mt-3 flex flex-col gap-1">
+        <h3 className="font-display text-xl leading-snug text-ink">
+          {product.name}
+          {sold && <span className="text-clay"> Sold</span>}
+        </h3>
+        {!sold && <p className="t-small text-ink-soft">{formatMoney(product.price)}</p>}
+      </div>
+    </Link>
   );
 }

@@ -1,100 +1,112 @@
 import Link from "next/link";
-import { Container } from "./Container";
-import { Logo } from "./Logo";
-import { MotifDivider } from "./MotifDivider";
-import { TrustSignals } from "./TrustSignals";
-import { SITE } from "@/lib/site";
+import { SITE, whatsappLink } from "@/lib/site";
 
-const COLUMNS = [
+/**
+ * The footer, on the roundel's green. Everything that came out of the
+ * header lives here as a quiet list: contact, the categories, help pages,
+ * and the retired sections (edits, journal, archive) for anyone who has
+ * bookmarked them. No badges.
+ */
+const COLUMNS: { title: string; links: { label: string; href: string; external?: boolean }[] }[] = [
   {
-    title: "Shop",
+    title: "Pieces",
     links: [
       { label: "All pieces", href: "/shop" },
-      { label: "Earrings", href: "/shop?type=earrings" },
       { label: "Necklaces", href: "/shop?type=necklaces" },
-      { label: "Gift vouchers", href: "/gift-cards" },
-      { label: "Archive (sold)", href: "/archive" },
-      { label: "Bespoke", href: "/bespoke" },
+      { label: "Earrings", href: "/shop?type=earrings" },
+      { label: "Bracelets and rings", href: "/shop?type=bracelets" },
+      { label: "Crochet", href: "/shop?type=crochet" },
+      { label: "Clay", href: "/shop?type=clay" },
+      { label: "Little gifts", href: "/shop?type=gifts" },
     ],
   },
   {
-    title: "The brand",
+    title: "Her",
     links: [
-      { label: "Our story", href: "/our-story" },
-      { label: "The craft / journal", href: "/journal" },
+      { label: "About", href: "/about" },
+      { label: "Markets", href: "/markets" },
+      { label: "Bespoke", href: "/bespoke" },
       { label: "Contact", href: "/contact" },
     ],
   },
   {
     title: "Help",
     links: [
-      { label: "FAQ", href: "/faq" },
-      { label: "Shipping & delivery", href: "/shipping" },
-      { label: "Returns & exchanges", href: "/returns" },
+      { label: "Delivery", href: "/shipping" },
+      { label: "Returns", href: "/returns" },
       { label: "International orders", href: "/international" },
+      { label: "Questions", href: "/faq" },
+      { label: "Care", href: "/care" },
       { label: "Size guide", href: "/size-guide" },
-      { label: "Jewellery care", href: "/care" },
+      { label: "Gift vouchers", href: "/gift-cards" },
+    ],
+  },
+  {
+    title: "Elsewhere",
+    links: [
+      { label: "The edits", href: "/edit/gulzar" },
+      { label: "Journal", href: "/journal" },
+      { label: "Archive of sold pieces", href: "/archive" },
     ],
   },
 ];
 
 export function Footer() {
   return (
-    <footer className="mt-auto bg-peacock-deep text-cream">
-      <Container className="py-14">
-        <MotifDivider color="var(--color-gold-soft)" className="mb-12" />
+    <footer className="mt-auto">
+      {/* the one hairline between sections on the whole site */}
+      <div className="mx-auto w-full max-w-[1120px] px-5 lg:px-10">
+        <div className="h-px w-full bg-brass/60" aria-hidden />
+      </div>
 
-        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
-          <div className="flex flex-col gap-4">
-            <Logo color="text-cream" markColor="var(--color-gold-soft)" />
-            <p className="max-w-xs text-sm leading-relaxed text-cream/70">
-              Handmade jewellery, with the story of every piece told as
-              carefully as it was made.
-            </p>
-            <div className="flex flex-col gap-1 text-sm">
-              <a
-                href={SITE.instagram}
-                className="inline-flex min-h-11 items-center gap-2 text-cream/85 transition-colors hover:text-gold-soft"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-                </svg>
-                @gulcraftstories
-              </a>
-              <a href={`mailto:${SITE.email}`} className="inline-flex min-h-11 items-center text-cream/85 transition-colors hover:text-gold-soft">
-                {SITE.email}
-              </a>
-            </div>
-          </div>
-
-          {COLUMNS.map((col) => (
-            <div key={col.title} className="flex flex-col gap-3">
-              <h3 className="eyebrow text-gold-soft">{col.title}</h3>
-              <ul className="flex flex-col gap-2">
-                {col.links.map((l) => (
-                  <li key={l.label}>
-                    <Link href={l.href} className="inline-block py-1.5 text-sm text-cream/80 transition-colors hover:text-gold-soft">
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
+      <div className="mt-16 bg-green text-ivory lg:mt-24">
+        <div className="mx-auto w-full max-w-[1120px] px-5 py-14 lg:px-10 lg:py-20">
+          <div className="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1fr_1fr] md:gap-8">
+            <div className="flex flex-col gap-5">
+              <p className="font-display text-xl">GulCraft Stories</p>
+              <p className="t-small max-w-xs text-ivory/85">
+                Handmade jewellery and small things, made once, in London.
+              </p>
+              <ul className="t-small flex flex-col gap-2">
+                <li>
+                  <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="footer-link inline-block py-1">
+                    Instagram, @gulcraftstories
+                  </a>
+                </li>
+                <li>
+                  <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="footer-link inline-block py-1">
+                    WhatsApp
+                  </a>
+                </li>
+                <li>
+                  <a href={`mailto:${SITE.email}`} className="footer-link inline-block py-1">
+                    {SITE.email}
+                  </a>
+                </li>
               </ul>
             </div>
-          ))}
-        </div>
 
-        {/* trust signals */}
-        <div className="mt-12 border-t border-cream/15 pt-8">
-          <TrustSignals tone="dark" compact />
-        </div>
+            {COLUMNS.map((col) => (
+              <div key={col.title} className="flex flex-col gap-3">
+                <h2 className="font-sans t-small font-medium text-ivory/70">{col.title}</h2>
+                <ul className="t-small flex flex-col gap-1">
+                  {col.links.map((l) => (
+                    <li key={l.href}>
+                      <Link href={l.href} className="footer-link inline-block py-1">
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
 
-        <div className="mt-8 flex flex-col gap-2 text-xs text-cream/60 sm:flex-row sm:items-center sm:justify-between">
-          <span>© {new Date().getFullYear()} GulCraft Stories. Made by hand.</span>
-          <span>Prices in GBP · Worldwide shipping</span>
+          <p className="t-small mt-14 text-ivory/70">
+            © {new Date().getFullYear()} GulCraft Stories. Prices in pounds sterling. Delivery worldwide.
+          </p>
         </div>
-      </Container>
+      </div>
     </footer>
   );
 }

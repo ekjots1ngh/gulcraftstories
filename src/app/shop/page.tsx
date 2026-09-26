@@ -1,54 +1,36 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/Container";
-import { MotifDivider } from "@/components/MotifDivider";
-import { ProductBrowser } from "@/components/ProductBrowser";
-import { products, TYPES, EDITS, MATERIALS, ONE_OF_ONE, isOneOfOne } from "@/lib/catalogue";
+import { CollectionGrid, TABS, isTab } from "@/components/CollectionGrid";
+import { products, isOneOfOne } from "@/lib/catalogue";
 import { getSoldSlugs } from "@/lib/sold";
-
-export const metadata: Metadata = {
-  title: "Shop",
-  description:
-    "One-of-a-kind handmade jewellery. Filter by availability, price, material and collection, and sort to taste. Every piece is one of one.",
-};
 
 // Reflect pieces sold through Stripe, re-checked at least once a minute.
 export const revalidate = 60;
 
-type SP = { type?: string; edit?: string; material?: string; availability?: string };
+type SP = { type?: string };
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<SP> }): Promise<Metadata> {
+  const { type } = await searchParams;
+  const tab = TABS.find((t) => t.slug === type);
+  return {
+    title: tab && tab.slug !== "all" ? tab.title : "All pieces",
+    description:
+      "Handmade necklaces, earrings, bracelets, crochet and clay pieces, each made once. Sold pieces stay on show.",
+  };
+}
 
 export default async function ShopPage({ searchParams }: { searchParams: Promise<SP> }) {
-  const sp = await searchParams;
+  const { type } = await searchParams;
   // Override the catalogue status with anything sold through Stripe.
   const soldSlugs = await getSoldSlugs();
   const shown = products.map((p) =>
     isOneOfOne(p) && soldSlugs.includes(p.slug) ? { ...p, status: "sold" as const } : p,
   );
-  const availability: "available" | "sold" | undefined =
-    sp.availability === "available" || sp.availability === "sold" ? sp.availability : undefined;
-  // Deep links from the mega-menu set the browser's initial filters.
-  const initial = {
-    type: TYPES.find((t) => t.slug === sp.type)?.slug,
-    edit: EDITS.find((e) => e.slug === sp.edit)?.slug,
-    material: MATERIALS.find((m) => m.slug === sp.material)?.slug,
-    availability,
-  };
 
   return (
     <main className="flex-1">
-      <Container className="py-12 sm:py-16">
-        <div className="flex flex-col items-center gap-3 text-center">
-          <span className="eyebrow text-peacock">{ONE_OF_ONE}</span>
-          <h1 className="text-4xl leading-tight sm:text-5xl">Every piece</h1>
-          <p className="max-w-md text-base leading-relaxed text-ink-soft">
-            Each piece is made once, by hand. Filter by availability, price,
-            material or collection, and sort however you like.
-          </p>
-        </div>
-
-        <MotifDivider className="my-10" />
-
-        <ProductBrowser products={shown} initial={initial} />
-      </Container>
+      <div className="mx-auto w-full max-w-[1120px] px-5 pt-6 lg:px-10 lg:pt-10">
+        <CollectionGrid products={shown} initialTab={isTab(type) ? type : "all"} />
+      </div>
     </main>
   );
 }

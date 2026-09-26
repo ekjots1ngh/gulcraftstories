@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Container } from "@/components/Container";
-import { Button } from "@/components/Button";
-import { MotifDivider, MotifMark } from "@/components/MotifDivider";
-import { ClearCartOnSuccess } from "@/components/ClearCartOnSuccess";
 import { getStripe } from "@/lib/stripe";
 
 export const metadata: Metadata = {
-  title: "Order confirmed",
+  title: "Thank you",
   robots: { index: false },
 };
 
@@ -49,93 +45,71 @@ export default async function CheckoutSuccessPage({
 
   return (
     <main className="flex-1">
-      <Container size="narrow" className="py-16 text-center sm:py-24">
-        {state === "paid" && <ClearCartOnSuccess />}
-
-        <div className="mx-auto flex flex-col items-center gap-6">
-          <MotifMark size={56} color="var(--color-gold)" />
-
-          {state === "paid" && (
-            <>
-              <span className="eyebrow text-peacock">Order confirmed</span>
-              <h1 className="text-3xl leading-tight sm:text-4xl">
-                Thank you, your order is on its way to being made.
-              </h1>
-              <MotifDivider className="my-2 max-w-xs" />
-              <p className="max-w-md text-lg leading-relaxed text-ink-soft">
-                {email ? (
-                  <>
-                    A confirmation is on its way to{" "}
-                    <span className="font-semibold text-ink">{email}</span>.{" "}
-                  </>
-                ) : null}
-                {total ? (
-                  <>
-                    You paid <span className="font-semibold text-ink">{total}</span>.{" "}
-                  </>
-                ) : null}
-                Each piece is made by hand, so we&apos;ll be in touch with timings.
+      <div className="mx-auto w-full max-w-[620px] px-5 py-16 lg:px-10 lg:py-24">
+        {state === "paid" && (
+          <>
+            <h1 className="t-display">Thank you.</h1>
+            <div className="t-body mt-6 flex flex-col gap-4">
+              <p>
+                Your piece is yours.
+                {total ? ` You paid ${total}.` : ""}
+                {email ? ` A receipt is on its way to ${email}.` : ""}
               </p>
-              <Button href="/shop" variant="primary">
-                Continue browsing
-              </Button>
-            </>
-          )}
-
-          {state === "pending" && (
-            <>
-              <span className="eyebrow text-marigold-ink">Payment pending</span>
-              <h1 className="text-3xl leading-tight sm:text-4xl">
-                We&apos;re still confirming your payment.
-              </h1>
-              <p className="max-w-md text-lg leading-relaxed text-ink-soft">
-                This can take a moment. If you were charged, you&apos;ll receive a
-                confirmation email shortly, there&apos;s no need to pay again.
+              <p>
+                It will be checked, wrapped by hand and posted tracked within the
+                week. If there is anything you would like to add, a note or a
+                question, reply to the receipt or message on Instagram.
               </p>
-              <Button href="/cart" variant="outline">
-                Back to cart
-              </Button>
-            </>
-          )}
+            </div>
+            <Link href="/shop" className="action-link t-body mt-8 inline-block">
+              Back to the pieces
+            </Link>
+          </>
+        )}
 
-          {state === "error" && (
-            <>
-              <span className="eyebrow text-rani">Something went wrong</span>
-              <h1 className="text-3xl leading-tight sm:text-4xl">
-                We couldn&apos;t confirm this order.
-              </h1>
-              <p className="max-w-md text-lg leading-relaxed text-ink-soft">
-                If you completed payment you will still receive a confirmation
-                email. Otherwise your cart is safe, please try again, or{" "}
-                <Link href="/contact" className="underline hover:text-marigold-ink">
-                  get in touch
-                </Link>{" "}
-                and we&apos;ll help.
-              </p>
-              <Button href="/cart" variant="outline">
-                Return to cart
-              </Button>
-            </>
-          )}
+        {state === "pending" && (
+          <>
+            <h1 className="t-display">Still confirming your payment.</h1>
+            <p className="t-body mt-6">
+              This can take a moment. If you were charged you will receive a
+              receipt shortly; there is no need to pay again.
+            </p>
+            <Link href="/shop" className="action-link t-body mt-8 inline-block">
+              Back to the pieces
+            </Link>
+          </>
+        )}
 
-          {state === "unconfigured" && (
-            <>
-              <span className="eyebrow text-marigold-ink">Checkout not connected yet</span>
-              <h1 className="text-3xl leading-tight sm:text-4xl">
-                Payments aren&apos;t switched on yet.
-              </h1>
-              <p className="max-w-md text-lg leading-relaxed text-ink-soft">
-                Stripe keys haven&apos;t been set for this environment. Once
-                <code className="mx-1 rounded bg-cream-deep px-1.5 py-0.5">STRIPE_SECRET_KEY</code>
-                is configured, this page will confirm real orders.
-              </p>
-              <Button href="/shop" variant="outline">
-                Back to the shop
-              </Button>
-            </>
-          )}
-        </div>
-      </Container>
+        {state === "error" && (
+          <>
+            <h1 className="t-display">We could not confirm this order.</h1>
+            <p className="t-body mt-6">
+              If you completed payment you will still receive a receipt by email.
+              If not, nothing was charged. Please try again from the piece, or{" "}
+              <Link href="/contact" className="inline-link">
+                get in touch
+              </Link>{" "}
+              and we will sort it out.
+            </p>
+            <Link href="/shop" className="action-link t-body mt-8 inline-block">
+              Back to the pieces
+            </Link>
+          </>
+        )}
+
+        {state === "unconfigured" && (
+          <>
+            <h1 className="t-display">Payments are not switched on yet.</h1>
+            <p className="t-body mt-6">
+              Stripe keys have not been set for this environment. Once
+              STRIPE_SECRET_KEY is configured this page will confirm real orders.
+            </p>
+            <Link href="/shop" className="action-link t-body mt-8 inline-block">
+              Back to the pieces
+            </Link>
+          </>
+        )}
+      </div>
     </main>
   );
 }
