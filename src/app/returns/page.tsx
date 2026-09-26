@@ -4,7 +4,7 @@ import { Container } from "@/components/Container";
 import { MotifDivider } from "@/components/MotifDivider";
 
 export const metadata: Metadata = {
-  title: "Returns & Exchanges",
+  title: "Returns",
   description:
     "How returns work for one-of-a-kind handmade pieces: your 14-day change-of-mind right, faulty-goods rights, and how to start a return.",
 };

@@ -27,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/returns",
     "/international",
     "/contact",
+    "/privacy",
   ];
 
   return [

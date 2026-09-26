@@ -4,7 +4,7 @@ import { Container } from "@/components/Container";
 import { MotifDivider } from "@/components/MotifDivider";
 
 export const metadata: Metadata = {
-  title: "FAQ",
+  title: "Questions",
   description:
     "Answers to the questions we get asked most: one-of-a-kind pieces, sizing, care, returns, shipping worldwide, hand delivery and bespoke commissions.",
 };

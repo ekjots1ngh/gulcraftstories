@@ -39,6 +39,7 @@ const COLUMNS: { title: string; links: { label: string; href: string; external?:
       { label: "Care", href: "/care" },
       { label: "Size guide", href: "/size-guide" },
       { label: "Gift vouchers", href: "/gift-cards" },
+      { label: "Privacy", href: "/privacy" },
     ],
   },
   {

@@ -4,7 +4,7 @@ import { Container } from "@/components/Container";
 import { MotifDivider } from "@/components/MotifDivider";
 
 export const metadata: Metadata = {
-  title: "International Orders",
+  title: "International orders",
   description:
     "We ship handmade pieces worldwide from our UK studio with tracked, signed delivery. Delivery times, costs, and customs information.",
 };
@@ -20,10 +20,9 @@ export default function InternationalPage() {
 
       <Container size="narrow" className="story-prose pb-16">
         <p>
-          Pieces go all over the world from our UK studio. Prices are in GBP (£),
-          and international buyers can see an approximate price in their own
-          currency using the currency switcher at the top of the site. Your bank
-          settles the exact amount at checkout.
+          Pieces go all over the world from our London studio. Prices are in
+          pounds sterling; your bank converts the amount to your own currency
+          at checkout, at its usual rate.
         </p>
 
         <h2>Where we ship</h2>

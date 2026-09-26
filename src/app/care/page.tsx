@@ -4,7 +4,7 @@ import { Container } from "@/components/Container";
 import { MotifDivider } from "@/components/MotifDivider";
 
 export const metadata: Metadata = {
-  title: "Jewellery Care",
+  title: "Care",
   description:
     "How to care for handmade pieces made of air-dry clay, brass, crochet and semi-precious stones, so they last and age beautifully.",
 };

@@ -4,7 +4,7 @@ import { MotifDivider, MotifMark } from "@/components/MotifDivider";
 import { BespokeForm } from "@/components/BespokeForm";
 
 export const metadata: Metadata = {
-  title: "Bespoke Enquiries",
+  title: "Bespoke",
   description:
     "Commission a one-of-a-kind handmade piece, a small number of bespoke and bridal commissions are taken each season.",
 };

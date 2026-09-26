@@ -6,7 +6,7 @@ import { products, isOneOfOne } from "@/lib/catalogue";
 import { getSoldSlugs } from "@/lib/sold";
 
 export const metadata: Metadata = {
-  title: "The Archive",
+  title: "Archive",
   description:
     "A portfolio of pieces that have found their homes. Kept here, not hidden, so you can see the range and style, even when a piece is gone.",
 };

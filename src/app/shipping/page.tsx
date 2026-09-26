@@ -4,7 +4,7 @@ import { Container } from "@/components/Container";
 import { MotifDivider } from "@/components/MotifDivider";
 
 export const metadata: Metadata = {
-  title: "Shipping & Delivery",
+  title: "Delivery",
   description:
     "How your handmade piece reaches you: UK and worldwide tracked delivery, dispatch times, and what happens if a parcel goes astray.",
 };
