@@ -125,10 +125,14 @@ tell me and it is a one-line edit.
 Marigold Mela, Bamboo Grove, the five Posy Page Clips (Rose & Leaf, Blush &
 Dove, Berry & Emerald, Marigold & Navy, Lilac & Lagoon), the two Mela Clay
 Charms (The Star & Gourd, The Toadstool & Blossom), nine Mela Magnets (Peacock
-Stream, Lily Pebble, Little Palm, Marmalade Cat, Blueberry I, Lemon Grove,
+Stream, Lily Pebble, Little Palm, Pink Cat, Blueberry I, Lemon Grove,
 Orange Ibex, Red Dog, Starry Pot), and the three bag charms (Tota, Strawberry
 Fields, Matki).
 
-Two of them still say "on the left" and "on the right in the photograph"
-because both Mela Clay Charms share one photo. A photo of each on its own
-would let those lines go.
+Update, later the same day: the five Posy Page Clips are now one listing,
+"Posy Page Clips", £6 per clip, and the two Mela Clay Charms are one listing,
+"Mela Clay Charms", £12 per charm. Each story lists the options in the order
+they appear in the photo and the buyer says which they want in the note box
+on the payment page. The old addresses redirect. If you would rather each had
+its own page, photograph each clip and charm on its own and I will split them
+back out.

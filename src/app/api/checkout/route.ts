@@ -186,7 +186,7 @@ export async function POST(req: NextRequest) {
       custom_fields: [
         {
           key: "order_note",
-          label: { type: "custom", custom: "Colour choice / gift note (optional)" },
+          label: { type: "custom", custom: "Which one (as listed), colour choice or gift note" },
           type: "text",
           optional: true,
         },

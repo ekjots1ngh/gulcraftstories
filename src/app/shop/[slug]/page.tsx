@@ -156,7 +156,7 @@ export default async function ProductPage({
                 Or send a WhatsApp
               </a>
               <p className="t-small mt-2 text-ink-soft">
-                {oneOfOne ? "" : "Choose how many on the payment page. "}
+                {oneOfOne ? "" : "Choose how many on the payment page, and say which in the note box there. "}
                 Posted tracked from London: UK £4, free over £75; worldwide £14.{" "}
                 <Link href="/shipping" className="inline-link">
                   Delivery and returns

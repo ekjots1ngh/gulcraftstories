@@ -40,10 +40,28 @@ const securityHeaders = [
   },
 ];
 
+/** Pieces that were merged into one listing; old links still land somewhere sensible. */
+const mergedPieces: Record<string, string> = {
+  "rose-and-leaf-clip": "posy-page-clips",
+  "blush-and-dove-clip": "posy-page-clips",
+  "berry-and-emerald-clip": "posy-page-clips",
+  "marigold-and-navy-clip": "posy-page-clips",
+  "lilac-and-lagoon-clip": "posy-page-clips",
+  "the-star-and-gourd-charm": "mela-clay-charms",
+  "the-toadstool-and-blossom-charm": "mela-clay-charms",
+};
+
 const nextConfig: NextConfig = {
   poweredByHeader: false, // don't advertise the framework
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
+  },
+  async redirects() {
+    return Object.entries(mergedPieces).map(([from, to]) => ({
+      source: `/shop/${from}`,
+      destination: `/shop/${to}`,
+      permanent: true,
+    }));
   },
 };
 
