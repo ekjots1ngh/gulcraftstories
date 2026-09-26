@@ -63,7 +63,7 @@ export function Footer() {
         <div className="mx-auto w-full max-w-[1120px] px-5 py-14 lg:px-10 lg:py-20">
           <div className="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1fr_1fr] md:gap-8">
             <div className="flex flex-col gap-5">
-              <p className="font-display text-xl">GulCraft Stories</p>
+              <p className="font-display text-xl">GulCraftStories</p>
               <p className="t-small max-w-xs text-ivory/85">
                 Handmade jewellery and small things, made once, in London.
               </p>
@@ -103,7 +103,7 @@ export function Footer() {
           </div>
 
           <p className="t-small mt-14 text-ivory/70">
-            © {new Date().getFullYear()} GulCraft Stories. Prices in pounds sterling. Delivery worldwide.
+            © {new Date().getFullYear()} GulCraftStories. Prices in pounds sterling. Delivery worldwide.
           </p>
         </div>
       </div>

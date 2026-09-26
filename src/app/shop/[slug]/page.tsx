@@ -38,7 +38,7 @@ export async function generateMetadata({
     title: product.name,
     description: product.description,
     openGraph: {
-      title: `${product.name} · GulCraft Stories`,
+      title: `${product.name} · GulCraftStories`,
       description: product.description,
       images: [{ url: img }],
       type: "website",
@@ -74,7 +74,7 @@ export default async function ProductPage({
     name: product.name,
     image: [mainImageUrl(product, base)],
     description: product.description,
-    brand: { "@type": "Brand", name: "GulCraft Stories" },
+    brand: { "@type": "Brand", name: "GulCraftStories" },
     category: typeName(product.type),
     material: product.materialsList.join(", "),
     offers: {

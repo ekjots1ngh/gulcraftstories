@@ -6,7 +6,7 @@ import { SITE, MAKER_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `${MAKER_NAME} makes GulCraft Stories by hand in ${SITE.city}: necklaces, earrings, bracelets, crochet and small clay pieces, each made once.`,
+  description: `${MAKER_NAME} makes GulCraftStories by hand in ${SITE.city}: necklaces, earrings, bracelets, crochet and small clay pieces, each made once.`,
 };
 
 /**
@@ -26,7 +26,7 @@ export default function AboutPage() {
 
         <div className="flex flex-col gap-4 lg:pt-2">
           <h1 className="t-display">{MAKER_NAME}</h1>
-          <p className="t-small text-ink-soft">GulCraft Stories, {SITE.city}</p>
+          <p className="t-small text-ink-soft">GulCraftStories, {SITE.city}</p>
 
           <div className="story-prose mt-4">
             <p>

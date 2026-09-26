@@ -206,7 +206,7 @@ export const products: Product[] = [
     price: 2000,
     materials: ["Hand-painted floral porcelain beads", "red glass accents", "silver-plated ear wires"],
     story:
-      "Each porcelain bead is painted with a single bloom, no two flowers, no two earrings quite alike. Marigold Morning brings a little warmth to grey days and arrives gift-ready in its GulCraft Stories box. The sort of present people keep the box for, too.",
+      "Each porcelain bead is painted with a single bloom, no two flowers, no two earrings quite alike. Marigold Morning brings a little warmth to grey days and arrives gift-ready in its GulCraftStories box. The sort of present people keep the box for, too.",
     images: ["marigold-morning.jpg"],
     sold: false,
     madeOn: "2026-05-23",

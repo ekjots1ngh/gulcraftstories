@@ -28,7 +28,7 @@ export default async function Home() {
   const orgLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "GulCraft Stories",
+    name: "GulCraftStories",
     url: base,
     logo: `${base}/logo.png`,
     sameAs: [SITE.instagram],

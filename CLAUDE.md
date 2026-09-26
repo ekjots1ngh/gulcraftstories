@@ -1,9 +1,9 @@
-# Gul Craft Stories — Project Guide (CLAUDE.md)
+# GulCraftStories — Project Guide (CLAUDE.md)
 
 > Handmade Indian jewellery, with the story of every piece told as carefully as it was made.
 
 This file is the single source of truth for the brand, design system, and tech
-conventions of the Gul Craft Stories storefront. Read it before making changes.
+conventions of the GulCraftStories storefront. Read it before making changes.
 
 ---
 
@@ -20,7 +20,7 @@ original work. When in doubt, make it ours.
 
 ## 1. Brand
 
-- **Name:** Gul Craft Stories (Instagram [@gulcraftstories](https://instagram.com/gulcraftstories))
+- **Name:** GulCraftStories (Instagram [@gulcraftstories](https://instagram.com/gulcraftstories))
 - **What it is:** A small, maker-led brand of handmade Indian jewellery, run by
   the founder's mother.
 - **Two goals:**
@@ -351,7 +351,7 @@ The header is not sticky and has no bar, cart or icons.
   the layout; form fields carry labels/`aria-label`; the quick-view dialog moves
   focus and closes on Escape; decorative motifs are `aria-hidden`; `PieceImage`
   exposes `role="img"` + alt.
-- **SEO:** root `metadata` sets a title template (`%s · Gul Craft Stories`),
+- **SEO:** root `metadata` sets a title template (`%s · GulCraftStories`),
   description, keywords, Open Graph + Twitter (`summary_large_image`). The social
   card and favicon are **generated** by `src/app/opengraph-image.tsx` /
   `twitter-image.tsx` / `icon.tsx` (next/og) from the brand motif — no static

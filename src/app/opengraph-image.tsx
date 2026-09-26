@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-export const alt = "GulCraft Stories, handmade jewellery, one of a kind";
+export const alt = "GulCraftStories, handmade jewellery, one of a kind";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -35,7 +35,7 @@ export default async function OgImage() {
       >
         <img src={logoSrc} width={176} height={176} alt="" style={{ borderRadius: 999 }} />
         <div style={{ fontSize: 76, fontWeight: 600, marginTop: 26, letterSpacing: -1 }}>
-          GulCraft Stories
+          GulCraftStories
         </div>
         <div style={{ fontSize: 30, marginTop: 10, color: "#5A514B", maxWidth: 860 }}>
           Handmade jewellery and little clay things, each made once, by hand.

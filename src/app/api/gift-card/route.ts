@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
             currency: "gbp",
             unit_amount: Math.round(amount * 100),
             product_data: {
-              name: `GulCraft Stories gift voucher, £${amount}`,
+              name: `GulCraftStories gift voucher, £${amount}`,
               description: "A digital gift voucher, emailed after purchase.",
               metadata: { kind: "gift-card", amount: String(amount) },
             },

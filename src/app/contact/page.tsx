@@ -7,7 +7,7 @@ import { SITE, whatsappLink } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with the maker behind GulCraft Stories by email, WhatsApp, phone, or Instagram. A real person reads every message.",
+    "Get in touch with the maker behind GulCraftStories by email, WhatsApp, phone, or Instagram. A real person reads every message.",
 };
 
 export default function ContactPage() {

@@ -5,7 +5,7 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Markets",
-  description: `Where to find GulCraft Stories in person: market dates around ${SITE.city}, with the area and the hours.`,
+  description: `Where to find GulCraftStories in person: market dates around ${SITE.city}, with the area and the hours.`,
 };
 
 // Re-render at least daily so today's date moves markets from upcoming to past.

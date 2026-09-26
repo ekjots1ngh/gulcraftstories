@@ -26,12 +26,12 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "GulCraft Stories, handmade jewellery",
-    template: "%s · GulCraft Stories",
+    default: "GulCraftStories, handmade jewellery",
+    template: "%s · GulCraftStories",
   },
   description: SITE_DESC,
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com"),
-  applicationName: "GulCraft Stories",
+  applicationName: "GulCraftStories",
   // Relative canonical resolves to each page's own URL, so the .vercel.app
   // and custom-domain copies never compete in search.
   alternates: { canonical: "./" },
@@ -45,15 +45,15 @@ export const metadata: Metadata = {
     "London markets",
   ],
   openGraph: {
-    title: "GulCraft Stories, handmade jewellery",
+    title: "GulCraftStories, handmade jewellery",
     description: SITE_DESC,
     type: "website",
-    siteName: "GulCraft Stories",
+    siteName: "GulCraftStories",
     locale: "en_GB",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GulCraft Stories, handmade jewellery",
+    title: "GulCraftStories, handmade jewellery",
     description: SITE_DESC,
   },
 };

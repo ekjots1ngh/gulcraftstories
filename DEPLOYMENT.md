@@ -1,4 +1,4 @@
-# Deploying Gul Craft Stories
+# Deploying GulCraftStories
 
 A step-by-step guide to put the site live from GitHub, set payment keys securely,
 connect a custom domain, and confirm checkout works in **test mode** before going live.

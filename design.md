@@ -1,4 +1,4 @@
-# GulCraft Stories design system
+# GulCraftStories design system
 
 Gallery, not shop. The piece is the first thing on every screen; the site gets
 out of its way. Whitespace separates things, boxes do not. One voice, hers.

@@ -7,7 +7,7 @@ import { MotifMark } from "./MotifDivider";
 
 /**
  * Brand logo, the circular Instagram-style photo at `public/logo.png` plus the
- * "GulCraft Stories" wordmark beside it. Until that file exists it gracefully
+ * "GulCraftStories" wordmark beside it. Until that file exists it gracefully
  * falls back to the marigold motif, so the header/footer never show a broken image.
  */
 export function Logo({
@@ -28,7 +28,7 @@ export function Logo({
     <Link
       href="/"
       className={cn("group inline-flex items-center gap-2.5", color, className)}
-      aria-label="GulCraft Stories, home"
+      aria-label="GulCraftStories, home"
     >
       {useFallback ? (
         <MotifMark
@@ -40,7 +40,7 @@ export function Logo({
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src="/logo.png"
-          alt="GulCraft Stories"
+          alt="GulCraftStories"
           width={px}
           height={px}
           onError={() => setUseFallback(true)}
@@ -49,7 +49,7 @@ export function Logo({
         />
       )}
       <span className={cn("whitespace-nowrap font-display tracking-tight", compact ? "text-base" : "text-lg")}>
-        GulCraft Stories
+        GulCraftStories
       </span>
     </Link>
   );
