@@ -1,49 +1,63 @@
 @import "tailwindcss";
 
 /* ============================================================
-   GulCraft Stories, Design Tokens
-   Edit palette/type here only. Components consume tokens.
+   GulCraft Stories, design tokens (see design.md)
+   Edit palette and type here only. Components consume tokens.
+
+   Gallery, not shop: ivory page, ink text, one warm accent (clay),
+   brass hairlines, the roundel's green for the footer and focus.
+   The older jewel-tone names are kept as aliases so pages that
+   have not been redesigned yet stay coherent; new work uses the
+   names in the first block only.
    ============================================================ */
 
 @theme {
-  /* --- Brand colours --- */
-  --color-marigold: #e08a1e; /* primary warm accent (fills, large/decorative) */
-  --color-marigold-ink: #985311; /* accessible deep amber for SMALL text on cream (WCAG AA) */
-  --color-marigold-soft: #f3b85f;
-  --color-rani: #b5267a; /* vibrant secondary, sparingly */
-  --color-rani-soft: #d96aa8;
-  --color-peacock: #0e5a5b; /* deep jewel anchor */
-  --color-peacock-deep: #0a4344;
-  --color-aubergine: #3b2a4a; /* regal dark */
-  --color-gold: #c9a24b; /* hairline accent only */
-  --color-gold-soft: #e3cf93;
-  --color-cream: #faf4e8; /* primary background */
-  --color-cream-deep: #f1e7d3;
-  --color-ink: #241f1c; /* body text */
-  --color-ink-soft: #5a514b;
+  /* --- Palette --- */
+  --color-ivory: #f8f3e9;        /* page background */
+  --color-ivory-deep: #eee6d6;   /* image frames, sold fade, form fields */
+  --color-ink: #241f1c;          /* text, rules */
+  --color-ink-soft: #5c554e;     /* prices, materials, captions */
+  --color-clay: #9a5b33;         /* link hover, the Sold word, one warm accent */
+  --color-brass: #b08d3c;        /* hairline rules and underlines only */
+  --color-green: #3f5230;        /* the roundel's green: footer, focus, current page */
+  --color-green-deep: #2f3f24;
+  --color-teal: #0e5a5b;         /* inline links in body text only */
+
+  /* --- Aliases for pages not yet redesigned (do not use in new work) --- */
+  --color-cream: var(--color-ivory);
+  --color-cream-deep: var(--color-ivory-deep);
+  --color-gold: var(--color-brass);
+  --color-gold-soft: #d8c48f;
+  --color-peacock: var(--color-green);
+  --color-peacock-deep: var(--color-green-deep);
+  --color-marigold: var(--color-clay);
+  --color-marigold-ink: var(--color-clay);
+  --color-marigold-soft: var(--color-ivory-deep);
+  --color-rani: var(--color-clay);
+  --color-rani-soft: var(--color-clay);
+  --color-aubergine: var(--color-ink);
 
   /* --- Typography --- */
   --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-hanken), system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
 
-  /* --- Radius --- */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
+  /* --- Radius: square corners throughout --- */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
 
-  /* --- Shadows (soft, warm) --- */
-  --shadow-soft: 0 12px 40px -16px rgba(36, 31, 28, 0.25);
-  --shadow-card: 0 8px 28px -18px rgba(36, 31, 28, 0.45);
+  /* --- Shadows: none --- */
+  --shadow-soft: none;
+  --shadow-card: none;
 }
 
 /* --- Base --- */
 :root {
-  --background: var(--color-cream);
+  --background: var(--color-ivory);
   --foreground: var(--color-ink);
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -59,26 +73,129 @@ body {
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-optical-sizing: auto;
+  font-weight: 400;
 }
 
-/* Selection in jewel tone */
 ::selection {
-  background: var(--color-marigold-soft);
+  background: var(--color-ivory-deep);
   color: var(--color-ink);
 }
 
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
+/* Focus: 2 px green outline, 2 px offset, on everything focusable */
+:focus-visible {
+  outline: 2px solid var(--color-green);
+  outline-offset: 2px;
 }
 
 /* ============================================================
-   Reusable token-driven utilities
+   Type roles (design.md, section 1)
    ============================================================ */
+.t-display {
+  font-family: var(--font-display);
+  font-size: 2rem;            /* 32 px */
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.t-heading {
+  font-family: var(--font-display);
+  font-size: 1.375rem;        /* 22 px */
+  line-height: 1.2;
+  font-weight: 400;
+}
+.t-body {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;       /* 17 px */
+  line-height: 1.6;
+  font-weight: 400;
+}
+.t-small {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;        /* 14 px */
+  line-height: 1.5;
+  font-weight: 400;
+}
+/* The one uppercase label a page may carry. */
+.t-label {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;       /* 13 px */
+  line-height: 1;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+@media (min-width: 768px) {
+  .t-display { font-size: 2.75rem; }   /* 44 px */
+  .t-heading { font-size: 1.625rem; }  /* 26 px */
+  .t-body { font-size: 1.125rem; }     /* 18 px */
+  .t-small { font-size: 0.9375rem; }   /* 15 px */
+}
+
+/* ============================================================
+   Links (design.md, section 5): there are no buttons
+   ============================================================ */
+
+/* Action link: buy, enquire. Body size, ink, brass hairline underline. */
+.action-link {
+  display: inline-block;
+  padding-block: 0.5rem;               /* 44 px tap target with the line height */
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-brass);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color 150ms ease, text-decoration-color 150ms ease;
+}
+.action-link:hover {
+  color: var(--color-clay);
+  text-decoration-color: var(--color-clay);
+}
+.action-link:disabled,
+.action-link[aria-disabled="true"] {
+  color: var(--color-ink-soft);
+  text-decoration-color: var(--color-ivory-deep);
+  cursor: default;
+}
+
+/* Nav link: Small size, ink, the current page carries a green hairline. */
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+.nav-link:hover { color: var(--color-clay); }
+.nav-link[aria-current="page"] { border-bottom-color: var(--color-green); }
+
+/* Inline link inside body text. */
+.inline-link {
+  color: var(--color-teal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 150ms ease;
+}
+.inline-link:hover { color: var(--color-clay); }
+
+/* Footer link: ivory on green, underline on hover. */
+.footer-link {
+  color: var(--color-ivory);
+  text-decoration: none;
+  transition: text-decoration-color 150ms ease;
+}
+.footer-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Form field: hairline border, square, ivory-deep. */
+.field {
+  width: 100%;
+  border: 1px solid var(--color-ink-soft);
+  background: var(--color-ivory-deep);
+  color: var(--color-ink);
+  padding: 0.75rem 0.875rem;
+  font: inherit;
+}
 
 /* Skip-to-content link, visible only when focused (keyboard users) */
 .skip-link {
@@ -87,92 +204,118 @@ h1, h2, h3, h4 {
   left: 0.5rem;
   z-index: 100;
   transform: translateY(-200%);
-  background: var(--color-peacock);
-  color: var(--color-cream);
+  background: var(--color-green);
+  color: var(--color-ivory);
   padding: 0.6rem 1rem;
-  border-radius: var(--radius-sm);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   transition: transform 0.15s ease;
 }
 .skip-link:focus {
   transform: translateY(0);
 }
 
-/* Letter-spaced micro label used across the site */
+/* Legacy micro label. No longer uppercase: pages that still use it read as
+   a quiet small caption until they are redesigned. */
 .eyebrow {
   font-family: var(--font-sans);
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ============================================================
+   Motion (kept to a gentle fade and a slight lift, both off
+   under prefers-reduced-motion)
+   ============================================================ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+.fade-in.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.card-lift {
+  transition: transform 300ms ease;
+}
+@media (hover: hover) {
+  .card-lift:hover { transform: translateY(-4px); }
+}
+
+.img-fade {
+  transition: opacity 400ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in { opacity: 1; transform: none; transition: none; }
+  .card-lift:hover { transform: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ------------------------------------------------------------
-   Story prose, a calm, bespoke reading experience for the
-   journal. Generous measure, quiet rhythm, jewel-tone accents.
+   Story prose: the calm reading style for long copy (About,
+   delivery and returns, the journal). Reading measure 620 px.
    ------------------------------------------------------------ */
 .story-prose {
   color: var(--color-ink);
-  font-size: 1.125rem;
-  line-height: 1.85;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+@media (min-width: 768px) {
+  .story-prose { font-size: 1.125rem; }
 }
 .story-prose > * + * {
-  margin-top: 1.4em;
+  margin-top: 1.3em;
 }
 .story-prose p {
-  max-width: 38rem;
+  max-width: 38.75rem;
 }
 .story-prose h2 {
   font-family: var(--font-display);
-  font-size: 1.7rem;
-  line-height: 1.25;
-  margin-top: 2.4em;
+  font-size: 1.375rem;
+  line-height: 1.2;
+  margin-top: 2.2em;
   color: var(--color-ink);
+}
+@media (min-width: 768px) {
+  .story-prose h2 { font-size: 1.625rem; }
 }
 .story-prose h3 {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   margin-top: 2em;
 }
 .story-prose a {
-  color: var(--color-peacock);
+  color: var(--color-teal);
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: var(--color-gold);
 }
 .story-prose a:hover {
-  color: var(--color-marigold);
+  color: var(--color-clay);
 }
 .story-prose strong {
-  font-weight: 600;
-  color: var(--color-aubergine);
+  font-weight: 500;
 }
 .story-prose em {
   font-style: italic;
 }
 .story-prose ul,
 .story-prose ol {
-  max-width: 38rem;
+  max-width: 38.75rem;
   padding-left: 1.2em;
 }
 .story-prose li {
   margin-top: 0.5em;
 }
-.story-prose ul li {
-  list-style: none;
-  position: relative;
-  padding-left: 1.1em;
-}
-.story-prose ul li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.78em;
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 9999px;
-  background: var(--color-marigold);
+.story-prose ul {
+  list-style: disc;
 }
 .story-prose ol {
   list-style: decimal;
@@ -181,33 +324,27 @@ h1, h2, h3, h4 {
   max-width: 40rem;
   margin-block: 2em;
   padding: 0.2em 0 0.2em 1.4rem;
-  border-left: 2px solid var(--color-gold);
+  border-left: 1px solid var(--color-brass);
   font-family: var(--font-display);
-  font-size: 1.4rem;
-  line-height: 1.5;
-  font-style: italic;
-  color: var(--color-peacock);
+  font-size: 1.375rem;
+  line-height: 1.4;
+  color: var(--color-ink);
 }
 .story-prose blockquote p {
   max-width: none;
 }
 .story-prose img {
-  border-radius: var(--radius-md);
   margin-block: 2em;
 }
 .story-prose hr {
   border: 0;
   height: 1px;
-  background: color-mix(in srgb, var(--color-gold) 50%, transparent);
+  background: var(--color-brass);
+  opacity: 0.5;
   margin-block: 2.5em;
 }
 
-/* Very subtle jaali (lattice) texture for story backgrounds only.
-   Original geometric pattern, not lifted from any source. */
+/* Kept for the journal pages only; nothing new uses it. */
 .jaali-bg {
-  background-image:
-    linear-gradient(45deg, rgba(201, 162, 75, 0.06) 25%, transparent 25%, transparent 75%, rgba(201, 162, 75, 0.06) 75%),
-    linear-gradient(45deg, rgba(201, 162, 75, 0.06) 25%, transparent 25%, transparent 75%, rgba(201, 162, 75, 0.06) 75%);
-  background-size: 28px 28px;
-  background-position: 0 0, 14px 14px;
+  background-image: none;
 }
