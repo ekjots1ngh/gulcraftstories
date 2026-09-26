@@ -4,7 +4,7 @@
  * obvious placeholders to replace.
  */
 /** How the maker is named on the home page and About. */
-export const MAKER_NAME = "Guljeet";
+export const MAKER_NAME = "Guljeet Kaur";
 
 export const SITE = {
   email: "gulcraftstories@gmail.com",

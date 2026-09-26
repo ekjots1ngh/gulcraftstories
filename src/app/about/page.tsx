@@ -1,27 +1,39 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { PieceImage } from "@/components/PieceImage";
 import { FadeIn } from "@/components/FadeIn";
 import { SITE, MAKER_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `${MAKER_NAME} makes GulCraftStories by hand in ${SITE.city}: necklaces, earrings, bracelets, crochet and small clay pieces, each made once.`,
+  description: `${MAKER_NAME} started GulCraftStories in December 2024. Every piece is made by hand in ${SITE.city}, one at a time, and never made again.`,
 };
 
 /**
- * About: her name, her own words, one portrait, the market photographs.
- * The words and the portrait are placeholders until she supplies them; the
- * brackets make that obvious on the page so nothing invented goes live.
+ * Her portrait comes through the normal photo pipeline: drop Guljeet.jpg in
+ * photos-inbox and run `npm run images`, which writes /images/guljeet-*.webp
+ * at 4:5 without cropping (a photo of another shape is padded, never cut).
+ * Until those files exist the frame stays empty rather than broken.
  */
+const PORTRAIT = "guljeet";
+const hasPortrait = existsSync(join(process.cwd(), "public", "images", `${PORTRAIT}-960.webp`));
+
+/** About: her name, her bio (her words, as supplied), one portrait, the market photographs. */
 export default function AboutPage() {
   return (
     <main className="flex-1">
       <article className="mx-auto grid w-full max-w-[1120px] gap-8 px-5 pt-2 lg:grid-cols-[45fr_55fr] lg:gap-16 lg:px-10 lg:pt-6">
-        {/* portrait slot: drop her photo at public/about/portrait.jpg (4:5) and set src */}
         <div>
-          <PieceImage label={`Portrait of ${MAKER_NAME}, to come`} sizes="(min-width: 1024px) 45vw, 100vw" />
-          <p className="t-small mt-3 text-ink-soft">[A portrait of her, 4:5, to come]</p>
+          <PieceImage
+            src={hasPortrait ? `/images/${PORTRAIT}` : undefined}
+            label={`${MAKER_NAME}, who makes GulCraftStories`}
+            fit="contain"
+            priority
+            sizes="(min-width: 1024px) 45vw, 100vw"
+          />
+          {!hasPortrait && <p className="t-small mt-3 text-ink-soft">[Portrait to come]</p>}
         </div>
 
         <div className="flex flex-col gap-4 lg:pt-2">
@@ -30,14 +42,23 @@ export default function AboutPage() {
 
           <div className="story-prose mt-4">
             <p>
-              [Her own words go here, in the first person: how she started
-              making, what she makes and why, where the beads, clay and thread
-              come from, and what she hopes a piece will mean to the person who
-              wears it. Two or three short paragraphs.]
+              Guljeet Kaur started GulCraft Stories in December 2024. Gul, the
+              first part of her name, means flower, which suits a brand built
+              on colour, care and small things given meaning.
             </p>
             <p>
-              [A line about the markets: which ones she sells at, how long she
-              has been doing it, and that she likes people to try things on.]
+              Every piece is made by hand, one at a time, and never made again,
+              so whatever you take home is the only one of its kind. She works
+              with beads, thread, crochet and hand-painted clay, drawing on the
+              colours and festivals of South Asian and Tibetan craft. Her
+              collections carry names with stories of their own: Gulzar, a
+              garden in bloom; Mitti, the earth; Dhaaga, thread; Roshni, light;
+              and Saanjh, the soft hour of dusk.
+            </p>
+            <p>
+              What began in craft classes has grown into a stall you can visit
+              at Chiswick Flower Market, Piccadilly and Kensington, where every
+              piece comes with its story.
             </p>
           </div>
 
