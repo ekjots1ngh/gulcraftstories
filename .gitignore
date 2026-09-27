@@ -46,3 +46,4 @@ photos-inbox/*
 !photos-inbox/.gitkeep
 photos-archive/*
 !photos-archive/.gitkeep
+*.log
