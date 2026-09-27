@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   GulCraftStories, design tokens (see design.md)
+   GulCraftStories, design tokens (see DESIGN.md)
    Edit palette and type here only. Components consume tokens.
 
    Gallery, not shop: ivory page, ink text, one warm accent (clay),
@@ -14,7 +14,7 @@
 @theme {
   /* --- Palette --- */
   --color-ivory: #f8f3e9;        /* page background */
-  --color-ivory-deep: #eee6d6;   /* image frames, sold fade, form fields */
+  --color-ivory-deep: #eee6d6;   /* form fields, selection, quiet fills */
   --color-ink: #241f1c;          /* text, rules */
   --color-ink-soft: #5c554e;     /* prices, materials, captions */
   --color-clay: #9a5b33;         /* link hover, the Sold word, one warm accent */
@@ -92,7 +92,7 @@ h1, h2, h3, h4 {
 @layer components {
 
 /* ============================================================
-   Type roles (design.md, section 1)
+   Type roles (DESIGN.md, section 1)
    ============================================================ */
 .t-display {
   font-family: var(--font-display);
@@ -136,7 +136,7 @@ h1, h2, h3, h4 {
 }
 
 /* ============================================================
-   Links (design.md, section 5): there are no buttons
+   Links (DESIGN.md, section 5): there are no buttons
    ============================================================ */
 
 /* Action link: buy, enquire. Body size, ink, brass hairline underline. */

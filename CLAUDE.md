@@ -7,6 +7,22 @@ conventions of the GulCraftStories storefront. Read it before making changes.
 
 ---
 
+## Site rules
+
+- Design direction lives in `PRODUCT.md` and `DESIGN.md`; follow them.
+- gulcraftstories.com is the main domain and gulcraftstories.co.uk redirects
+  to it, so always use the .com in canonical URLs, links and social tags
+  (`NEXT_PUBLIC_SITE_URL` defaults to `https://gulcraftstories.com`).
+- Instagram is @gulcraftstories.
+- Every product image needs alt text that describes the piece (the catalogue
+  derives it from the name and materials; keep the materials line honest).
+- The site is hosted on Vercel; make sure `npm run build` passes before
+  committing.
+- Check any page you change at phone (390 px) and desktop (1440 px) width
+  with Playwright before calling it done: `npm run screens -- /shop /about`
+  (first time: `npx playwright install chromium`) writes both widths to
+  `screens/`.
+
 ## 0. The one rule that overrides everything
 
 **Research for inspiration, never copy.**
@@ -104,14 +120,15 @@ Contact) · Help (delivery, returns, international, FAQ, care, size guide, vouch
 · Elsewhere (the edits, journal, archive: retired from the nav, still reachable)
 ```
 
-### The gallery rebuild (September 2026): read `design.md` first
-The site now follows **`design.md`** ("gallery, not shop"): ivory page, ink
+### The gallery rebuild (September 2026): read `DESIGN.md` first
+The site now follows **`DESIGN.md`** ("gallery, not shop"): ivory page, ink
 text, clay as the one warm accent, brass hairlines, the roundel's green for
 the footer and focus ring; Fraunces for display, Hanken Grotesk for body;
 square corners, no shadows, no gradients, no badges or overlays on photos, no
 buttons (actions are text links), no uppercase labels, no em dashes, no
 exclamation marks. Photos sit in a **4:5 frame, uncropped** (`PieceImage`
-with `fit="contain"` on `ivory-deep`). Motion is a gentle fade-in on scroll
+with `fit="contain"`; padding is transparent, so the photo floats; the social
+image is the flattened `<name>-og.jpg`). Motion is a gentle fade-in on scroll
 (`FadeIn`) and a slight card lift, both off under `prefers-reduced-motion`.
 Component classes (`.t-display`, `.action-link`, `.nav-link`, `.fade-in`
 and so on) live in `@layer components` in `globals.css` so Tailwind
@@ -161,7 +178,7 @@ taxonomies type / edit / material, pounds prices, image objects with swatches,
 
 **Photos:** originals go in `/photos-inbox` named by slug; `npm run images`
 (sharp) writes `/public/images/<name>-{480,960,1600}.webp` at 4:5 without
-cropping (other shapes are padded on ivory-deep and reported), strips EXIF,
+cropping (other shapes are padded with transparent pixels and reported), strips EXIF,
 warns under 1200 px, and moves originals to `/photos-archive` (both folders
 git-ignored). `PieceImage` serves those files through a next/image loader.
 
@@ -174,7 +191,7 @@ metal, textile & thread). `/shop` filters on any combination via `?type=`,
 
 ### Product cards and grids
 `ProductCard` (client) is the only card: the photo in a 4:5 frame (uncropped,
-`fit="contain"` on ivory-deep), the second photo fading in on hover if there
+`fit="contain"`, transparent padding), the second photo fading in on hover if there
 is one, then the name and a regular-weight price; sold pieces fade to 55% and
 say "Sold" in clay. Every grid on the site (shop, home, edits, archive,
 related pieces, journal posts) is the same two-column, three-on-desktop list
@@ -219,7 +236,7 @@ this edit" (`getPostsForEdit`); posts link back to pieces/edits in their body.
 ### Buying (there is no basket)
 Each piece is bought from its own page: `BuyLink` posts
 `{ items: [{ slug, quantity: 1 }] }` to `/api/checkout` and redirects to
-Stripe's hosted page. Collection pieces (magnets, clips, charms, ornaments)
+Stripe's hosted page. Collection pieces (magnets, clips, charms, ornaments, rings)
 get `adjustable_quantity` on the Stripe line item, so the buyer chooses how
 many there. Fixed sets (Chevron Sea Set, Reindeer Rounds) are simply one
 piece with one price. Mix-and-match offers ("any three ornaments for £24")
@@ -348,7 +365,7 @@ Conventions:
 - No secrets in the repo. Stripe keys come from env vars (`.env.local`); only `.env.example` is committed.
 
 ### Chosen direction
-**"Gallery, not shop"** per `design.md` (September 2026), which superseded the
+**"Gallery, not shop"** per `DESIGN.md` (September 2026), which superseded the
 earlier "Atelier" homepage. The reference points are exhibition catalogues and
 quiet makers' sites: the piece is the first thing on every screen, whitespace
 separates things, actions are text links. Earlier directions (the two mockups,
@@ -363,23 +380,24 @@ The header is not sticky and has no bar, cart or icons.
   text; reserve `marigold` for fills and large/decorative use, `gold` for
   dividers/icons only. Other accents (peacock, rani, ink) already pass on cream.
 - **A11y:** a "Skip to content" link (`.skip-link`) targets `#main-content` in
-  the layout; form fields carry labels/`aria-label`; the quick-view dialog moves
-  focus and closes on Escape; decorative motifs are `aria-hidden`; `PieceImage`
-  exposes `role="img"` + alt.
+  the layout; form fields have visible labels; the lightbox holds focus, works
+  with arrow keys and closes on Escape; `PieceImage` passes descriptive alt
+  text to its image and an empty frame is `aria-hidden`.
 - **SEO:** root `metadata` sets a title template (`%s · GulCraftStories`),
   description, keywords, Open Graph + Twitter (`summary_large_image`). The social
   card and favicon are **generated** by `src/app/opengraph-image.tsx` /
   `twitter-image.tsx` / `icon.tsx` (next/og) from the brand motif — no static
   assets. Draft pages set `robots: { index: false }`.
-- **Images:** real product photos live in `/public/products/<slug>.jpg` and are
-  rendered by `PieceImage`, which uses **`next/image` with `fill`** inside a
-  fixed aspect-ratio box (portrait 3:4 / square / landscape 4:3), so grids stay
-  tidy and each device gets a resized WebP from the `sizes` hint; `priority`
-  makes the hero/product image eager. A matching swatch shows while loading or
-  if a photo is missing. Journal posts can set `image:` frontmatter for a real
-  cover. The logo is `/public/logo.png`; the **favicon is `src/app/icon.png`
-  (the logo roundel)** and the OG/Twitter card (`opengraph-image.tsx`) embeds
-  the same roundel on cream. Fonts use `next/font` (self-hosted, `display: swap`).
+- **Images:** piece photos are the pipeline's `/public/images/<name>-{480,960,1600}.webp`
+  files, rendered by `PieceImage` (`next/image` with `fill` in a 4:5 frame,
+  `object-contain`, a `sizes` hint on every use, `priority` + `fetchPriority`
+  on the first image of a page only). Padding around a photo that is not 4:5
+  is transparent, so the photo floats on any background; a missing photo is
+  simply empty space (the frame is `aria-hidden` when it has no `src`).
+  Journal posts can set `image:` frontmatter for a real cover. The logo is
+  `/public/logo.png`; the favicon is `src/app/icon.png` (the logo roundel)
+  and the OG/Twitter card (`opengraph-image.tsx`) embeds the same roundel on
+  ivory. Fonts use `next/font` (self-hosted, `display: swap`).
 - **Canonical:** root metadata sets `alternates.canonical: "./"`, resolving to
   each page's own URL.
 
@@ -443,7 +461,7 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
 - [x] Checkout: Stripe hosted Checkout + success/cancel flow + confirmation page
       + webhook scaffold (needs real keys in env to go live)
 - [x] September 2026: 26 new pieces + Bracelets category; gallery rebuild per
-      `design.md` (home, shop tabs, product page with lightbox and direct
+      `DESIGN.md` (home, shop tabs, product page with lightbox and direct
       Stripe buy link, About, Markets, green footer; basket and extras retired)
 - [x] Her name: Guljeet Kaur (`MAKER_NAME` in `src/lib/site.ts`)
 - [x] About bio, her words as supplied; her name is Guljeet Kaur

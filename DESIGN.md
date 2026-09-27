@@ -35,7 +35,7 @@ the name. Grid names are Fraunces 20 px.
 | Token | Hex | Use |
 |---|---|---|
 | `ivory` | `#F8F3E9` | Page background |
-| `ivory-deep` | `#EEE6D6` | Image frames behind uncropped photos, sold fade, form fields |
+| `ivory-deep` | `#EEE6D6` | Form fields, selection, quiet fills |
 | `ink` | `#241F1C` | Text, rules, the single filled element (focus ring uses green) |
 | `ink-soft` | `#5C554E` | Prices, materials, captions, secondary text (7.2:1 on ivory) |
 | `clay` | `#9A5B33` | Link hover, the Sold word, one warm accent |
@@ -62,14 +62,15 @@ no shadows, no tints of these anywhere.
 
 - Product photos are **4:5 portrait, uncropped, no overlays, no badges, no
   rounded corners, no shadow.** The frame is 4:5; a photo of another shape sits
-  inside it on `ivory-deep` at its natural proportions (contain), never cropped.
+  inside it at its natural proportions (contain), never cropped. The frame and
+  any padding are the page ivory, so nothing reads as a box: the photo floats.
   New photos shot at 4:5 fill the frame exactly.
 - Grid: 2 columns on mobile, 3 on desktop, every frame 4:5 so rows stay level.
 - Product page: one image, full column width on mobile, 55% of the row on
   desktop. If a second photo exists it sits directly beneath, same frame.
 - Home hero: one photo, 4:5 on mobile, 16:10 on desktop (the only place a crop
   is allowed, and only for that image). About: one portrait of her, 4:5.
-- Sold: the image at 55% opacity on `ivory-deep`; the word "Sold" in clay after
+- Sold: the image at 55% opacity; the word "Sold" in clay after
   the name; nothing else changes.
 - Delivery: next/image with `fill`, a `sizes` hint on every use, `priority` on
   the first image of a page only, lazy for the rest. Alt text is "Name, the

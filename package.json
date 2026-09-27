@@ -13,7 +13,8 @@
     "add-pieces": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/add-pieces.mjs",
     "check-pieces": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-pieces.mjs",
     "sold": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sold.mjs",
-    "unsold": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sold.mjs --unsold"
+    "unsold": "node --experimental-strip-types --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sold.mjs --unsold",
+    "screens": "node scripts/screens.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
@@ -33,6 +34,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.6",
+    "playwright": "^1.56.1",
     "sharp": "^0.35.4",
     "tailwindcss": "^4",
     "typescript": "^5"

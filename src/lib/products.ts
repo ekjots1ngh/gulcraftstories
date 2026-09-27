@@ -705,6 +705,7 @@ export const products: Product[] = [
     images: ["seed-bead-rings.jpg"],
     sold: false,
     madeOn: "2026-09-13",
+    collection: "Seed Bead Rings",
   },
   {
     id: "sky-stones",
