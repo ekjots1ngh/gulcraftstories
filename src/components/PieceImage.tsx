@@ -21,10 +21,10 @@ const isPipeline = (src: string) => src.startsWith("/images/") && !/\.[a-z]+$/i.
 
 /**
  * A photograph in a fixed-ratio frame, so grids stay level and nothing shifts
- * as it loads. The default frame is 4:5 portrait on ivory-deep. Piece photos
- * from the pipeline are already 4:5 and fill it exactly; with `fit="contain"`
- * a photo of another shape sits inside the frame at its own proportions,
- * never cropped. Without a `src` the frame is simply the flat ivory-deep.
+ * as it loads. The default frame is 4:5 portrait in the page ivory, so a
+ * photo of another shape (padded by the pipeline in the same ivory, or shown
+ * with `fit="contain"`) floats at its own proportions with no visible box,
+ * never cropped. Without a `src` the frame is simply empty space.
  *
  * Piece photos are served straight from /public at three widths (no runtime
  * resizing); other photos go through next/image's optimiser.
@@ -40,7 +40,7 @@ export function PieceImage({
   priority = false,
   sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
 }: {
-  /** Kept for callers that still pass one; the frame is flat ivory-deep. */
+  /** Kept for callers that still pass one; the frame is the page ivory. */
   swatch?: [string, string];
   src?: string;
   label?: string;
@@ -64,7 +64,7 @@ export function PieceImage({
           : "aspect-[4/5]";
   return (
     <div
-      className={cn("relative isolate overflow-hidden bg-ivory-deep", aspect, className)}
+      className={cn("relative isolate overflow-hidden bg-ivory", aspect, className)}
       {...(src ? {} : { role: "img", "aria-label": label ?? "photograph" })}
     >
       {src && (

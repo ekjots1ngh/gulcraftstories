@@ -67,11 +67,9 @@ export default async function Home() {
 
       {/* six pieces */}
       <section className="mx-auto w-full max-w-[1120px] px-5 pt-16 lg:px-10 lg:pt-24" aria-labelledby="pieces-heading">
-        <FadeIn>
-          <h2 id="pieces-heading" className="t-heading">
-            Pieces
-          </h2>
-        </FadeIn>
+        <h2 id="pieces-heading" className="t-heading">
+          Pieces
+        </h2>
         <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 md:gap-y-14">
           {pieces.map((p, i) =>
             i < 3 ? (
@@ -87,11 +85,11 @@ export default async function Home() {
             ),
           )}
         </ul>
-        <FadeIn className="mt-10">
+        <p className="mt-10">
           <Link href="/shop" className="action-link t-body">
             All {live.length} pieces
           </Link>
-        </FadeIn>
+        </p>
       </section>
 
       {/* where to find her next */}

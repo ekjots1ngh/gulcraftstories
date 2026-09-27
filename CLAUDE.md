@@ -125,7 +125,7 @@ the footer and focus ring; Fraunces for display, Hanken Grotesk for body;
 square corners, no shadows, no gradients, no badges or overlays on photos, no
 buttons (actions are text links), no uppercase labels, no em dashes, no
 exclamation marks. Photos sit in a **4:5 frame, uncropped** (`PieceImage`
-with `fit="contain"` on `ivory-deep`). Motion is a gentle fade-in on scroll
+with `fit="contain"` in the page ivory, so padding is invisible). Motion is a gentle fade-in on scroll
 (`FadeIn`) and a slight card lift, both off under `prefers-reduced-motion`.
 Component classes (`.t-display`, `.action-link`, `.nav-link`, `.fade-in`
 and so on) live in `@layer components` in `globals.css` so Tailwind
@@ -175,7 +175,7 @@ taxonomies type / edit / material, pounds prices, image objects with swatches,
 
 **Photos:** originals go in `/photos-inbox` named by slug; `npm run images`
 (sharp) writes `/public/images/<name>-{480,960,1600}.webp` at 4:5 without
-cropping (other shapes are padded on ivory-deep and reported), strips EXIF,
+cropping (other shapes are padded in the page ivory and reported), strips EXIF,
 warns under 1200 px, and moves originals to `/photos-archive` (both folders
 git-ignored). `PieceImage` serves those files through a next/image loader.
 
@@ -188,7 +188,7 @@ metal, textile & thread). `/shop` filters on any combination via `?type=`,
 
 ### Product cards and grids
 `ProductCard` (client) is the only card: the photo in a 4:5 frame (uncropped,
-`fit="contain"` on ivory-deep), the second photo fading in on hover if there
+`fit="contain"` in the page ivory), the second photo fading in on hover if there
 is one, then the name and a regular-weight price; sold pieces fade to 55% and
 say "Sold" in clay. Every grid on the site (shop, home, edits, archive,
 related pieces, journal posts) is the same two-column, three-on-desktop list

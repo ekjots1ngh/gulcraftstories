@@ -10,7 +10,7 @@
  *
  * Rules
  *   - 4:5 portrait is preserved with no cropping. A photo of another shape is
- *     padded on ivory-deep (#EEE6D6) to 4:5 and reported, so it can be re-shot.
+ *     padded in the page ivory (#F8F3E9) to 4:5 and reported, so it can be re-shot.
  *   - EXIF is stripped (orientation is applied first, so nothing turns sideways).
  *   - Sources under 1200 px wide are warned about (they will look soft on phones).
  *   - Originals move to /photos-archive when done.
@@ -28,7 +28,7 @@ const ARCHIVE = path.join(ROOT, "photos-archive");
 const OUT = path.join(ROOT, "public", "images");
 const WIDTHS = [480, 960, 1600];
 const RATIO = 4 / 5; // width / height
-const PAD = { r: 0xee, g: 0xe6, b: 0xd6 }; // ivory-deep #EEE6D6
+const PAD = { r: 0xf8, g: 0xf3, b: 0xe9 }; // the page ivory #F8F3E9, so padding is invisible
 const MIN_WIDTH = 1200;
 const ACCEPT = new Set([".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff"]);
 
