@@ -53,8 +53,6 @@ export const MATERIALS: Taxon<MaterialSlug>[] = [
 
 export type ProductImage = {
   alt: string;
-  /** Placeholder gradient shown if the photo is missing. */
-  swatch: [string, string];
   /** Base path of a pipeline photo, e.g. /images/bazaar-song (PieceImage adds the size). */
   src?: string;
 };
@@ -102,14 +100,6 @@ const TYPE_OF: Record<Category, TypeSlug> = {
   Clay: "clay",
 };
 
-const SWATCH_OF: Record<Category, [string, string]> = {
-  Necklaces: ["#0E5A5B", "#3B2A4A"],
-  Earrings: ["#E08A1E", "#0E5A5B"],
-  Bracelets: ["#7E5AA2", "#C9A24B"],
-  Crochet: ["#B5267A", "#4E9B6E"],
-  Clay: ["#9A5B33", "#C9A24B"],
-};
-
 const MATERIAL_KEYWORDS: [MaterialSlug, RegExp][] = [
   ["semi-precious-stones", /jasper|turquoise|agate|quartz|aventurine|carnelian|citrine|lapis|amethyst|labradorite|onyx|chalcedony|jade|coral|rhodonite|gemstone|mother-of-pearl|mookaite|stone|resin/i],
   ["ceramics", /ceramic|porcelain|clay|glazed/i],
@@ -144,7 +134,6 @@ function derive(p: Piece): Product {
     materialNote: p.materials.length ? `${p.materials.join(", ")}.` : "",
     images: p.images.map((file, i) => ({
       alt: `${p.name}, ${p.materials.slice(0, 3).join(", ").toLowerCase()}${i === 0 ? "" : ", another view"}`,
-      swatch: SWATCH_OF[p.category],
       src: `/images/${baseName(file)}`,
     })),
     status: p.sold ? "sold" : "available",
@@ -157,9 +146,9 @@ function derive(p: Piece): Product {
 
 export const products: Product[] = pieces.map(derive);
 
-/** Public URL of a piece's main photo at the largest pipeline size (og:image, JSON-LD). */
+/** Public URL of a piece's main photo, flattened on ivory for link previews (og:image, JSON-LD). */
 export const mainImageUrl = (p: Product, base = "") =>
-  p.images[0]?.src ? `${base}${p.images[0].src}-1600.webp` : `${base}/logo.png`;
+  p.images[0]?.src ? `${base}${p.images[0].src}-og.jpg` : `${base}/logo.png`;
 
 /* ---------- helpers ---------- */
 

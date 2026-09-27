@@ -10,7 +10,10 @@ import { chromium } from "playwright";
 import { mkdirSync } from "node:fs";
 
 const BASE = process.env.BASE ?? "http://localhost:3000";
-const paths = process.argv.slice(2).filter((a) => a.startsWith("/"));
+const paths = process.argv.slice(2).map((a) => {
+  if (/^https?:\/\//.test(a)) { const u = new URL(a); return u.pathname + u.search; }
+  return a.startsWith("/") ? a : `/${a}`;
+});
 if (paths.length === 0) paths.push("/");
 mkdirSync("screens", { recursive: true });
 
@@ -22,7 +25,8 @@ for (const [label, width, height, dpr] of [["phone", 390, 844, 2], ["desktop", 1
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => {
     // Vercel's analytics script only exists on Vercel; locally it 404s. Not a site error.
-    if (m.type() === "error" && !(m.location()?.url ?? "").includes("/_vercel/")) errors.push(`${m.text()} (${m.location()?.url ?? ""})`);
+    const loc = m.location()?.url ?? "";
+    if (m.type() === "error" && !loc.includes("/_vercel/") && !m.text().includes("/_vercel/")) errors.push(`${m.text()} (${loc})`);
   });
   for (const p of paths) {
     errors.length = 0;

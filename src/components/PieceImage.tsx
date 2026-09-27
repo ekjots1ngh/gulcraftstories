@@ -21,16 +21,15 @@ const isPipeline = (src: string) => src.startsWith("/images/") && !/\.[a-z]+$/i.
 
 /**
  * A photograph in a fixed-ratio frame, so grids stay level and nothing shifts
- * as it loads. The default frame is 4:5 portrait in the page ivory, so a
- * photo of another shape (padded by the pipeline in the same ivory, or shown
- * with `fit="contain"`) floats at its own proportions with no visible box,
- * never cropped. Without a `src` the frame is simply empty space.
+ * as it loads. The default frame is 4:5 portrait and has no background: the
+ * pipeline pads a photo of another shape with transparent pixels, so it
+ * floats at its own proportions on whatever is behind it, never cropped.
+ * Without a `src` the frame is reserved space, hidden from assistive tech.
  *
  * Piece photos are served straight from /public at three widths (no runtime
  * resizing); other photos go through next/image's optimiser.
  */
 export function PieceImage({
-  swatch,
   src,
   label,
   className,
@@ -40,8 +39,6 @@ export function PieceImage({
   priority = false,
   sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
 }: {
-  /** Kept for callers that still pass one; the frame is the page ivory. */
-  swatch?: [string, string];
   src?: string;
   label?: string;
   className?: string;
@@ -53,7 +50,6 @@ export function PieceImage({
   /** Responsive sizes hint (CSS widths per breakpoint). */
   sizes?: string;
 }) {
-  void swatch;
   const aspect =
     ratio === "square"
       ? "aspect-square"

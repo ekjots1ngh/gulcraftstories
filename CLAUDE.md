@@ -127,7 +127,8 @@ the footer and focus ring; Fraunces for display, Hanken Grotesk for body;
 square corners, no shadows, no gradients, no badges or overlays on photos, no
 buttons (actions are text links), no uppercase labels, no em dashes, no
 exclamation marks. Photos sit in a **4:5 frame, uncropped** (`PieceImage`
-with `fit="contain"`; padding is transparent, so the photo floats). Motion is a gentle fade-in on scroll
+with `fit="contain"`; padding is transparent, so the photo floats; the social
+image is the flattened `<name>-og.jpg`). Motion is a gentle fade-in on scroll
 (`FadeIn`) and a slight card lift, both off under `prefers-reduced-motion`.
 Component classes (`.t-display`, `.action-link`, `.nav-link`, `.fade-in`
 and so on) live in `@layer components` in `globals.css` so Tailwind
@@ -235,7 +236,7 @@ this edit" (`getPostsForEdit`); posts link back to pieces/edits in their body.
 ### Buying (there is no basket)
 Each piece is bought from its own page: `BuyLink` posts
 `{ items: [{ slug, quantity: 1 }] }` to `/api/checkout` and redirects to
-Stripe's hosted page. Collection pieces (magnets, clips, charms, ornaments)
+Stripe's hosted page. Collection pieces (magnets, clips, charms, ornaments, rings)
 get `adjustable_quantity` on the Stripe line item, so the buyer chooses how
 many there. Fixed sets (Chevron Sea Set, Reindeer Rounds) are simply one
 piece with one price. Mix-and-match offers ("any three ornaments for £24")
@@ -379,9 +380,9 @@ The header is not sticky and has no bar, cart or icons.
   text; reserve `marigold` for fills and large/decorative use, `gold` for
   dividers/icons only. Other accents (peacock, rani, ink) already pass on cream.
 - **A11y:** a "Skip to content" link (`.skip-link`) targets `#main-content` in
-  the layout; form fields carry labels/`aria-label`; the quick-view dialog moves
-  focus and closes on Escape; decorative motifs are `aria-hidden`; `PieceImage`
-  exposes `role="img"` + alt.
+  the layout; form fields have visible labels; the lightbox holds focus, works
+  with arrow keys and closes on Escape; `PieceImage` passes descriptive alt
+  text to its image and an empty frame is `aria-hidden`.
 - **SEO:** root `metadata` sets a title template (`%s · GulCraftStories`),
   description, keywords, Open Graph + Twitter (`summary_large_image`). The social
   card and favicon are **generated** by `src/app/opengraph-image.tsx` /

@@ -134,7 +134,7 @@ export async function POST(req: NextRequest) {
 
     line_items.push({
       quantity: 1, // one of one
-      // Collection pieces (magnets, clips, charms) exist in small numbers, so
+      // Collection pieces (magnets, clips, charms, ornaments, rings) exist in small numbers, so
       // the buyer picks how many on Stripe's page. One-of-one pieces cannot.
       ...(isOneOfOne(product)
         ? {}
