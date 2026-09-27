@@ -64,8 +64,10 @@ export function PieceImage({
           : "aspect-[4/5]";
   return (
     <div
-      className={cn("relative isolate overflow-hidden bg-ivory", aspect, className)}
-      {...(src ? {} : { role: "img", "aria-label": label ?? "photograph" })}
+      className={cn("relative isolate overflow-hidden", aspect, className)}
+      // With nothing to show, the frame is only reserved space: hide it from
+      // assistive tech rather than announce a photograph that is not there.
+      {...(src ? {} : { "aria-hidden": true })}
     >
       {src && (
         <Image

@@ -10,7 +10,7 @@
  *
  * Rules
  *   - 4:5 portrait is preserved with no cropping. A photo of another shape is
- *     padded in the page ivory (#F8F3E9) to 4:5 and reported, so it can be re-shot.
+ *     padded with transparent pixels to 4:5 and reported, so it can be re-shot.
  *   - EXIF is stripped (orientation is applied first, so nothing turns sideways).
  *   - Sources under 1200 px wide are warned about (they will look soft on phones).
  *   - Originals move to /photos-archive when done.
@@ -28,7 +28,7 @@ const ARCHIVE = path.join(ROOT, "photos-archive");
 const OUT = path.join(ROOT, "public", "images");
 const WIDTHS = [480, 960, 1600];
 const RATIO = 4 / 5; // width / height
-const PAD = { r: 0xf8, g: 0xf3, b: 0xe9 }; // the page ivory #F8F3E9, so padding is invisible
+const PAD = { r: 0, g: 0, b: 0, alpha: 0 }; // transparent: the photo floats on whatever is behind it
 const MIN_WIDTH = 1200;
 const ACCEPT = new Set([".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff"]);
 
@@ -83,7 +83,7 @@ async function main() {
 
     const top = Math.round((canvasH - h) / 2);
     const left = Math.round((canvasW - w) / 2);
-    const framed = image.extend({
+    const framed = image.ensureAlpha().extend({
       top,
       bottom: canvasH - h - top,
       left,
@@ -96,7 +96,7 @@ async function main() {
       const target = Math.min(width, canvasW); // never upscale
       await sharp(framedBuffer)
         .resize({ width: target, height: Math.round(target / RATIO), fit: "fill" })
-        .webp({ quality: 82, effort: 5 })
+        .webp({ quality: 82, effort: 5, alphaQuality: 100 })
         .toFile(path.join(OUT, `${base}-${width}.webp`));
     }
 

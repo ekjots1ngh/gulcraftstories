@@ -12,7 +12,7 @@
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import {
-  CATEGORIES, NAME_MAX, loadProducts, slugify, normaliseCategory, toPence,
+  CATEGORIES, loadProducts, slugify, normaliseCategory, toPence,
   splitList, today, appendEntries, validateCandidate, formatEntry,
 } from "./lib/pieces.mjs";
 

@@ -19,7 +19,9 @@ conventions of the GulCraftStories storefront. Read it before making changes.
 - The site is hosted on Vercel; make sure `npm run build` passes before
   committing.
 - Check any page you change at phone (390 px) and desktop (1440 px) width
-  with Playwright before calling it done.
+  with Playwright before calling it done: `npm run screens -- /shop /about`
+  (first time: `npx playwright install chromium`) writes both widths to
+  `screens/`.
 
 ## 0. The one rule that overrides everything
 
@@ -125,7 +127,7 @@ the footer and focus ring; Fraunces for display, Hanken Grotesk for body;
 square corners, no shadows, no gradients, no badges or overlays on photos, no
 buttons (actions are text links), no uppercase labels, no em dashes, no
 exclamation marks. Photos sit in a **4:5 frame, uncropped** (`PieceImage`
-with `fit="contain"` in the page ivory, so padding is invisible). Motion is a gentle fade-in on scroll
+with `fit="contain"`; padding is transparent, so the photo floats). Motion is a gentle fade-in on scroll
 (`FadeIn`) and a slight card lift, both off under `prefers-reduced-motion`.
 Component classes (`.t-display`, `.action-link`, `.nav-link`, `.fade-in`
 and so on) live in `@layer components` in `globals.css` so Tailwind
@@ -175,7 +177,7 @@ taxonomies type / edit / material, pounds prices, image objects with swatches,
 
 **Photos:** originals go in `/photos-inbox` named by slug; `npm run images`
 (sharp) writes `/public/images/<name>-{480,960,1600}.webp` at 4:5 without
-cropping (other shapes are padded in the page ivory and reported), strips EXIF,
+cropping (other shapes are padded with transparent pixels and reported), strips EXIF,
 warns under 1200 px, and moves originals to `/photos-archive` (both folders
 git-ignored). `PieceImage` serves those files through a next/image loader.
 
@@ -188,7 +190,7 @@ metal, textile & thread). `/shop` filters on any combination via `?type=`,
 
 ### Product cards and grids
 `ProductCard` (client) is the only card: the photo in a 4:5 frame (uncropped,
-`fit="contain"` in the page ivory), the second photo fading in on hover if there
+`fit="contain"`, transparent padding), the second photo fading in on hover if there
 is one, then the name and a regular-weight price; sold pieces fade to 55% and
 say "Sold" in clay. Every grid on the site (shop, home, edits, archive,
 related pieces, journal posts) is the same two-column, three-on-desktop list
@@ -385,15 +387,16 @@ The header is not sticky and has no bar, cart or icons.
   card and favicon are **generated** by `src/app/opengraph-image.tsx` /
   `twitter-image.tsx` / `icon.tsx` (next/og) from the brand motif — no static
   assets. Draft pages set `robots: { index: false }`.
-- **Images:** real product photos live in `/public/products/<slug>.jpg` and are
-  rendered by `PieceImage`, which uses **`next/image` with `fill`** inside a
-  fixed aspect-ratio box (portrait 3:4 / square / landscape 4:3), so grids stay
-  tidy and each device gets a resized WebP from the `sizes` hint; `priority`
-  makes the hero/product image eager. A matching swatch shows while loading or
-  if a photo is missing. Journal posts can set `image:` frontmatter for a real
-  cover. The logo is `/public/logo.png`; the **favicon is `src/app/icon.png`
-  (the logo roundel)** and the OG/Twitter card (`opengraph-image.tsx`) embeds
-  the same roundel on cream. Fonts use `next/font` (self-hosted, `display: swap`).
+- **Images:** piece photos are the pipeline's `/public/images/<name>-{480,960,1600}.webp`
+  files, rendered by `PieceImage` (`next/image` with `fill` in a 4:5 frame,
+  `object-contain`, a `sizes` hint on every use, `priority` + `fetchPriority`
+  on the first image of a page only). Padding around a photo that is not 4:5
+  is transparent, so the photo floats on any background; a missing photo is
+  simply empty space (the frame is `aria-hidden` when it has no `src`).
+  Journal posts can set `image:` frontmatter for a real cover. The logo is
+  `/public/logo.png`; the favicon is `src/app/icon.png` (the logo roundel)
+  and the OG/Twitter card (`opengraph-image.tsx`) embeds the same roundel on
+  ivory. Fonts use `next/font` (self-hosted, `display: swap`).
 - **Canonical:** root metadata sets `alternates.canonical: "./"`, resolving to
   each page's own URL.
 

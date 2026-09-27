@@ -35,7 +35,7 @@ the name. Grid names are Fraunces 20 px.
 | Token | Hex | Use |
 |---|---|---|
 | `ivory` | `#F8F3E9` | Page background |
-| `ivory-deep` | `#EEE6D6` | Form fields, the print kit frames, quiet fills |
+| `ivory-deep` | `#EEE6D6` | Form fields, selection, quiet fills |
 | `ink` | `#241F1C` | Text, rules, the single filled element (focus ring uses green) |
 | `ink-soft` | `#5C554E` | Prices, materials, captions, secondary text (7.2:1 on ivory) |
 | `clay` | `#9A5B33` | Link hover, the Sold word, one warm accent |

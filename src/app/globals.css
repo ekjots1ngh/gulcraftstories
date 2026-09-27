@@ -14,7 +14,7 @@
 @theme {
   /* --- Palette --- */
   --color-ivory: #f8f3e9;        /* page background */
-  --color-ivory-deep: #eee6d6;   /* image frames, sold fade, form fields */
+  --color-ivory-deep: #eee6d6;   /* form fields, selection, quiet fills */
   --color-ink: #241f1c;          /* text, rules */
   --color-ink-soft: #5c554e;     /* prices, materials, captions */
   --color-clay: #9a5b33;         /* link hover, the Sold word, one warm accent */
