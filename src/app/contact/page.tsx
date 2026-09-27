@@ -1,66 +1,63 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/Container";
-import { MotifDivider } from "@/components/MotifDivider";
+import { PageShell, PageIntro } from "@/components/Page";
 import { ContactForm } from "@/components/ContactForm";
 import { SITE, whatsappLink } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with the maker behind GulCraftStories by email, WhatsApp, phone, or Instagram. A real person reads every message.",
+    "Get in touch with Guljeet Kaur, who makes GulCraftStories, by email, WhatsApp, phone or Instagram. A real person reads every message.",
 };
 
 export default function ContactPage() {
   return (
-    <main className="flex-1">
-      <Container size="narrow" className="py-12 text-center sm:py-16">
-        <span className="eyebrow text-peacock">Say hello</span>
-        <h1 className="mt-3 text-4xl leading-tight sm:text-5xl">Get in touch</h1>
-        <p className="mx-auto mt-4 max-w-md text-lg leading-relaxed text-ink-soft">
-          A real person reads every message, usually the maker herself. The
-          quickest answers come via WhatsApp.
-        </p>
-        <MotifDivider className="mt-8" />
-      </Container>
-
-      <Container size="narrow" className="pb-16">
-        <div className="grid gap-8 sm:grid-cols-2">
-          {/* details */}
-          <div className="flex flex-col gap-5">
-            <Detail label="Email">
-              <a href={`mailto:${SITE.email}`} className="underline hover:text-marigold-ink">
+    <PageShell>
+      <PageIntro
+        title="Contact"
+        lead="A real person reads every message, usually the maker herself. The quickest answers come by WhatsApp."
+      />
+      <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+        <dl className="t-body flex max-w-[620px] flex-col gap-5">
+          <div>
+            <dt className="t-small text-ink-soft">Email</dt>
+            <dd>
+              <a href={`mailto:${SITE.email}`} className="inline-link">
                 {SITE.email}
               </a>
-            </Detail>
-            <Detail label="WhatsApp">
-              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="underline hover:text-marigold-ink">
+            </dd>
+          </div>
+          <div>
+            <dt className="t-small text-ink-soft">WhatsApp</dt>
+            <dd>
+              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="inline-link">
                 Message us on WhatsApp
               </a>
-            </Detail>
-            <Detail label="Phone">
-              <a href="tel:+447466397162" className="underline hover:text-marigold-ink">
+            </dd>
+          </div>
+          <div>
+            <dt className="t-small text-ink-soft">Phone</dt>
+            <dd>
+              <a href="tel:+447466397162" className="inline-link">
                 07466 397162
               </a>
-            </Detail>
-            <Detail label="Instagram">
-              <a href={SITE.instagram} className="underline hover:text-marigold-ink">@gulcraftstories</a>
-            </Detail>
-            <Detail label="Hours">Replies Monday to Friday, usually within one working day.</Detail>
+            </dd>
           </div>
+          <div>
+            <dt className="t-small text-ink-soft">Instagram</dt>
+            <dd>
+              <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="inline-link">
+                @gulcraftstories
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt className="t-small text-ink-soft">Replies</dt>
+            <dd>Monday to Friday, usually within one working day.</dd>
+          </div>
+        </dl>
 
-          {/* form */}
-          <ContactForm />
-        </div>
-      </Container>
-    </main>
-  );
-}
-
-function Detail({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <p className="eyebrow text-marigold-ink">{label}</p>
-      <p className="mt-1 leading-relaxed text-ink">{children}</p>
-    </div>
+        <ContactForm />
+      </div>
+    </PageShell>
   );
 }

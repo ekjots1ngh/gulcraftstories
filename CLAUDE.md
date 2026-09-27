@@ -172,37 +172,27 @@ metal, textile & thread). `/shop` filters on any combination via `?type=`,
 `?edit=`, `?material=` (AND); the header mega-menu links into each axis
 (type/material → shop filters, edit → the immersive edit page).
 
-### Filtering, sorting & product cards
-`src/components/ProductBrowser.tsx` is a reusable **client** component that
-filters + sorts a product list **in-memory** (the catalogue is small and already
-on the page, so it's instant on mobile — no navigation/refetch). It powers
-`/shop`, each `/edit/[slug]`, and `/archive`. Filters: **availability**
-(available/sold), **price** buckets, **material**, **type**, **collection**
-(`showEdit`/`showAvailability` toggle which apply). Sorts: **featured, newest,
-price ↑/↓** (`SortKey`/`SORTS`/`sortProducts` + per-piece `addedAt`). The filter
-panel is collapsible on mobile, inline on desktop; deep links (e.g. mega-menu
-`?type=`) seed the initial state.
-
-Upgraded `ProductCard` (client): crossfades to a **second image on hover**, shows
-a clear **"One of one" / "Sold"** badge, and opens a lightweight **quick-view**
-dialog (`QuickView.tsx` — image, materials, add-to-cart, link to full story;
-only mounts when open).
+### Product cards and grids
+`ProductCard` (client) is the only card: the photo in a 4:5 frame (uncropped,
+`fit="contain"` on ivory-deep), the second photo fading in on hover if there
+is one, then the name and a regular-weight price; sold pieces fade to 55% and
+say "Sold" in clay. Every grid on the site (shop, home, edits, archive,
+related pieces, journal posts) is the same two-column, three-on-desktop list
+of `ProductCard`s. There are no filters, sort controls, badges or quick view.
 
 ### Archive (sold pieces as portfolio)
-`/archive` shows every **sold** piece as a portfolio — kept on show, never hidden
-— so visitors see her range/style even after pieces are gone. Uses `getArchive()`
-+ `ProductBrowser` (availability filter hidden, all sold). Linked from the nav and
-footer. Reinforces the one-of-a-kind promise: gone, but not forgotten.
+`/archive` shows every **sold** piece as a portfolio (kept on show, never
+hidden): a title, one paragraph, the count, and the grid of faded cards.
+Linked from the footer only.
 
-### Edits (curated, evolving — not restocked lines)
+### Edits (curated, evolving, not restocked lines)
 Five named edits: **Gulzar** (garden/bloom), **Mitti** (earth/clay), **Dhaaga**
-(thread/crochet), **Roshni** (light), **Saanjh** (dusk). Each has an immersive
-page at `/edit/[slug]` (full-bleed hero, written story, pull quote, an
-"evolving, not restocked" note, then its current pieces, then the other edits).
-Editorial copy lives in **`src/lib/edits.ts`** (`editContent` keyed by `EditSlug`)
-— swap the `tagline`/`story`/`pullQuote` there to update copy in one place. Edits
-are linked from the homepage ("The Edits" section) and the mega-menu. A piece's
-`edit` field assigns it; as one-of-a-kind pieces sell, an edit's contents change.
+(thread/crochet), **Roshni** (light), **Saanjh** (dusk). Each page at
+`/edit/[slug]` is the name, its meaning, the written story with a pull quote,
+the pieces in it now (sold-synced), stories from the edit, and the other edits
+as a text list. Copy lives in **`src/lib/edits.ts`** (`editContent` keyed by
+`EditSlug`); membership in `src/lib/edit-pieces.ts`. Linked from the footer
+only.
 
 ### Journal / "Stories" (the craft journal)
 Editorial long-form lives in **markdown files** under `content/journal/*.md`.
@@ -211,7 +201,9 @@ Adding a post = drop in a new `.md` with frontmatter: `title`, `date`, `kind`,
 edit slugs), `featured` (pin as headline), `status` (`upcoming` stubs a not-yet-
 written post — listed as "coming soon", no page). Read time is computed
 automatically. Parsed by `src/lib/journal.ts` (gray-matter + marked) at build
-time; rendered through the calm `.story-prose` styles in `globals.css`.
+time; rendered through the calm `.story-prose` styles in `globals.css`. The
+index is a plain list (title, date, read time, excerpt); a post is title,
+cover photo if it has a real one, prose, and the pieces it mentions.
 
 Published posts: **Why It's Called Gul**, **One of a Kind** (the featured
 headline), **The Hours Inside One Piece**. Four upcoming stubs are listed as
@@ -296,10 +288,15 @@ issued at fulfilment (webhook) and emailed. Same graceful "not configured" path
 as the main checkout when keys are unset.
 
 ### Support pages
+All text pages (`/shipping`, `/returns`, `/international`, `/faq`, `/contact`,
+`/care`, `/size-guide`, `/gift-cards`, `/bespoke`, `/privacy`, the journal)
+share `PageShell` / `PageIntro` / `Prose` from `src/components/Page.tsx`: the
+site gutter, a Display title, an optional lead and a 620 px reading column.
+Forms use `.field` inputs with visible labels and an action-link submit.
 `/shipping`, `/returns`, `/international`, `/faq`, `/contact` are **published**
 with the founder's real details (dispatch within a week, 14-day returns, buyer
 pays customs, phone 07466 397162, hand-delivery tiers London £99 / worldwide
-£5,000). `DraftBanner` / `ReviewNote` remain as components for future drafts.
+£5,000, mentioned in one plain paragraph on the delivery page).
 Background on the decisions that were flagged while drafting:
 - **Returns/exchange** is the sensitive one. "One of a kind" is a brand promise,
   **not** a legal basis to refuse returns: ready-made online sales keep the UK
@@ -457,6 +454,8 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
 - [x] Offer lines on product pages (message us on Instagram) + PAYMENT-LINKS.md;
       paste each Stripe Payment Link into `src/lib/offers.ts` when created
 - [x] Market kit (QR files, A5 stall sign, A4 price cards), MARKET-DAY.md, /privacy
+- [x] Every footer-linked page restyled to the gallery system (no eyebrows, motifs,
+      cards, buttons or gradients anywhere); legacy components removed
 - [ ] Founder: create the three Payment Links; confirm the Formspree env vars
       in Vercel; send a full-resolution portrait
 

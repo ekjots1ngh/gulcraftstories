@@ -30,12 +30,7 @@ export function BespokeForm() {
       const res = await fetch(ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          message: idea,
-          _subject: `Bespoke enquiry from ${name}`,
-        }),
+        body: JSON.stringify({ name, email, message: idea, _subject: `Bespoke enquiry from ${name}` }),
       });
       setState(res.ok ? "sent" : "error");
     } catch {
@@ -45,82 +40,59 @@ export function BespokeForm() {
 
   if (state === "sent") {
     return (
-      <div className="flex flex-col items-center gap-3 rounded-lg border border-gold/40 bg-cream p-8 text-center">
-        <h2 className="font-display text-xl text-peacock">Your enquiry is on its way</h2>
-        <p className="max-w-sm text-sm leading-relaxed text-ink-soft">
-          Thank you, {name.split(" ")[0] || "friend"}. A real person reads every
-          message, we&apos;ll reply to {email} within a couple of days.
+      <div>
+        <h2 className="t-heading">Your enquiry is on its way</h2>
+        <p className="t-body mt-3 text-ink-soft">
+          Thank you, {name.split(" ")[0] || "friend"}. A real person reads every message; we will
+          reply to {email} within a couple of days.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg border border-gold/40 bg-cream p-6 sm:p-7">
-      <h2 className="font-display text-xl">Start an enquiry</h2>
-      <form
-        className="flex flex-col gap-3"
-        onSubmit={(e) => {
-          e.preventDefault();
-          submit();
-        }}
-      >
-        <input
-          type="text"
-          required
-          aria-label="Your name"
-          placeholder="Your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none"
-        />
-        <input
-          type="email"
-          required
-          aria-label="Your email"
-          placeholder="Your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none"
-        />
-        <textarea
-          rows={5}
-          required
-          aria-label="About your piece"
-          placeholder="Tell me about the piece you have in mind, materials, colours, occasion, timeline…"
-          value={idea}
-          onChange={(e) => setIdea(e.target.value)}
-          className="rounded-sm border border-ink/20 bg-cream px-4 py-3 text-sm focus:border-ink focus:outline-none"
-        />
-        <button
-          type="submit"
-          disabled={state === "sending"}
-          className="rounded-sm bg-peacock px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-peacock-deep disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {state === "sending" ? "Sending…" : "Send enquiry"}
-        </button>
-        {state === "error" && (
-          <p role="alert" className="text-sm text-rani">
-            Sorry, that didn&apos;t send. Please email{" "}
-            <a href={`mailto:${SITE.email}`} className="underline">{SITE.email}</a>{" "}
-            or try WhatsApp below.
-          </p>
-        )}
-      </form>
-      <p className="text-center text-xs text-ink-soft">
+    <form
+      className="flex flex-col gap-5"
+      onSubmit={(e) => {
+        e.preventDefault();
+        submit();
+      }}
+    >
+      <h2 className="t-heading">Start an enquiry</h2>
+      <label className="flex flex-col gap-2">
+        <span className="t-small text-ink-soft">Your name</span>
+        <input type="text" required value={name} onChange={(e) => setName(e.target.value)} className="field" />
+      </label>
+      <label className="flex flex-col gap-2">
+        <span className="t-small text-ink-soft">Your email</span>
+        <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="field" />
+      </label>
+      <label className="flex flex-col gap-2">
+        <span className="t-small text-ink-soft">The piece you have in mind: materials, colours, occasion, timeline</span>
+        <textarea rows={6} required value={idea} onChange={(e) => setIdea(e.target.value)} className="field" />
+      </label>
+      <button type="submit" aria-disabled={state === "sending"} className="action-link t-body self-start">
+        {state === "sending" ? "Sending" : "Send enquiry"}
+      </button>
+      {state === "error" && (
+        <p role="alert" className="t-small text-clay">
+          Sorry, that did not send. Please email{" "}
+          <a href={`mailto:${SITE.email}`} className="inline-link">
+            {SITE.email}
+          </a>{" "}
+          or message on WhatsApp.
+        </p>
+      )}
+      <p className="t-small text-ink-soft">
         {ENDPOINT
           ? "Your enquiry goes straight to the studio inbox."
           : "This opens your email app with the enquiry ready to send."}{" "}
-        Prefer to chat?{" "}
-        <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="underline hover:text-marigold-ink">
+        Prefer to talk it through?{" "}
+        <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="inline-link">
           Message on WhatsApp
-        </a>
-        {" "}or email{" "}
-        <a href={`mailto:${SITE.email}`} className="underline hover:text-marigold-ink">
-          {SITE.email}
         </a>
         .
       </p>
-    </div>
+    </form>
   );
 }

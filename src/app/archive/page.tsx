@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/Container";
-import { MotifDivider, MotifMark } from "@/components/MotifDivider";
-import { ProductBrowser } from "@/components/ProductBrowser";
+import Link from "next/link";
+import { ProductCard } from "@/components/ProductCard";
 import { products, isOneOfOne } from "@/lib/catalogue";
 import { getSoldSlugs } from "@/lib/sold";
 
 export const metadata: Metadata = {
   title: "Archive",
   description:
-    "A portfolio of pieces that have found their homes. Kept here, not hidden, so you can see the range and style, even when a piece is gone.",
+    "Pieces that have found their homes. Kept on show, not hidden, so you can see the range and the way the work has grown.",
 };
 
 // Include pieces sold through Stripe, re-checked at least once a minute.
@@ -16,7 +15,6 @@ export const revalidate = 60;
 
 export default async function ArchivePage() {
   const soldSlugs = await getSoldSlugs();
-  // Sold = permanently sold in the catalogue, or paid for through Stripe.
   const archive = products
     .filter((p) => p.status === "sold" || (isOneOfOne(p) && soldSlugs.includes(p.slug)))
     .map((p) => ({ ...p, status: "sold" as const }))
@@ -24,44 +22,37 @@ export default async function ArchivePage() {
 
   return (
     <main className="flex-1">
-      {/* hero */}
-      <section className="relative isolate overflow-hidden bg-aubergine text-cream">
-        <div className="jaali-bg absolute inset-0 -z-10 opacity-60" />
-        <div className="absolute inset-0 -z-10 grid place-items-center opacity-[0.07]">
-          <MotifMark size={460} color="var(--color-gold-soft)" />
-        </div>
-        <Container size="narrow" className="flex flex-col items-center gap-5 py-20 text-center sm:py-28">
-          <span className="eyebrow text-gold-soft">A portfolio, not a shop</span>
-          <h1 className="font-display text-[2.8rem] leading-[1] sm:text-6xl">The Archive</h1>
-          <p className="max-w-lg text-lg leading-relaxed text-cream/85">
-            Every piece here has found its home. Because each one is one of a kind
-            and never remade, it can&apos;t be bought again, but we keep it on
-            show, so you can see the range, the materials, and the way her style
-            has grown over time.
+      <div className="mx-auto w-full max-w-[1120px] px-5 pt-2 lg:px-10 lg:pt-6">
+        <header className="max-w-[620px]">
+          <h1 className="t-display">Archive</h1>
+          <p className="t-body mt-4 text-ink-soft">
+            Every piece here has found its home. Because each one is made once and never remade it
+            cannot be bought again, but it stays on show, so you can see the range, the materials
+            and the way the work has grown.
           </p>
-          <p className="font-display text-xl italic text-cream/90">
-            Gone, but not forgotten.
+          <p className="t-small mt-4 text-ink-soft">
+            {archive.length} {archive.length === 1 ? "piece" : "pieces"}
           </p>
-        </Container>
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
-      </section>
-
-      <Container className="py-14 sm:py-20">
-        <div className="flex flex-col items-center gap-2 text-center">
-          <span className="eyebrow text-rani">{archive.length} pieces archived</span>
-          <h2 className="text-2xl sm:text-3xl">Browse her range</h2>
-        </div>
-        <MotifDivider className="my-10" />
+        </header>
 
         {archive.length > 0 ? (
-          // All archived pieces are sold, so availability filtering is hidden.
-          <ProductBrowser products={archive} showAvailability={false} />
+          <ul className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 md:gap-y-14">
+            {archive.map((p, i) => (
+              <li key={p.slug}>
+                <ProductCard product={p} priority={i < 2} />
+              </li>
+            ))}
+          </ul>
         ) : (
-          <p className="text-center text-ink-soft">
-            Nothing in the archive yet, every piece is still available.
-          </p>
+          <p className="t-body mt-10 max-w-[620px]">Nothing in the archive yet; every piece is still available.</p>
         )}
-      </Container>
+
+        <p className="mt-12">
+          <Link href="/shop" className="action-link t-body">
+            Pieces still available
+          </Link>
+        </p>
+      </div>
     </main>
   );
 }

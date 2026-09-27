@@ -1,189 +1,120 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Container } from "@/components/Container";
-import { Button } from "@/components/Button";
-import { MotifDivider, MotifMark } from "@/components/MotifDivider";
-import { ProductBrowser } from "@/components/ProductBrowser";
-import { PieceImage } from "@/components/PieceImage";
-import { JournalCard } from "@/components/JournalCard";
-import { EDITS, getProducts, ONE_OF_ONE } from "@/lib/catalogue";
+import { ProductCard } from "@/components/ProductCard";
+import { EDITS, getProducts, isOneOfOne } from "@/lib/catalogue";
 import { editContent } from "@/lib/edits";
 import { getPostsForEdit } from "@/lib/journal";
+import { getSoldSlugs } from "@/lib/sold";
+
+export const revalidate = 60;
 
 export function generateStaticParams() {
   return EDITS.map((e) => ({ slug: e.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const edit = EDITS.find((e) => e.slug === slug);
   if (!edit) return { title: "Edit not found" };
-  const c = editContent[edit.slug];
-  return { title: `${edit.name}, an edit`, description: c.meaning };
+  return { title: `${edit.name}, an edit`, description: editContent[edit.slug].meaning };
 }
 
-export default async function EditPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+/** An edit: its story, then the pieces in it right now, then the other edits. */
+export default async function EditPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const edit = EDITS.find((e) => e.slug === slug);
   if (!edit) notFound();
 
   const content = editContent[edit.slug];
-  const pieces = getProducts({ edit: edit.slug });
+  const soldSlugs = await getSoldSlugs();
+  const pieces = getProducts({ edit: edit.slug }).map((p) =>
+    isOneOfOne(p) && soldSlugs.includes(p.slug) ? { ...p, status: "sold" as const } : p,
+  );
   const stories = getPostsForEdit(edit.slug);
-  const available = pieces.filter((p) => p.status === "available");
   const others = EDITS.filter((e) => e.slug !== edit.slug);
 
   return (
     <main className="flex-1">
-      {/* ───────── HERO (immersive) ───────── */}
-      <section
-        className="relative isolate overflow-hidden text-cream"
-        style={{
-          backgroundImage: `radial-gradient(120% 120% at 70% 10%, ${content.heroSwatch[0]} 0%, ${content.heroSwatch[1]} 100%)`,
-        }}
-      >
-        <div className="absolute inset-0 -z-10 grid place-items-center opacity-[0.08]">
-          <MotifMark size={520} color="var(--color-cream)" />
-        </div>
-        <Container className="flex min-h-[62vh] flex-col items-center justify-center gap-5 py-20 text-center sm:min-h-[68vh]">
-          <span className="eyebrow text-cream/80">An evolving edit</span>
-          <h1 className="font-display text-[3.4rem] leading-[0.95] sm:text-8xl">{edit.name}</h1>
-          <p className="max-w-md text-lg leading-relaxed text-cream/90">{content.meaning}</p>
-          <p className="font-display text-xl italic text-cream/90">{content.tagline}</p>
-        </Container>
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
-      </section>
+      <div className="mx-auto w-full max-w-[1120px] px-5 pt-2 lg:px-10 lg:pt-6">
+        <header className="max-w-[620px]">
+          <h1 className="t-display">{edit.name}</h1>
+          <p className="t-body mt-4 text-ink-soft">{content.meaning}</p>
+        </header>
 
-      {/* ───────── THE STORY ───────── */}
-      <section className="py-16 sm:py-24">
-        <Container className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
-          <div className="order-2 md:order-1">
-            <span className="eyebrow text-rani">The story of this edit</span>
-            <div className="mt-5 flex flex-col gap-5">
-              {content.story.map((para, i) => (
-                <p
-                  key={i}
-                  className="text-lg leading-[1.85] text-ink first:text-xl"
-                >
-                  {para}
-                </p>
-              ))}
-            </div>
-          </div>
-          <div className="order-1 md:order-2">
-            <PieceImage
-              swatch={content.storySwatch}
-              label={`${edit.name}, the edit`}
-              ratio="portrait"
-              className="shadow-[var(--shadow-soft)]"
-            />
-          </div>
-        </Container>
-
-        {/* pull quote */}
-        <Container size="narrow" className="mt-8 text-center">
-          <MotifDivider className="mb-8" />
-          <blockquote className="font-display text-2xl leading-relaxed text-peacock sm:text-3xl">
-            &ldquo;{content.pullQuote}&rdquo;
+        <div className="story-prose mt-8 max-w-[620px]">
+          {content.story.map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
+          <blockquote>
+            <p>{content.pullQuote}</p>
           </blockquote>
-        </Container>
-      </section>
-
-      {/* ───────── EVOLVING, NOT RESTOCKED ───────── */}
-      <section className="jaali-bg bg-aubergine py-12 text-cream">
-        <Container className="flex flex-col items-center gap-3 text-center">
-          <MotifMark size={26} color="var(--color-gold-soft)" />
-          <p className="max-w-xl text-base leading-relaxed text-cream/90">
-            An edit is a living thing, not a restocked line. Every piece is one of
-            one, as each finds its home it&apos;s gone for good, and the edit
-            slowly becomes something new. {ONE_OF_ONE}.
+          <p className="t-small text-ink-soft">
+            An edit is a living thing, not a restocked line. Every piece is made once; as each finds its
+            home the edit slowly becomes something new.
           </p>
-        </Container>
-      </section>
+        </div>
 
-      {/* ───────── PIECES (right now) ───────── */}
-      <section className="py-16 sm:py-24">
-        <Container>
-          <div className="flex flex-col items-center gap-2 text-center">
-            <span className="eyebrow text-peacock" style={{ color: edit.accent }}>
-              {available.length > 0 ? "In this edit, right now" : "Between pieces"}
-            </span>
-            <h2 className="text-3xl leading-tight sm:text-4xl">
-              {edit.name}
-              <span className="text-ink-soft">
-                {" "}· {pieces.length} {pieces.length === 1 ? "piece" : "pieces"}
-              </span>
-            </h2>
-          </div>
-          <MotifDivider className="my-10" />
-
+        <section className="mt-16 lg:mt-24" aria-labelledby="edit-pieces">
+          <h2 id="edit-pieces" className="t-heading">
+            In {edit.name} now
+          </h2>
+          <p className="t-small mt-2 text-ink-soft">
+            {pieces.length} {pieces.length === 1 ? "piece" : "pieces"}
+          </p>
           {pieces.length > 0 ? (
-            <ProductBrowser products={pieces} showEdit={false} />
+            <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 md:gap-y-14">
+              {pieces.map((p, i) => (
+                <li key={p.slug}>
+                  <ProductCard product={p} priority={i < 2} />
+                </li>
+              ))}
+            </ul>
           ) : (
-            <p className="mx-auto max-w-md text-center text-ink-soft">
-              This edit is resting between pieces just now, new work opens here
-              often. Follow along on Instagram, or browse the other edits below.
+            <p className="t-body mt-6 max-w-[620px]">
+              This edit is resting between pieces just now. New work opens here often.
             </p>
           )}
-
-          <div className="mt-12 text-center">
-            <Button href="/shop" variant="outline">
-              See every piece
-            </Button>
-          </div>
-        </Container>
-      </section>
-
-      {/* ───────── STORIES FROM THIS EDIT ───────── */}
-      {stories.length > 0 && (
-        <section className="border-t border-gold/40 py-14 sm:py-20">
-          <Container>
-            <div className="flex flex-col items-center gap-2 text-center">
-              <span className="eyebrow text-rani">Read more</span>
-              <h2 className="text-2xl sm:text-3xl">Stories from this edit</h2>
-            </div>
-            <div className="mt-10 grid gap-x-7 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-              {stories.map((post) => (
-                <JournalCard key={post.slug} post={post} />
-              ))}
-            </div>
-          </Container>
         </section>
-      )}
 
-      {/* ───────── OTHER EDITS ───────── */}
-      <section className="bg-cream-deep/40 py-14 sm:py-20">
-        <Container>
-          <h2 className="text-center text-2xl sm:text-3xl">The other edits</h2>
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {stories.length > 0 && (
+          <section className="mt-16 max-w-[620px]" aria-labelledby="edit-stories">
+            <h2 id="edit-stories" className="t-heading">
+              Stories from this edit
+            </h2>
+            <ul className="mt-4 flex flex-col gap-2">
+              {stories.map((post) => (
+                <li key={post.slug}>
+                  <Link href={`/journal/${post.slug}`} className="action-link t-body">
+                    {post.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <section className="mt-16 max-w-[620px]" aria-labelledby="other-edits">
+          <h2 id="other-edits" className="t-heading">
+            The other edits
+          </h2>
+          <ul className="mt-4 flex flex-col gap-2">
             {others.map((e) => (
-              <Link
-                key={e.slug}
-                href={`/edit/${e.slug}`}
-                className="group relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-lg p-4 text-cream"
-                style={{
-                  backgroundImage: `radial-gradient(120% 120% at 70% 10%, ${editContent[e.slug].heroSwatch[0]} 0%, ${editContent[e.slug].heroSwatch[1]} 100%)`,
-                }}
-              >
-                <div className="absolute right-3 top-3 opacity-30 transition-transform duration-500 group-hover:rotate-45">
-                  <MotifMark size={28} color="var(--color-cream)" />
-                </div>
-                <h3 className="font-display text-2xl">{e.name}</h3>
-                <p className="text-xs text-cream/85">{e.blurb}</p>
-              </Link>
+              <li key={e.slug} className="flex flex-wrap items-baseline gap-x-3">
+                <Link href={`/edit/${e.slug}`} className="action-link t-body">
+                  {e.name}
+                </Link>
+                <span className="t-small text-ink-soft">{e.blurb}</span>
+              </li>
             ))}
-          </div>
-        </Container>
-      </section>
+          </ul>
+          <p className="mt-8">
+            <Link href="/shop" className="action-link t-body">
+              All pieces
+            </Link>
+          </p>
+        </section>
+      </div>
     </main>
   );
 }

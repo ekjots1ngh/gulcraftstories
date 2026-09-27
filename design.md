@@ -1,5 +1,15 @@
 # GulCraftStories design system
 
+## Brief
+
+GulCraftStories is a handmade jewellery and craft brand. People mostly meet it
+in person, at Chiswick Flower Market, the Piccadilly and Kensington markets and
+at exhibitions, and the site is for that same affluent, design-literate
+audience. It should feel tasteful and gallery-like, with the pieces as the
+focus. Register: brand, not shop. Anti-references: busy Etsy-style listing
+grids, generic Shopify templates, anything that feels like a discount shop.
+Every screen, including the small support pages, is held to this.
+
 Gallery, not shop. The piece is the first thing on every screen; the site gets
 out of its way. Whitespace separates things, boxes do not. One voice, hers.
 
