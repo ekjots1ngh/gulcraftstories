@@ -7,6 +7,20 @@ conventions of the GulCraftStories storefront. Read it before making changes.
 
 ---
 
+## Site rules
+
+- Design direction lives in `PRODUCT.md` and `DESIGN.md`; follow them.
+- gulcraftstories.com is the main domain and gulcraftstories.co.uk redirects
+  to it, so always use the .com in canonical URLs, links and social tags
+  (`NEXT_PUBLIC_SITE_URL` defaults to `https://gulcraftstories.com`).
+- Instagram is @gulcraftstories.
+- Every product image needs alt text that describes the piece (the catalogue
+  derives it from the name and materials; keep the materials line honest).
+- The site is hosted on Vercel; make sure `npm run build` passes before
+  committing.
+- Check any page you change at phone (390 px) and desktop (1440 px) width
+  with Playwright before calling it done.
+
 ## 0. The one rule that overrides everything
 
 **Research for inspiration, never copy.**
@@ -104,8 +118,8 @@ Contact) · Help (delivery, returns, international, FAQ, care, size guide, vouch
 · Elsewhere (the edits, journal, archive: retired from the nav, still reachable)
 ```
 
-### The gallery rebuild (September 2026): read `design.md` first
-The site now follows **`design.md`** ("gallery, not shop"): ivory page, ink
+### The gallery rebuild (September 2026): read `DESIGN.md` first
+The site now follows **`DESIGN.md`** ("gallery, not shop"): ivory page, ink
 text, clay as the one warm accent, brass hairlines, the roundel's green for
 the footer and focus ring; Fraunces for display, Hanken Grotesk for body;
 square corners, no shadows, no gradients, no badges or overlays on photos, no
@@ -348,7 +362,7 @@ Conventions:
 - No secrets in the repo. Stripe keys come from env vars (`.env.local`); only `.env.example` is committed.
 
 ### Chosen direction
-**"Gallery, not shop"** per `design.md` (September 2026), which superseded the
+**"Gallery, not shop"** per `DESIGN.md` (September 2026), which superseded the
 earlier "Atelier" homepage. The reference points are exhibition catalogues and
 quiet makers' sites: the piece is the first thing on every screen, whitespace
 separates things, actions are text links. Earlier directions (the two mockups,
@@ -443,7 +457,7 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
 - [x] Checkout: Stripe hosted Checkout + success/cancel flow + confirmation page
       + webhook scaffold (needs real keys in env to go live)
 - [x] September 2026: 26 new pieces + Bracelets category; gallery rebuild per
-      `design.md` (home, shop tabs, product page with lightbox and direct
+      `DESIGN.md` (home, shop tabs, product page with lightbox and direct
       Stripe buy link, About, Markets, green footer; basket and extras retired)
 - [x] Her name: Guljeet Kaur (`MAKER_NAME` in `src/lib/site.ts`)
 - [x] About bio, her words as supplied; her name is Guljeet Kaur
