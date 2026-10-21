@@ -13,6 +13,8 @@ import {
   formatMoney,
   isOneOfOne,
   getCollectionSiblings,
+  getProducts,
+  gridOrder,
   mainImageUrl,
 } from "@/lib/catalogue";
 import { getSoldSlugs } from "@/lib/sold";
@@ -65,6 +67,15 @@ export default async function ProductPage({
     isOneOfOne(p) && soldSlugs.includes(p.slug) ? { ...p, status: "sold" as const } : p,
   );
   const siblings = getCollectionSiblings(product.slug);
+  // Walk the category in the same order as its grid: previous and next piece.
+  const inCategory = gridOrder(
+    getProducts({ type: product.type }).map((p) =>
+      isOneOfOne(p) && soldSlugs.includes(p.slug) ? { ...p, status: "sold" as const } : p,
+    ),
+  );
+  const at = inCategory.findIndex((p) => p.slug === product.slug);
+  const previous = at > 0 ? inCategory[at - 1] : undefined;
+  const next = at >= 0 && at < inCategory.length - 1 ? inCategory[at + 1] : undefined;
   const paragraphs = product.description.split(/\n+/).map((s) => s.trim()).filter(Boolean);
   const price = formatMoney(product.price);
   const offers = offersFor(product.slug);
@@ -88,9 +99,20 @@ export default async function ProductPage({
     },
   };
 
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Pieces", item: `${base}/shop` },
+      { "@type": "ListItem", position: 2, name: typeName(product.type), item: `${base}/shop?type=${product.type}` },
+      { "@type": "ListItem", position: 3, name: product.name, item: `${base}/shop/${product.slug}` },
+    ],
+  };
+
   return (
     <main className="flex-1">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
       <div className="mx-auto w-full max-w-[1120px] px-5 pt-4 lg:px-10 lg:pt-8">
         <Link href={`/shop?type=${product.type}`} className="nav-link t-small text-ink-soft">
@@ -186,6 +208,25 @@ export default async function ProductPage({
           )}
         </div>
       </article>
+
+      {(previous || next) && (
+        <nav aria-label="Previous and next piece" className="mx-auto w-full max-w-[1120px] px-5 pt-12 lg:px-10 lg:pt-16">
+          <div className="flex flex-wrap justify-between gap-x-8 gap-y-2 border-t border-brass/40 pt-6">
+            {previous ? (
+              <Link href={`/shop/${previous.slug}`} rel="prev" className="action-link t-small">
+                Previous, {previous.name}
+              </Link>
+            ) : (
+              <span />
+            )}
+            {next && (
+              <Link href={`/shop/${next.slug}`} rel="next" className="action-link t-small">
+                Next, {next.name}
+              </Link>
+            )}
+          </div>
+        </nav>
+      )}
 
       {related.length > 0 && (
         <section className="mx-auto w-full max-w-[1120px] px-5 pt-16 lg:px-10 lg:pt-24" aria-labelledby="more-pieces">

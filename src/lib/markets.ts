@@ -80,3 +80,7 @@ export const formatMarketDate = (iso: string) =>
     day: "numeric",
     month: "long",
   });
+
+/** A Google Maps search for the market's address, for visitors on their way. */
+export const mapsLink = (m: Market) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${m.name}, ${m.area}`)}`;

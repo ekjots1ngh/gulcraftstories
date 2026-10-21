@@ -30,9 +30,9 @@ type Taxon<S extends string> = { slug: S; name: string; blurb: string; accent: s
 export const TYPES: Taxon<TypeSlug>[] = [
   { slug: "necklaces", name: "Necklaces", blurb: "Pendants, statements and beaded strands.", accent: "#0E5A5B" },
   { slug: "earrings", name: "Earrings", blurb: "Drops and dainty everyday pairs.", accent: "#E08A1E" },
-  { slug: "bracelets", name: "Bracelets & rings", blurb: "Stretch strands, knotted cords and little seed-bead rings.", accent: "#7E5AA2" },
+  { slug: "bracelets", name: "Bracelets and rings", blurb: "Stretch strands, knotted cords and little seed-bead rings.", accent: "#7E5AA2" },
   { slug: "crochet", name: "Crochet", blurb: "Little things made one stitch at a time.", accent: "#B5267A" },
-  { slug: "clay", name: "Clay charms & magnets", blurb: "Hand-painted air-dry clay, full of character.", accent: "#9A5B33" },
+  { slug: "clay", name: "Clay", blurb: "Hand-painted air-dry clay, full of character.", accent: "#9A5B33" },
 ];
 
 export const EDITS: Taxon<EditSlug>[] = [
@@ -211,6 +211,15 @@ export function sortProducts(list: Product[], key: SortKey): Product[] {
       );
   }
 }
+
+/** Pieces still for sale first, sold ones after, otherwise in the given order. */
+export const availableFirst = (list: Product[]): Product[] => [
+  ...list.filter((p) => p.status !== "sold"),
+  ...list.filter((p) => p.status === "sold"),
+];
+
+/** The order a category's grid shows: featured, then newest, with sold pieces last. */
+export const gridOrder = (list: Product[]): Product[] => availableFirst(sortProducts(list, "featured"));
 
 /** Related pieces, prefer the same edit, then same type. */
 export function getRelated(slug: string, limit = 3): Product[] {
