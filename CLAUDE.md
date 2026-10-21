@@ -474,7 +474,9 @@ design/previews/  screenshots (homepage, shop, product, cart, journal, direction
 - [x] Market kit (QR files, A5 stall sign, A4 price cards), MARKET-DAY.md, /privacy
 - [x] Every footer-linked page restyled to the gallery system (no eyebrows, motifs,
       cards, buttons or gradients anywhere); legacy components removed
+- [x] `for-guljeet/`: a PDF guide (photos, measuring, materials, questions) and a
+      fill-in spreadsheet, one row per unsold piece, for the founder to return
 - [ ] Founder: create the three Payment Links; confirm the Formspree env vars
-      in Vercel; send a full-resolution portrait
+      in Vercel; send a full-resolution portrait; return the for-guljeet pack
 
 > Development branch: `claude/funny-wozniak-M7VpJ`.
