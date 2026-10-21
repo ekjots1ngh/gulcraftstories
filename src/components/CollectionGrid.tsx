@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { Product } from "@/lib/catalogue";
-import { sortProducts } from "@/lib/catalogue";
+import { gridOrder } from "@/lib/catalogue";
 import { TABS, filterByTab, type TabSlug } from "@/lib/tabs";
 import { ProductCard } from "./ProductCard";
 import { FadeIn } from "./FadeIn";
@@ -16,7 +16,7 @@ import { FadeIn } from "./FadeIn";
 export function CollectionGrid({ products, initialTab = "all" }: { products: Product[]; initialTab?: TabSlug }) {
   const [tab, setTab] = useState<TabSlug>(initialTab);
 
-  const shown = useMemo(() => sortProducts(filterByTab(products, tab), "featured"), [products, tab]);
+  const shown = useMemo(() => gridOrder(filterByTab(products, tab)), [products, tab]);
   const current = TABS.find((t) => t.slug === tab) ?? TABS[0];
   const available = shown.filter((p) => p.status !== "sold").length;
 

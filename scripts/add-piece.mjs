@@ -32,7 +32,7 @@ async function main() {
   const existing = new Set((await loadProducts()).map((p) => p.id));
   console.log("Add a piece. Press Enter to accept a suggestion in brackets.\n");
 
-  const name = await ask("Name (up to 40 characters): ");
+  const name = await ask(`Name (up to ${NAME_MAX} characters): `);
   const id = slugify(name);
   if (existing.has(id)) {
     console.log(`\nThere is already a piece with the slug "${id}". Give this one a different name.`);

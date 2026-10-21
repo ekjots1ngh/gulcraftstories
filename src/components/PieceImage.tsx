@@ -21,16 +21,15 @@ const isPipeline = (src: string) => src.startsWith("/images/") && !/\.[a-z]+$/i.
 
 /**
  * A photograph in a fixed-ratio frame, so grids stay level and nothing shifts
- * as it loads. The default frame is 4:5 portrait on ivory-deep. Piece photos
- * from the pipeline are already 4:5 and fill it exactly; with `fit="contain"`
- * a photo of another shape sits inside the frame at its own proportions,
- * never cropped. Without a `src` the frame is simply the flat ivory-deep.
+ * as it loads. The default frame is 4:5 portrait and has no background: the
+ * pipeline pads a photo of another shape with transparent pixels, so it
+ * floats at its own proportions on whatever is behind it, never cropped.
+ * Without a `src` the frame is reserved space, hidden from assistive tech.
  *
  * Piece photos are served straight from /public at three widths (no runtime
  * resizing); other photos go through next/image's optimiser.
  */
 export function PieceImage({
-  swatch,
   src,
   label,
   className,
@@ -40,8 +39,6 @@ export function PieceImage({
   priority = false,
   sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
 }: {
-  /** Kept for callers that still pass one; the frame is flat ivory-deep. */
-  swatch?: [string, string];
   src?: string;
   label?: string;
   className?: string;
@@ -53,7 +50,6 @@ export function PieceImage({
   /** Responsive sizes hint (CSS widths per breakpoint). */
   sizes?: string;
 }) {
-  void swatch;
   const aspect =
     ratio === "square"
       ? "aspect-square"
@@ -64,8 +60,10 @@ export function PieceImage({
           : "aspect-[4/5]";
   return (
     <div
-      className={cn("relative isolate overflow-hidden bg-ivory-deep", aspect, className)}
-      {...(src ? {} : { role: "img", "aria-label": label ?? "photograph" })}
+      className={cn("relative isolate overflow-hidden", aspect, className)}
+      // With nothing to show, the frame is only reserved space: hide it from
+      // assistive tech rather than announce a photograph that is not there.
+      {...(src ? {} : { "aria-hidden": true })}
     >
       {src && (
         <Image

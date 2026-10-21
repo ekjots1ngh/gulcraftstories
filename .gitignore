@@ -47,3 +47,6 @@ photos-inbox/*
 photos-archive/*
 !photos-archive/.gitkeep
 *.log
+
+# Playwright screenshots from npm run screens
+screens/

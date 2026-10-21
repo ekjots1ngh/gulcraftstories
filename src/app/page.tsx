@@ -4,7 +4,7 @@ import { PieceImage } from "@/components/PieceImage";
 import { FadeIn } from "@/components/FadeIn";
 import { products, isOneOfOne, formatMoney, sortProducts, type Product } from "@/lib/catalogue";
 import { getSoldSlugs } from "@/lib/sold";
-import { nextMarket, formatMarketDate } from "@/lib/markets";
+import { upcomingMarkets, formatMarketDate } from "@/lib/markets";
 import { SITE, MAKER_NAME } from "@/lib/site";
 
 // Reflect pieces sold through Stripe, re-checked at least once a minute.
@@ -22,7 +22,7 @@ export default async function Home() {
 
   const hero = live.find((p) => p.slug === "bazaar-song") ?? live[0];
   const pieces = live.filter((p) => p.slug !== hero?.slug).slice(0, 6);
-  const market = nextMarket();
+  const markets = upcomingMarkets().slice(0, 3);
 
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gulcraftstories.com";
   const orgLd = {
@@ -67,11 +67,9 @@ export default async function Home() {
 
       {/* six pieces */}
       <section className="mx-auto w-full max-w-[1120px] px-5 pt-16 lg:px-10 lg:pt-24" aria-labelledby="pieces-heading">
-        <FadeIn>
-          <h2 id="pieces-heading" className="t-heading">
-            Pieces
-          </h2>
-        </FadeIn>
+        <h2 id="pieces-heading" className="t-heading">
+          Pieces
+        </h2>
         <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 md:gap-y-14">
           {pieces.map((p, i) =>
             i < 3 ? (
@@ -87,11 +85,11 @@ export default async function Home() {
             ),
           )}
         </ul>
-        <FadeIn className="mt-10">
+        <p className="mt-10">
           <Link href="/shop" className="action-link t-body">
             All {live.length} pieces
           </Link>
-        </FadeIn>
+        </p>
       </section>
 
       {/* where to find her next */}
@@ -100,17 +98,23 @@ export default async function Home() {
           <h2 id="next-heading" className="t-heading">
             Find her next
           </h2>
-          {market ? (
-            <p className="t-body mt-4 max-w-[620px]">
-              {market.name}, {market.area}. {formatMarketDate(market.date)}, {market.time}.
-              {market.note ? ` ${market.note}` : ""}
-            </p>
+          {markets.length > 0 ? (
+            <ul className="t-body mt-4 flex max-w-[620px] flex-col gap-3">
+              {markets.map((m) => (
+                <li key={`${m.name}-${m.date}`}>
+                  <span className="font-display text-xl">{m.name}</span>
+                  <br />
+                  {m.area}. {formatMarketDate(m.date)}, {m.time}.
+                  {m.note ? ` ${m.note}` : ""}
+                </li>
+              ))}
+            </ul>
           ) : (
             <p className="t-body mt-4 max-w-[620px]">
               No market dates in the diary just now. New ones are posted on Instagram first.
             </p>
           )}
-          <div className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
+          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2">
             <Link href="/markets" className="action-link t-body">
               All market dates
             </Link>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/ProductCard";
-import { EDITS, getProducts, isOneOfOne } from "@/lib/catalogue";
+import { EDITS, getProducts, isOneOfOne, gridOrder } from "@/lib/catalogue";
 import { editContent } from "@/lib/edits";
 import { getPostsForEdit } from "@/lib/journal";
 import { getSoldSlugs } from "@/lib/sold";
@@ -28,8 +28,10 @@ export default async function EditPage({ params }: { params: Promise<{ slug: str
 
   const content = editContent[edit.slug];
   const soldSlugs = await getSoldSlugs();
-  const pieces = getProducts({ edit: edit.slug }).map((p) =>
-    isOneOfOne(p) && soldSlugs.includes(p.slug) ? { ...p, status: "sold" as const } : p,
+  const pieces = gridOrder(
+    getProducts({ edit: edit.slug }).map((p) =>
+      isOneOfOne(p) && soldSlugs.includes(p.slug) ? { ...p, status: "sold" as const } : p,
+    ),
   );
   const stories = getPostsForEdit(edit.slug);
   const others = EDITS.filter((e) => e.slug !== edit.slug);

@@ -95,6 +95,13 @@ What the customer sees tells you where to look.
 | The button does nothing and the piece shows "Sold" | It is sold. | Nothing, unless it is wrongly marked sold: see section 1 and set `sold: true` back to `false`. |
 | The whole site looks old or a change has not appeared | The last rebuild failed. | In Vercel, Deployments: the newest one will be red. Open it, read the last lines of the log. Usually a typo in `products.ts`; fix and push. |
 
+Before the first online sale, two one-off settings in Stripe:
+- **Settings, then Emails:** turn on "Successful payments" so every buyer
+  gets a receipt from Stripe automatically. Without this nobody is emailed.
+- **Settings, then Business, then Public details:** the name and support
+  email shown on receipts should read GulCraftStories and
+  gulcraftstories@gmail.com.
+
 Other quick checks:
 - Stripe sends a receipt to the buyer and an email to you for every sale. No
   email means no sale went through.

@@ -30,9 +30,9 @@ type Taxon<S extends string> = { slug: S; name: string; blurb: string; accent: s
 export const TYPES: Taxon<TypeSlug>[] = [
   { slug: "necklaces", name: "Necklaces", blurb: "Pendants, statements and beaded strands.", accent: "#0E5A5B" },
   { slug: "earrings", name: "Earrings", blurb: "Drops and dainty everyday pairs.", accent: "#E08A1E" },
-  { slug: "bracelets", name: "Bracelets & rings", blurb: "Stretch strands, knotted cords and little seed-bead rings.", accent: "#7E5AA2" },
+  { slug: "bracelets", name: "Bracelets and rings", blurb: "Stretch strands, knotted cords and little seed-bead rings.", accent: "#7E5AA2" },
   { slug: "crochet", name: "Crochet", blurb: "Little things made one stitch at a time.", accent: "#B5267A" },
-  { slug: "clay", name: "Clay charms & magnets", blurb: "Hand-painted air-dry clay, full of character.", accent: "#9A5B33" },
+  { slug: "clay", name: "Clay", blurb: "Hand-painted air-dry clay, full of character.", accent: "#9A5B33" },
 ];
 
 export const EDITS: Taxon<EditSlug>[] = [
@@ -53,8 +53,6 @@ export const MATERIALS: Taxon<MaterialSlug>[] = [
 
 export type ProductImage = {
   alt: string;
-  /** Placeholder gradient shown if the photo is missing. */
-  swatch: [string, string];
   /** Base path of a pipeline photo, e.g. /images/bazaar-song (PieceImage adds the size). */
   src?: string;
 };
@@ -102,14 +100,6 @@ const TYPE_OF: Record<Category, TypeSlug> = {
   Clay: "clay",
 };
 
-const SWATCH_OF: Record<Category, [string, string]> = {
-  Necklaces: ["#0E5A5B", "#3B2A4A"],
-  Earrings: ["#E08A1E", "#0E5A5B"],
-  Bracelets: ["#7E5AA2", "#C9A24B"],
-  Crochet: ["#B5267A", "#4E9B6E"],
-  Clay: ["#9A5B33", "#C9A24B"],
-};
-
 const MATERIAL_KEYWORDS: [MaterialSlug, RegExp][] = [
   ["semi-precious-stones", /jasper|turquoise|agate|quartz|aventurine|carnelian|citrine|lapis|amethyst|labradorite|onyx|chalcedony|jade|coral|rhodonite|gemstone|mother-of-pearl|mookaite|stone|resin/i],
   ["ceramics", /ceramic|porcelain|clay|glazed/i],
@@ -144,7 +134,6 @@ function derive(p: Piece): Product {
     materialNote: p.materials.length ? `${p.materials.join(", ")}.` : "",
     images: p.images.map((file, i) => ({
       alt: `${p.name}, ${p.materials.slice(0, 3).join(", ").toLowerCase()}${i === 0 ? "" : ", another view"}`,
-      swatch: SWATCH_OF[p.category],
       src: `/images/${baseName(file)}`,
     })),
     status: p.sold ? "sold" : "available",
@@ -157,9 +146,9 @@ function derive(p: Piece): Product {
 
 export const products: Product[] = pieces.map(derive);
 
-/** Public URL of a piece's main photo at the largest pipeline size (og:image, JSON-LD). */
+/** Public URL of a piece's main photo, flattened on ivory for link previews (og:image, JSON-LD). */
 export const mainImageUrl = (p: Product, base = "") =>
-  p.images[0]?.src ? `${base}${p.images[0].src}-1600.webp` : `${base}/logo.png`;
+  p.images[0]?.src ? `${base}${p.images[0].src}-og.jpg` : `${base}/logo.png`;
 
 /* ---------- helpers ---------- */
 
@@ -222,6 +211,15 @@ export function sortProducts(list: Product[], key: SortKey): Product[] {
       );
   }
 }
+
+/** Pieces still for sale first, sold ones after, otherwise in the given order. */
+export const availableFirst = (list: Product[]): Product[] => [
+  ...list.filter((p) => p.status !== "sold"),
+  ...list.filter((p) => p.status === "sold"),
+];
+
+/** The order a category's grid shows: featured, then newest, with sold pieces last. */
+export const gridOrder = (list: Product[]): Product[] => availableFirst(sortProducts(list, "featured"));
 
 /** Related pieces, prefer the same edit, then same type. */
 export function getRelated(slug: string, limit = 3): Product[] {
